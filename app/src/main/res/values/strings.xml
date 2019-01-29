@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Kitchen Assistant</string>
+    <string name="login">Login</string>
+    <string name="send_the_verification_code">Send the verification code</string>
+    <string name="the_registration_is_automatically_at_the_first_login">The registration is automatically at the first login.</string>
+    <string name="your_phone_number">Your phone number</string>
+    <string name="the_phone_number_should_follow_this_pattern_country_code_your_number">The phone number should follow this pattern: +country code your number</string>
+</resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "282810153135",
+    "firebase_url": "https://kitchenassistant-e90a0.firebaseio.com",
+    "project_id": "kitchenassistant-e90a0",
+    "storage_bucket": "kitchenassistant-e90a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282810153135:android:cac551b0544247d5",
+        "android_client_info": {
+          "package_name": "com.example.laci.kitchenassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282810153135-fg14fn7j0doq9s9aad0icia253ogphl5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.laci.kitchenassistant",
+            "certificate_hash": "8af3096051f70ef3003506a6f1074ff47101f8ab"
+          }
+        },
+        {
+          "client_id": "282810153135-cire8pb2vu2u217ftbhmj5lqdm8rko0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANUBnYvkq1aKmuDfM-Ah2nnEpAv0y4Lwo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282810153135-cire8pb2vu2u217ftbhmj5lqdm8rko0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

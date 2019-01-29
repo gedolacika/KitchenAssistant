@@ -1,0 +1,38 @@
+package com.example.laci.kitchenassistant;
+
+import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.laci.kitchenassistant.Tools.Validations;
+
+import java.util.Objects;
+
+import static com.example.laci.kitchenassistant.Tools.ActivityNavigation.navigateToConfirm;
+
+public class LoginActivity extends AppCompatActivity {
+    private Button button;
+    private TextInputEditText phoneNumber;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        button = findViewById(R.id.login_button);
+        phoneNumber = findViewById(R.id.login_text_input_edit_text);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Validations.validatePhoneNumber(phoneNumber.getText().toString())==0)
+                    navigateToConfirm(LoginActivity.this,Objects.requireNonNull(phoneNumber.getText()).toString());
+                if(Validations.validatePhoneNumber(phoneNumber.getText().toString())==1)
+                    phoneNumber.setError("The length of phone number should be 12 characters!");
+                if(Validations.validatePhoneNumber(phoneNumber.getText().toString())==2)
+                    phoneNumber.setError("The phone number have to be like this: \"+[country code][your number].\"");
+            }
+        });
+    }
+}
