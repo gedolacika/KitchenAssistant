@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.main.Account.AccountFragment;
-import com.example.laci.kitchenassistant.main.AddFoodFragment;
+import com.example.laci.kitchenassistant.main.AddFood.AddFoodFragment;
 import com.example.laci.kitchenassistant.main.DiagramsFragment;
 import com.example.laci.kitchenassistant.main.FitnessFragment;
 import com.example.laci.kitchenassistant.main.FoodsAtHomeFragment;

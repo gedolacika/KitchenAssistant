@@ -1,5 +1,6 @@
 package com.example.laci.kitchenassistant.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,12 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
+import com.example.laci.kitchenassistant.firebase.BasicFoodsHandler;
+import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -29,11 +33,13 @@ public class MainActivity extends AppCompatActivity
     public User user;
     public ArrayList<BasicFood> basicFoods;
     public ArrayList<Recipe> recipes;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,6 +53,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         FragmentNavigation.loadHomeFragment(this);
+
+        BasicFoodsHandler.downloadBasicFoods(new RetrieveDataListener<ArrayList<BasicFood>>() {
+            @Override
+            public void onSuccess(ArrayList<BasicFood> data) {
+                basicFoods = data;
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
