@@ -4,5 +4,21 @@
     <string name="send_the_verification_code">Send the verification code</string>
     <string name="the_registration_is_automatically_at_the_first_login">The registration is automatically at the first login.</string>
     <string name="your_phone_number">Your phone number</string>
-    <string name="the_phone_number_should_follow_this_pattern_country_code_your_number">The phone number should follow this pattern: +country code your number</string>
+    <string name="the_phone_number_should_follow_this_pattern_country_code_your_number">The phone number have to follow this pattern: +[country code][your number]</string>
+    <string name="your_phone_number_is">Phone number:</string>
+    <string name="phone_number">phone number</string>
+    <string name="the_code_didn_t_send_yet">The code didn\'t send yet!</string>
+    <string name="verification_code_sent_textview">Your verification code has been sent in SMS to your device.</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Anonymus</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change">Change</string>
+    <string name="close">Close</string>
 </resources>

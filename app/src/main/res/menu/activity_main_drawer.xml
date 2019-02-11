@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/icon_home"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/nav_foods"
+            android:icon="@drawable/icon_food"
+            android:title="Foods" />
+        <item
+            android:id="@+id/nav_foods_at_home"
+            android:icon="@drawable/icon_fridge"
+            android:title="Foods at home" />
+        <item
+            android:id="@+id/nav_add_food"
+            android:icon="@drawable/icon_plus"
+            android:title="Add food" />
+        <item
+            android:id="@+id/nav_fitness"
+            android:icon="@drawable/icon_run"
+            android:title="Fitness" />
+
+        <item
+            android:id="@+id/nav_diagram"
+            android:icon="@drawable/icon_diagram"
+            android:title="Diagrams" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/icon_history"
+            android:title="History" />
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/icon_account"
+            android:title="Account" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/icon_logout"
+            android:title="Logout" />
+    </group>
+
+</menu>

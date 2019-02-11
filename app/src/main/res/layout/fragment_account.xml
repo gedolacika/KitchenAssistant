@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.Account.AccountFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/fragment_account_cover_photo"
+            android:layout_width="384dp"
+            android:layout_height="148dp"
+            android:scaleType="center"
+            android:src="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/fragment_account_profile_picture"
+            android:layout_width="55dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="center"
+
+            android:src="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_account_cover_photo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--android:background="@drawable/rounded_corner"-->
+
+
+        <ImageView
+            android:id="@+id/fragment_account_lose_weigh_imageView"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="80dp"
+            android:src="@drawable/icon_down"
+
+            app:layout_constraintEnd_toStartOf="@+id/fragment_account_keep_weight_image_view"
+            app:layout_constraintTop_toTopOf="@+id/fragment_account_keep_weight_image_view" />
+
+        <ImageView
+            android:id="@+id/fragment_account_keep_weight_image_view"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="216dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/icon_keep"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_cover_photo" />
+
+        <ImageView
+            android:id="@+id/fragment_account_gain_weight_imageView"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="80dp"
+            android:src="@drawable/icon_up"
+            app:layout_constraintStart_toEndOf="@+id/fragment_account_keep_weight_image_view"
+            app:layout_constraintTop_toTopOf="@+id/fragment_account_keep_weight_image_view" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_account_name_layout"
+            android:layout_width="150dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.036"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_cover_photo">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/fragment_account_namet_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Name"
+                android:inputType="text|textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/fragment_account_change_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="168dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/change"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.689"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_cover_photo" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_account_age_layout"
+            android:layout_width="150dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toEndOf="@+id/fragment_account_name_layout"
+            app:layout_constraintTop_toTopOf="@+id/fragment_account_name_layout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/fragment_account_age_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Age"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_account_weight_layout"
+            android:layout_width="150dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_account_name_layout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/fragment_account_name_layout"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_name_layout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/fragment_account_weight_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Weight"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_account_height_layout"
+            android:layout_width="150dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_account_age_layout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/fragment_account_age_layout"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_age_layout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/fragment_account_height_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Height"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/fragment_account_lose_weight_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Lose weight"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_account_lose_weigh_imageView"
+            app:layout_constraintStart_toStartOf="@+id/fragment_account_lose_weigh_imageView"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_lose_weigh_imageView" />
+
+        <TextView
+            android:id="@+id/fragment_account_keep_weight_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Keep weight"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_account_keep_weight_image_view"
+            app:layout_constraintStart_toStartOf="@+id/fragment_account_keep_weight_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_keep_weight_image_view" />
+
+        <TextView
+            android:id="@+id/fragment_account_gain_weight_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Gain weight"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_account_gain_weight_imageView"
+            app:layout_constraintStart_toStartOf="@+id/fragment_account_gain_weight_imageView"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_gain_weight_imageView" />
+
+        <TextView
+            android:id="@+id/fragment_account_reccomend_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:text="Recommended calorie intake: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_keep_weight_textView" />
+
+        <TextView
+            android:id="@+id/fragment_account_recommend_calorie_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="1000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.194"
+            app:layout_constraintStart_toEndOf="@+id/fragment_account_reccomend_textView"
+            app:layout_constraintTop_toTopOf="@+id/fragment_account_reccomend_textView" />
+
+        <Button
+            android:id="@+id/fragment_account_close_button"
+            android:layout_width="68dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="316dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorRedCodeDidntSend"
+            android:text="@string/close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/fragment_account_change_save_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/fragment_account_gender_female"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/icon_gender_female"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_account_change_save_button"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_weight_layout" />
+
+        <ImageView
+            android:id="@+id/fragment_account_gender_male"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="100dp"
+            android:src="@drawable/icon_gender_male"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_account_change_save_button"
+            app:layout_constraintStart_toEndOf="@+id/fragment_account_gender_female"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_account_weight_layout" />
+    </android.support.constraint.ConstraintLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+
+</FrameLayout>
