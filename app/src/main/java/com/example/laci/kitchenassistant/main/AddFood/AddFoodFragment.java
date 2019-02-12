@@ -1,8 +1,18 @@
 package com.example.laci.kitchenassistant.main.AddFood;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,17 +26,29 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
+import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.Validations;
+import com.example.laci.kitchenassistant.firebase.Account;
+import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
+import com.example.laci.kitchenassistant.main.Account.AccountFragment;
 import com.example.laci.kitchenassistant.main.MainActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static android.app.Activity.RESULT_OK;
+import static com.google.android.gms.common.util.CollectionUtils.listOf;
+
 public class AddFoodFragment extends Fragment {
-    private TextInputEditText name,origin,preparation_time, portion, difficulty,quantity,preparation,quantity_of_all_food;
+    private TextInputEditText name,origin,preparation_time, portion, difficulty,quantity,preparation,quantity_of_all_food,link;
     private Spinner type, ingredient;
     private Button add_ingredient, add_picture, add_food;
     private RecyclerView ingredients_recyclerView, pictures_recyclerView;
@@ -35,25 +57,47 @@ public class AddFoodFragment extends Fragment {
     private BasicFood chosen_basic_food;
     private AddFoodBasicFoodsSpinnerAdapter ingredient_spinner_adapter;
     private AddFoodIngredientAdapter ingredient_recyclerView_adapter;
+    private AddFoodAddPictureAdapter add_picture_adapter;
     private ArrayList<BasicFoodQuantity> ingredients;
     private Context context;
+    private Recipe recipe;
+    private ArrayList<byte[]> pictures_byte_byte;
+    private ArrayList<String> pictures_byte_name;
+    private static final int PICTURE_GALLERY = 0;
+    private static final int PICTURE_CAMERA = 1;
+    private static final int PICTURE_GALLERY_PERMISSION = 3;
+    private static final int PICTURE_CAMERA_PERMISSION = 4;
+    private View globalView;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_food, container, false);
+        globalView = view;
         initViews(view);
         context = view.getContext();
+        recipe = new Recipe();
         setUpTypeSpinner(container.getContext());
         setUpIngredientSpinner(container.getContext());
         setUpIngredientRecyclerView(view.getContext());
+        setUpPicturesRecyclerView(view.getContext());
         setUpListeners();
 
 
 
 
         return view;
+    }
+
+    private void setUpPicturesRecyclerView(Context context){
+        pictures_byte_name = new ArrayList<>();
+        pictures_byte_byte = new ArrayList<>();
+        add_picture_adapter = new AddFoodAddPictureAdapter(context,recipe.getPictures(),pictures_byte_byte);
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        manager.setOrientation(LinearLayout.HORIZONTAL);
+        pictures_recyclerView.setLayoutManager(manager);
+        pictures_recyclerView.setAdapter(add_picture_adapter);
     }
 
     private void setUpListeners(){
@@ -77,6 +121,141 @@ public class AddFoodFragment extends Fragment {
                     quantity.setError("Not a valid number.");
             }
         });
+        add_picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(link.getText() == null){
+                    recipe.addPicture(link.getText().toString());
+                    add_picture_adapter.notifyDataSetChanged();
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddFoodFragment.this.context);
+
+                    builder.setMessage("Select the source of the picture.");
+
+                    builder.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                requestPermissions(new String[]{
+                                                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                        PICTURE_GALLERY_PERMISSION);
+                            } else {
+
+                                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(intent, PICTURE_GALLERY);
+                            }
+                        }
+                    });
+
+                    builder.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                requestPermissions(new String[]{
+                                                android.Manifest.permission.CAMERA,
+                                                android.Manifest.permission.CAMERA},
+                                        PICTURE_CAMERA_PERMISSION);
+                            } else {
+
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(intent, PICTURE_CAMERA);
+                            }
+
+                        }
+                    });
+
+                    builder.show();
+                }
+
+            }
+        });
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case PICTURE_GALLERY:
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    InputStream istream = null;
+                    try {
+                        istream = getContext().getContentResolver().openInputStream(uri);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        pictures_byte_byte.add(getBytes(istream));
+                        pictures_byte_name.add(String.valueOf(System.currentTimeMillis()));
+                        add_picture_adapter.notifyDataSetChanged();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                break;
+            case PICTURE_CAMERA:
+                if (resultCode == RESULT_OK) {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    pictures_byte_byte.add(baos.toByteArray());
+                    pictures_byte_name.add(String.valueOf(System.currentTimeMillis()));
+                    add_picture_adapter.notifyDataSetChanged();
+
+
+                }
+                break;
+        }
+    }
+
+    private byte[] getBytes(InputStream inputStream) throws IOException {
+
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PICTURE_GALLERY_PERMISSION:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, PICTURE_GALLERY);
+
+                } else {
+                    Toast.makeText(globalView.getContext(),"You can't upload picture from gallery if you don't enabled the access of store.",Toast.LENGTH_LONG).show();
+                }
+                break;
+            case PICTURE_CAMERA_PERMISSION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, PICTURE_CAMERA);
+                } else {
+                    Toast.makeText(globalView.getContext(),"You can't upload picture from gallery if you don't enabled the access of camera.",Toast.LENGTH_LONG).show();
+                }
+                break;
+
+
+        }
     }
 
     private void setUpIngredientRecyclerView(Context context){
@@ -138,6 +317,7 @@ public class AddFoodFragment extends Fragment {
         add_food = view.findViewById(R.id.add_food_upload_food);
         ingredients_recyclerView = view.findViewById(R.id.add_food_add_ingredients_recyclerView);
         pictures_recyclerView = view.findViewById(R.id.add_food_add_images_recyclerView);
+        link = view.findViewById(R.id.add_food_picture_link_editText);
     }
 
 }

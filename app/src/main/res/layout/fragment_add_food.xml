@@ -26,12 +26,12 @@
                 <Button
                     android:id="@+id/add_food_add_image_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="46dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:background="@color/colorButton"
-                    android:text="Button"
+                    android:text="Add photo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/add_food_pictures_textView"
@@ -40,9 +40,8 @@
                 <TextView
                     android:id="@+id/add_food_pictures_textView"
                     android:layout_width="142dp"
-                    android:layout_height="40dp"
+                    android:layout_height="18dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="Pictures about food"
                     android:textColor="@color/colorBlack"
@@ -69,7 +68,7 @@
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="104dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -112,9 +111,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="40dp"
                     android:autofillHints="Food type"
-                    android:singleLine="false"
                     android:ellipsize="none"
                     android:minHeight="?android:attr/listPreferredItemHeight"
+                    android:singleLine="false"
                     android:spinnerMode="dialog"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/add_food_praparation_time_layout" />
@@ -267,6 +266,39 @@
                         android:layout_height="wrap_content"
                         android:hint="Quantity of food(g)" />
                 </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/add_food_picture_link_layout"
+                    android:layout_width="272dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_food_quantity_layout">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/add_food_picture_link_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Link" />
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Note! If you don't fill the &quot;Link&quot; field and push the button, you can pick a photo from gallery."
+                    app:layout_constraintBottom_toTopOf="@+id/add_food_add_images_recyclerView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_food_picture_link_layout" />
             </android.support.constraint.ConstraintLayout>
 
         </ScrollView>
