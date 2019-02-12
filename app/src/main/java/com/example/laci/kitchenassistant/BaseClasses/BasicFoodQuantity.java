@@ -14,6 +14,13 @@ public class BasicFoodQuantity extends BasicFood {
         this.quantity = quantity;
     }
 
+    public BasicFoodQuantity(BasicFood food, int quantity) {
+        super(food.getName(),food.getPicture(),food.getCalorie(),food.getProtein(),food.getCarbohydrate(),food.getFat());
+        this.quantity = quantity;
+    }
+
+
+
     public BasicFoodQuantity(int quantity) {
         this.quantity = quantity;
     }

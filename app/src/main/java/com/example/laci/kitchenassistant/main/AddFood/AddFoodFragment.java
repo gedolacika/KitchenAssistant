@@ -1,7 +1,6 @@
 package com.example.laci.kitchenassistant.main.AddFood;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -15,20 +14,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
+import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.Validations;
 import com.example.laci.kitchenassistant.main.MainActivity;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class AddFoodFragment extends Fragment {
     private TextInputEditText name,origin,preparation_time, portion, difficulty,quantity,preparation,quantity_of_all_food;
     private Spinner type, ingredient;
     private Button add_ingredient, add_picture, add_food;
-    private RecyclerView ingredients, pictures;
+    private RecyclerView ingredients_recyclerView, pictures_recyclerView;
     private ArrayAdapter<CharSequence> type_adapter;
     private String choosen_type;
     private BasicFood chosen_basic_food;
-    private AddFoodBasicFoodsSpinnerAdapter ingredient_adapter;
+    private AddFoodBasicFoodsSpinnerAdapter ingredient_spinner_adapter;
+    private AddFoodIngredientAdapter ingredient_recyclerView_adapter;
+    private ArrayList<BasicFoodQuantity> ingredients;
+    private Context context;
 
 
     @Override
@@ -36,16 +44,58 @@ public class AddFoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_food, container, false);
         initViews(view);
+        context = view.getContext();
         setUpTypeSpinner(container.getContext());
+        setUpIngredientSpinner(container.getContext());
+        setUpIngredientRecyclerView(view.getContext());
+        setUpListeners();
 
-        ingredient_adapter = new AddFoodBasicFoodsSpinnerAdapter(view.getContext(),((MainActivity)getActivity()).basicFoods);
-        ingredient.setAdapter(ingredient_adapter);
+
+
+
+        return view;
+    }
+
+    private void setUpListeners(){
+        add_ingredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Validations.validateQuantity(quantity.getText().toString()) == 0){
+                    BasicFood new_basicFood = new BasicFood(chosen_basic_food.getName(),
+                            chosen_basic_food.getPicture(),
+                            chosen_basic_food.getCalorie()*Integer.parseInt(quantity.getText().toString())/100,
+                            chosen_basic_food.getProtein()*Integer.parseInt(quantity.getText().toString())/100,
+                            chosen_basic_food.getCarbohydrate()*Integer.parseInt(quantity.getText().toString())/100,
+                            chosen_basic_food.getFat()*Integer.parseInt(quantity.getText().toString())/100);
+                    ingredients.add(new BasicFoodQuantity(new_basicFood,Integer.parseInt(quantity.getText().toString())));
+                    ingredient_recyclerView_adapter.notifyDataSetChanged();
+
+                    Toast.makeText(context,quantity.getText() + "g " + new_basicFood.getName() + " added to ingredients.",Toast.LENGTH_LONG).show();
+                    quantity.setText("");
+                }
+                else
+                    quantity.setError("Not a valid number.");
+            }
+        });
+    }
+
+    private void setUpIngredientRecyclerView(Context context){
+        ingredients = new ArrayList<>();
+        ingredient_recyclerView_adapter = new AddFoodIngredientAdapter(context,ingredients);
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        manager.setOrientation(LinearLayout.VERTICAL);
+        ingredients_recyclerView.setLayoutManager(manager);
+        ingredients_recyclerView.setAdapter(ingredient_recyclerView_adapter);
+    }
+
+    private void setUpIngredientSpinner(Context context){
+        ingredient_spinner_adapter = new AddFoodBasicFoodsSpinnerAdapter(context,((MainActivity)Objects.requireNonNull(getActivity())).basicFoods);
+        ingredient.setAdapter(ingredient_spinner_adapter);
 
         ingredient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                BasicFood selectedBasicFood = (BasicFood)adapterView.getItemAtPosition(i);
-                chosen_basic_food = selectedBasicFood;
+                chosen_basic_food = (BasicFood)adapterView.getItemAtPosition(i);
             }
 
             @Override
@@ -53,10 +103,6 @@ public class AddFoodFragment extends Fragment {
                 chosen_basic_food = (BasicFood)adapterView.getItemAtPosition(0);
             }
         });
-
-
-
-        return view;
     }
 
     public void setUpTypeSpinner(Context context){
@@ -90,8 +136,8 @@ public class AddFoodFragment extends Fragment {
         add_ingredient = view.findViewById(R.id.add_food_button_add_ingredient);
         add_picture = view.findViewById(R.id.add_food_add_image_button);
         add_food = view.findViewById(R.id.add_food_upload_food);
-        ingredients = view.findViewById(R.id.add_food_add_ingredients_recyclerView);
-        pictures = view.findViewById(R.id.add_food_add_images_recyclerView);
+        ingredients_recyclerView = view.findViewById(R.id.add_food_add_ingredients_recyclerView);
+        pictures_recyclerView = view.findViewById(R.id.add_food_add_images_recyclerView);
     }
 
 }

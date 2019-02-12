@@ -33,6 +33,14 @@ public class Validations {
     private static int MAX_WEIGHT = 400;
     private static int MIN_WEIGHT = 30;
 
+    private static String QUANTITY_PATTERN = "[0123456789]+";
+
+
+    public static int validateQuantity(String quantity){
+        if(quantity == null)return 3;
+        if(!quantity.matches(QUANTITY_PATTERN)) return 2;
+        return 0;
+    }
 
     public static int validatePhoneNumber(String phoneNumber) {
         if (phoneNumber.length() != PHONE_NUMBER_LENGTH)

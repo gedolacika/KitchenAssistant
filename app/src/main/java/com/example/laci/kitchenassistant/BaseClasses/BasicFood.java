@@ -12,6 +12,15 @@ public class BasicFood {
         this.fat = fat;
     }
 
+    public BasicFood(String name, String picture, int calorie, int protein, int carbohydrate, int fat) {
+        this.name = name;
+        this.picture = picture;
+        this.calorie = calorie;
+        this.protein = protein;
+        this.carbohydrate = carbohydrate;
+        this.fat = fat;
+    }
+
     public BasicFood() {
         calorie = -1;
         protein = -1;
