@@ -5,8 +5,8 @@ import android.content.Intent;
 
 import com.example.laci.kitchenassistant.Activities.Confirm.ConfirmActivity;
 import com.example.laci.kitchenassistant.Activities.LoginActivity;
+import com.example.laci.kitchenassistant.Activities.SplashActivity;
 import com.example.laci.kitchenassistant.main.MainActivity;
-import com.example.laci.kitchenassistant.Activities.WelcomeActivity;
 
 public class ActivityNavigation {
     private static String PHONE_NUMBER = "phoneNumber";
@@ -25,11 +25,12 @@ public class ActivityNavigation {
         return intent.getStringExtra(PHONE_NUMBER);
     }
 
-    public static void navigateToWelcome(Context fromWhere) {
-        fromWhere.startActivity(new Intent(fromWhere, WelcomeActivity.class));
-    }
+
 
     public static void navigateToMain(Context fromWhere) {
         fromWhere.startActivity(new Intent(fromWhere,MainActivity.class));
+    }
+    public static void navigateToSplash(Context fromWhere) {
+        fromWhere.startActivity(new Intent(fromWhere,SplashActivity.class));
     }
 }

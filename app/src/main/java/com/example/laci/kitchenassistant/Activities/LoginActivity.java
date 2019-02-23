@@ -27,11 +27,13 @@ public class LoginActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Validations.validatePhoneNumber(phoneNumber.getText().toString())==0)
+                int validation_result = Validations.validatePhoneNumber(phoneNumber.getText().toString());
+
+                if(validation_result==0)
                     navigateToConfirm(LoginActivity.this,Objects.requireNonNull(phoneNumber.getText()).toString());
-                if(Validations.validatePhoneNumber(phoneNumber.getText().toString())==1)
+                if(validation_result==1)
                     phoneNumber.setError("The length of phone number should be 12 characters!");
-                if(Validations.validatePhoneNumber(phoneNumber.getText().toString())==2)
+                if(validation_result==2)
                     phoneNumber.setError("The phone number have to be like this: \"+[country code][your number]\".");
             }
         });

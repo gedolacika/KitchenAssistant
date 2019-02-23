@@ -35,6 +35,26 @@ public class Validations {
 
     private static String QUANTITY_PATTERN = "[0123456789]+";
 
+    private static String STRING_VALIDATION_NEWLINE = "[a-zA-Z0-9 \néáőúöüóí.,?!\\()/]+";
+    private static String STRING_VALIDATION = "[a-zA-Z0-9 éáőúöüóí]+";
+    private static String NUMBER_VALIDATION = "[0-9]+";
+
+    public static int validateStringWithNewLine(String string){
+        if(string.matches(""))return 3;
+        if(!string.matches(STRING_VALIDATION_NEWLINE))return 2;
+        return 0;
+    }
+    public static int validateString(String string){
+        if(string.matches(""))return 3;
+        if(!string.matches(STRING_VALIDATION))return 2;
+        return 0;
+    }
+    public static int validateNumber(String string){
+        if(string.matches(""))return 3;
+        if(!string.matches(NUMBER_VALIDATION))return 2;
+        return 0;
+    }
+
 
     public static int validateQuantity(String quantity){
         if(quantity == null)return 3;

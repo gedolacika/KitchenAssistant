@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,11 +25,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.Validations;
 import com.example.laci.kitchenassistant.firebase.Account;
 import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
+import com.example.laci.kitchenassistant.main.Account.HistoryDialog.HistoryDialog;
 import com.example.laci.kitchenassistant.main.MainActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -42,9 +45,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class AccountFragment extends Fragment implements AccountContract.View{
     private Button change, close;
-    private TextInputEditText name, weight,height,age;
-    private ImageView profilePicture,lose,keep,gain,coverPhoto,male,female;
-    private TextView lose_text,keep_text,gain_text;
+    private TextInputEditText name, weight,height,age,goal_weight;
+    private ImageView profilePicture,coverPhoto,male,female,weight_history;
     //Gender 0 = male
     //Gender 1 = female
     private int lose_keep_gain,gender;
@@ -72,6 +74,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         context = container.getContext();
         globalView = view;
         initViews(view);
+        Glide.with(view).load(R.drawable.icon_scale).into(weight_history);
         setMale();
         setListeners(view);
         Account.downloadProfilePicture(profilePicture,context);
@@ -112,9 +115,14 @@ public class AccountFragment extends Fragment implements AccountContract.View{
                     if(Validations.validateWeight(Objects.requireNonNull(weight.getText()).toString())==0)
                         user.setWeight(Integer.parseInt(weight.getText().toString()));
                     else
-                        weight.setError("Not a valid height. It didn't change.");
+                        weight.setError("Not a valid weight. It didn't change.");
 
-                    user.setLose_keep_gain_weight(lose_keep_gain);
+                    if(Validations.validateWeight(Objects.requireNonNull(goal_weight.getText()).toString())==0)
+                        user.setGoal_weight(Integer.parseInt(goal_weight.getText().toString()));
+                    else
+                        goal_weight.setError("Not a valid weight. It didn't change.");
+
+
                     user.setGender(gender);
 
                     Account.setUser(user);
@@ -132,21 +140,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
             }
         });
 
-        lose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mode)
-                    setLoseMode();
-            }
-        });
 
-        keep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mode)
-                    setKeepMode();
-            }
-        });
 
         male.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,13 +158,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
             }
         });
 
-        gain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mode)
-                    setGainMode();
-            }
-        });
+
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +247,14 @@ public class AccountFragment extends Fragment implements AccountContract.View{
                 });
 
                 builder.show();
+            }
+        });
+
+        weight_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HistoryDialog dialog = new HistoryDialog();
+                dialog.show(getFragmentManager(),"HistoryDialog");
             }
         });
 
@@ -462,13 +458,10 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         if(((MainActivity) getActivity()).user != null){
             if(!((MainActivity) Objects.requireNonNull(getActivity())).user.getName().equals("")) name.setText(((MainActivity) getActivity()).user.getName());
             if(((MainActivity) getActivity()).user.getAge() != -1 ) age.setText(String.valueOf(((MainActivity) getActivity()).user.getAge()));
-            if(((MainActivity) getActivity()).user.getWeight() != -1) weight.setText(String.valueOf(((MainActivity) getActivity()).user.getWeight()));
+            if(((MainActivity) getActivity()).user.getWeightHistories() != null) weight.setText(String.valueOf(((MainActivity) getActivity()).user.getWeightHistories().get(0).getWeight()));
             if(((MainActivity) getActivity()).user.getHeight() != -1) height.setText(String.valueOf(((MainActivity) getActivity()).user.getHeight()));
-            switch (((MainActivity) getActivity()).user.getLose_keep_gain_weight()){
-                case 0: setLoseMode();break;
-                case 1: setKeepMode();break;
-                case 2: setGainMode();break;
-            }
+            if(((MainActivity) getActivity()).user.getGoal_weight() != -1) goal_weight.setText(String.valueOf(((MainActivity) getActivity()).user.getGoal_weight()));
+
         }
     }
 
@@ -480,15 +473,11 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         height = view.findViewById(R.id.fragment_account_height_edittext);
         age = view.findViewById(R.id.fragment_account_age_edittext);
         profilePicture = view.findViewById(R.id.fragment_account_profile_picture);
-        lose = view.findViewById(R.id.fragment_account_lose_weigh_imageView);
-        keep = view.findViewById(R.id.fragment_account_keep_weight_image_view);
-        gain = view.findViewById(R.id.fragment_account_gain_weight_imageView);
         coverPhoto = view.findViewById(R.id.fragment_account_cover_photo);
-        lose_text = view.findViewById(R.id.fragment_account_lose_weight_textView);
-        keep_text = view.findViewById(R.id.fragment_account_keep_weight_textView);
-        gain_text = view.findViewById(R.id.fragment_account_gain_weight_textView);
         male = view.findViewById(R.id.fragment_account_gender_male);
         female = view.findViewById(R.id.fragment_account_gender_female);
+        weight_history = view.findViewById(R.id.fragment_account_weight_history);
+        goal_weight = view.findViewById(R.id.fragment_account_goal_weight_editText);
 
         unChangeMode();
         lose_keep_gain = 0;
@@ -517,29 +506,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         mode = false;
     }
 
-    @SuppressLint("ResourceAsColor")
-    private void setLoseMode(){
-        lose.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorBlack)));
-        keep.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorGray)));
-        gain.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorGray)));
-        lose_keep_gain = 0;
-    }
 
-    @SuppressLint("ResourceAsColor")
-    private void setKeepMode(){
-        lose.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorGray)));
-        keep.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorBlack)));
-        gain.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorGray)));
-        lose_keep_gain = 1;
-    }
-
-    @SuppressLint("ResourceAsColor")
-    private void setGainMode(){
-        lose.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorGray)));
-        keep.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorGray)));
-        gain.setImageTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.colorBlack)));
-        lose_keep_gain = 2;
-    }
 
     private void setMale(){
         gender = 0;

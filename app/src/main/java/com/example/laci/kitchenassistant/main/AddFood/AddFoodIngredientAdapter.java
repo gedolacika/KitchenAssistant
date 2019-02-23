@@ -43,6 +43,7 @@ public class AddFoodIngredientAdapter extends RecyclerView.Adapter<AddFoodIngred
         viewHolder.protein_count.setText(String.valueOf(food.getProtein()));
         viewHolder.fat_count.setText(String.valueOf(food.getFat()));
         viewHolder.carbohydrate_count.setText(String.valueOf(food.getCarbohydrate()));
+        viewHolder.quantity_count.setText(String.valueOf(food.getQuantity()));
 
         Glide.with(context).load(food.getPicture()).into(viewHolder.picture);
 
@@ -60,7 +61,7 @@ public class AddFoodIngredientAdapter extends RecyclerView.Adapter<AddFoodIngred
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView picture,calorie_image,protein_image, fat_image, carbohydrate_image,delete;
-        private TextView name,calorie_count,protein_count, fat_count, carbohydrate_count;
+        private TextView name,calorie_count,protein_count, fat_count, carbohydrate_count,quantity_count;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             setViews(itemView);
@@ -80,6 +81,7 @@ public class AddFoodIngredientAdapter extends RecyclerView.Adapter<AddFoodIngred
             this.protein_count = view.findViewById(R.id.cardview_add_food_ingredient_in_recycler_view_protein_textView);
             this.fat_count = view.findViewById(R.id.cardview_add_food_ingredient_in_recycler_view_fat_textView);
             this.carbohydrate_count = view.findViewById(R.id.cardview_add_food_ingredient_in_recycler_view_carbohydrate_textView);
+            this.quantity_count = view.findViewById(R.id.cardview_add_food_ingredient_in_recycler_view_quantity);
 
             this.picture = view.findViewById(R.id.cardview_add_food_ingredient_in_recycler_view_ingredient_imageView);
             this.calorie_image = view.findViewById(R.id.cardview_add_food_ingredient_in_recycler_view_calorie_image);

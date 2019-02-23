@@ -3,8 +3,6 @@ package com.example.laci.kitchenassistant.firebase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,16 +28,17 @@ public class RecipeHandler {
     private static String RECIPE_UPLOADER_ID = "UploaderID";
     private static String RECIPE_VISIBILITY = "Visibility";
 
-    private static String RECIPE_INGERDIENTS = "Ingredients";
-    private static String RECIPE_INGERDIENT_NAME = "Name";
-    private static String RECIPE_INGERDIENT_QUANTITY = "Quantity";
-    private static String RECIPE_INGERDIENT_PICTURE = "Quantity";
+    private static String RECIPE_INGREDIENTS = "Ingredients";
+    private static String RECIPE_INGREDIENT_NAME = "Name";
+    private static String RECIPE_INGREDIENT_QUANTITY = "Quantity";
+    private static String RECIPE_INGREDIENT_PICTURE = "Quantity";
     private static String RECIPE_PREPARATION = "Preparation";
 
      static String RECIPE_CALORIE = "Calorie";
     private static String RECIPE_CARBOHYDRATE = "Carbohydrate";
     private static String RECIPE_PROTEIN = "Protein";
     private static String RECIPE_FAT = "Fat";
+    private static String RECIPE_QUANTITY = "Quantity";
 
     private static String RECIPE_PICTURES_URL = "Picture URL";
     private static String UPLOAD_SUCCESS = "SUCCESS";
@@ -86,6 +85,8 @@ public class RecipeHandler {
                         recipe.setPortion(Integer.parseInt(current.child(RECIPE_PORTION).getValue().toString()));
                     if(current.child(RECIPE_DIFFICULTY).exists())
                         recipe.setDifficulty(Integer.parseInt(current.child(RECIPE_DIFFICULTY).getValue().toString()));
+                    if(current.child(RECIPE_QUANTITY).exists())
+                        recipe.setQuantity(Integer.parseInt(current.child(RECIPE_QUANTITY).getValue().toString()));
 
                     recipe.setVisibility(Boolean.parseBoolean(current.child(RECIPE_VISIBILITY).getValue().toString()));
                     if(current.child(RECIPE_PICTURES_URL).exists()){
@@ -95,11 +96,11 @@ public class RecipeHandler {
                         }
                     }
 
-                    if(current.child(RECIPE_INGERDIENTS).exists()){
-                        for(DataSnapshot current_ingredients : current.child(RECIPE_INGERDIENTS).getChildren()){
-                            recipe.addBasicFood(new BasicFoodQuantity(current_ingredients.child(RECIPE_INGERDIENT_NAME).getValue().toString(),
-                                    current_ingredients.child(RECIPE_INGERDIENT_PICTURE).getValue().toString(),
-                                    Integer.parseInt(current_ingredients.child(RECIPE_INGERDIENT_QUANTITY).getValue().toString())));
+                    if(current.child(RECIPE_INGREDIENTS).exists()){
+                        for(DataSnapshot current_ingredients : current.child(RECIPE_INGREDIENTS).getChildren()){
+                            recipe.addBasicFood(new BasicFoodQuantity(current_ingredients.child(RECIPE_INGREDIENT_NAME).getValue().toString(),
+                                    current_ingredients.child(RECIPE_INGREDIENT_PICTURE).getValue().toString(),
+                                    Integer.parseInt(current_ingredients.child(RECIPE_INGREDIENT_QUANTITY).getValue().toString())));
                             }
                     }
 
@@ -175,6 +176,8 @@ public class RecipeHandler {
                 databaseReference.child(RECIPE_PORTION).setValue(recipe.getPortion());
             if(recipe.getDifficulty() != -1)
                 databaseReference.child(RECIPE_DIFFICULTY).setValue(recipe.getDifficulty());
+            if(recipe.getQuantity() >= 0)
+                databaseReference.child(RECIPE_QUANTITY).setValue(recipe.getQuantity());
 
             databaseReference.child(RECIPE_VISIBILITY).setValue(recipe.isVisibility());
 
@@ -182,10 +185,11 @@ public class RecipeHandler {
                 databaseReference.child(RECIPE_PICTURES_URL).child(String.valueOf(i)).setValue(recipe.getPictures().get(i));
             }
 
+
             for(int i = 0; i < recipe.getIngredients().size();++i){
-                databaseReference.child(RECIPE_INGERDIENTS).child(String.valueOf(i)).child(RECIPE_INGERDIENT_NAME).setValue(recipe.getIngredients().get(i).getName());
-                databaseReference.child(RECIPE_INGERDIENTS).child(String.valueOf(i)).child(RECIPE_INGERDIENT_QUANTITY).setValue(recipe.getIngredients().get(i).getQuantity());
-                databaseReference.child(RECIPE_INGERDIENTS).child(String.valueOf(i)).child(RECIPE_INGERDIENT_PICTURE).setValue(recipe.getIngredients().get(i).getPicture());
+                databaseReference.child(RECIPE_INGREDIENTS).child(String.valueOf(i)).child(RECIPE_INGREDIENT_NAME).setValue(recipe.getIngredients().get(i).getName());
+                databaseReference.child(RECIPE_INGREDIENTS).child(String.valueOf(i)).child(RECIPE_INGREDIENT_QUANTITY).setValue(recipe.getIngredients().get(i).getQuantity());
+                databaseReference.child(RECIPE_INGREDIENTS).child(String.valueOf(i)).child(RECIPE_INGREDIENT_PICTURE).setValue(recipe.getIngredients().get(i).getPicture());
             }
 
         }

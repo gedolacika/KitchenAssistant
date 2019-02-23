@@ -20,6 +20,7 @@ import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.ActivityNavigation;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
 import com.example.laci.kitchenassistant.firebase.BasicFoodsHandler;
 import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
@@ -114,7 +115,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_foods_at_home: FragmentNavigation.loadFoodsAtHomeFragment(this); break;
             case R.id.nav_history: FragmentNavigation.loadHistoryFragment(this); break;
             case R.id.nav_home: FragmentNavigation.loadHomeFragment(this); break;
-            case R.id.nav_logout: FirebaseAuth.getInstance().signOut(); break;
+            case R.id.nav_logout: FirebaseAuth.getInstance().signOut();
+                                    ActivityNavigation.navigateToSplash(this);
+                                    break;
             case R.id.nav_add_food: FragmentNavigation.loadAddFoodFragment(this); break;
         }
 

@@ -11,18 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/login"
         android:textColor="@color/colorBlack"
         android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/login_button"
@@ -30,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/send_the_verification_code"
+        android:background="@color/colorButton"
         app:layout_constraintEnd_toEndOf="@+id/login_text_input_layout"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/login_text_input_layout"
@@ -71,12 +69,24 @@
         android:layout_width="285dp"
         android:layout_height="35dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="320dp"
         android:layout_marginEnd="8dp"
         android:text="@string/the_phone_number_should_follow_this_pattern_country_code_your_number"
         android:textColor="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_title" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/web_hi_res_512" />
 </android.support.constraint.ConstraintLayout>

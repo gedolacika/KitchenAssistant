@@ -26,16 +26,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
 import com.example.laci.kitchenassistant.Tools.Validations;
-import com.example.laci.kitchenassistant.firebase.Account;
-import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
-import com.example.laci.kitchenassistant.main.Account.AccountFragment;
+import com.example.laci.kitchenassistant.firebase.RecipeHandler;
 import com.example.laci.kitchenassistant.main.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -60,9 +59,8 @@ public class AddFoodFragment extends Fragment {
     private AddFoodAddPictureAdapter add_picture_adapter;
     private ArrayList<BasicFoodQuantity> ingredients;
     private Context context;
-    private Recipe recipe;
     private ArrayList<byte[]> pictures_byte_byte;
-    private ArrayList<String> pictures_byte_name;
+    private ArrayList<String> pictures_byte_name,recipe_url_pictures;
     private static final int PICTURE_GALLERY = 0;
     private static final int PICTURE_CAMERA = 1;
     private static final int PICTURE_GALLERY_PERMISSION = 3;
@@ -77,7 +75,7 @@ public class AddFoodFragment extends Fragment {
         globalView = view;
         initViews(view);
         context = view.getContext();
-        recipe = new Recipe();
+        recipe_url_pictures = new ArrayList<>();
         setUpTypeSpinner(container.getContext());
         setUpIngredientSpinner(container.getContext());
         setUpIngredientRecyclerView(view.getContext());
@@ -93,7 +91,7 @@ public class AddFoodFragment extends Fragment {
     private void setUpPicturesRecyclerView(Context context){
         pictures_byte_name = new ArrayList<>();
         pictures_byte_byte = new ArrayList<>();
-        add_picture_adapter = new AddFoodAddPictureAdapter(context,recipe.getPictures(),pictures_byte_byte);
+        add_picture_adapter = new AddFoodAddPictureAdapter(context, recipe_url_pictures,pictures_byte_byte);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setOrientation(LinearLayout.HORIZONTAL);
         pictures_recyclerView.setLayoutManager(manager);
@@ -124,8 +122,8 @@ public class AddFoodFragment extends Fragment {
         add_picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(link.getText() == null){
-                    recipe.addPicture(link.getText().toString());
+                if(!link.getText().toString().matches("")){
+                    recipe_url_pictures.add(link.getText().toString());
                     add_picture_adapter.notifyDataSetChanged();
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddFoodFragment.this.context);
@@ -167,6 +165,75 @@ public class AddFoodFragment extends Fragment {
                     });
 
                     builder.show();
+                }
+
+            }
+        });
+
+        add_food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //,origin,preparation_time, portion, difficulty, preparation,quantity_of_all_food
+                boolean send_data = true;
+                if(Validations.validateString(name.getText().toString()) != 0){
+                    name.setError("Not a valid name");
+                    send_data = false;
+                }
+                if(Validations.validateNumber(preparation_time.getText().toString()) != 0){
+                    preparation_time.setError("Not a valid time.");
+                    send_data = false;
+                }
+                if(Validations.validateNumber(portion.getText().toString()) != 0){
+                    portion.setError("Not a valid number of servings.");
+                    send_data = false;
+                }
+                if(Validations.validateNumber(difficulty.getText().toString()) != 0){
+                    difficulty.setError("Not a valid difficulty. It could be 0-easy,1-medium,2-hard.");
+                    send_data = false;
+                }
+                if(Validations.validateString(origin.getText().toString()) != 0){
+                    origin.setError("Not a valid origin.");
+                    send_data = false;
+                }
+
+                if(Validations.validateStringWithNewLine(preparation.getText().toString()) != 0){
+                    preparation.setError("Not a valid description.");
+                    send_data = false;
+                }
+                if(Validations.validateNumber(quantity_of_all_food.getText().toString()) != 0){
+                    quantity_of_all_food.setError("Not a valid origin.");
+                    send_data = false;
+                }
+                int calorie, protein, fat, carbohydrate;
+                calorie = 0;
+                protein = 0;
+                fat = 0;
+                carbohydrate = 0;
+                for(int i = 0; i < ingredients.size(); ++i){
+                    calorie += ingredients.get(i).getCalorie();
+                    protein += ingredients.get(i).getProtein();
+                    fat += ingredients.get(i).getFat();
+                    carbohydrate += ingredients.get(i).getCarbohydrate();
+                }
+                if(send_data){
+                    Recipe upload_recipe = new Recipe(name.getText().toString(),
+                            calorie,
+                            protein,
+                            carbohydrate,
+                            fat,
+                            ingredients,
+                            preparation.getText().toString(),
+                            origin.getText().toString(),
+                            choosen_type,
+                            FirebaseAuth.getInstance().getUid(),
+                            Integer.parseInt(preparation_time.getText().toString()),
+                            Integer.parseInt(portion.getText().toString()),
+                            Integer.parseInt(difficulty.getText().toString()),
+                            true,
+                            recipe_url_pictures);
+                    RecipeHandler.uploadRecipe(upload_recipe,pictures_byte_name,pictures_byte_byte);
+                    Toast.makeText(context,"The recipe uploaded to database.",Toast.LENGTH_LONG).show();
+                    FragmentNavigation.loadHomeFragment(getActivity());
                 }
 
             }

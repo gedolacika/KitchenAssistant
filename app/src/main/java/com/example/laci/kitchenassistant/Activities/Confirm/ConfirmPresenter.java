@@ -101,7 +101,7 @@ public class ConfirmPresenter implements ConfirmContract.Presenter {
                             Log.d(TAG, "signInWithCredential:success");
 
                             //FirebaseUser user = task.getResult().getUser();
-                            ActivityNavigation.navigateToWelcome(activity);
+                            ActivityNavigation.navigateToMain(activity);
                             materialDialog.dismiss();
 
                         } else {

@@ -2,7 +2,7 @@ package com.example.laci.kitchenassistant.BaseClasses;
 
 import java.util.ArrayList;
 
-public class Recipe extends BasicFood {
+public class Recipe extends BasicFoodQuantity {
 
     private ArrayList<BasicFoodQuantity> ingredients;
     //preparation - description of preparation
@@ -35,6 +35,20 @@ public class Recipe extends BasicFood {
         pictures = new ArrayList<String>();
 
 
+    }
+
+    public Recipe(String name, int calorie, int protein, int carbohydrate, int fat, ArrayList<BasicFoodQuantity> ingredients, String preparation, String origin, String recipeType, String uploaderID, int preparation_time, int portion, int difficulty, boolean visibility, ArrayList<String> pictures) {
+        super(name, calorie, protein, carbohydrate, fat);
+        this.ingredients = ingredients;
+        this.preparation = preparation;
+        this.origin = origin;
+        this.recipeType = recipeType;
+        this.uploaderID = uploaderID;
+        this.preparation_time = preparation_time;
+        this.portion = portion;
+        this.difficulty = difficulty;
+        this.visibility = visibility;
+        this.pictures = pictures;
     }
 
     public Recipe(String name, int calorie, int protein, int carbohydrate, int fat) {

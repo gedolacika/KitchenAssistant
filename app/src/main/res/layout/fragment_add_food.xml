@@ -33,8 +33,7 @@
                     android:background="@color/colorButton"
                     android:text="Add photo"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/add_food_pictures_textView"
+                    app:layout_constraintStart_toEndOf="@+id/add_food_picture_link_layout"
                     app:layout_constraintTop_toBottomOf="@+id/add_food_quantity_layout" />
 
                 <TextView
@@ -68,12 +67,12 @@
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="104dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/add_food_quantity_layout" />
+                    app:layout_constraintTop_toBottomOf="@+id/add_food_note_textView" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/add_food_preparation_layout"
@@ -106,7 +105,7 @@
 
                 <Spinner
                     android:id="@+id/add_food_food_ingerdients_spinner"
-                    android:layout_width="197dp"
+                    android:layout_width="186dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="40dp"
@@ -210,7 +209,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/add_food_ingredient_quantity_layout"
-                    android:layout_width="81dp"
+                    android:layout_width="97dp"
                     android:layout_height="63dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="40dp"
@@ -221,7 +220,7 @@
                         android:id="@+id/add_food_ingredient_quantity_editText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Quantity" />
+                        android:hint="Quantity(g)" />
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
@@ -287,14 +286,13 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/add_food_note_textView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"
                     android:text="Note! If you don't fill the &quot;Link&quot; field and push the button, you can pick a photo from gallery."
-                    app:layout_constraintBottom_toTopOf="@+id/add_food_add_images_recyclerView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"

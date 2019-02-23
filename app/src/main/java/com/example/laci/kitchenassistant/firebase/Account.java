@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.laci.kitchenassistant.BaseClasses.User;
+import com.example.laci.kitchenassistant.BaseClasses.WeightHistory;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Account {
@@ -32,10 +34,13 @@ public class Account {
     private static String ACCOUNT_AGE = "Age";
     private static String ACCOUNT_NAME = "Name";
     private static String ACCOUNT_WEIGHT = "Weight";
+    private static String ACCOUNT_WEIGHT_WEIGHT = "Weight";
+    private static String ACCOUNT_WEIGHT_TIME = "Time";
     private static String ACCOUNT_HEIGHT = "Height";
     private static String ACCOUNT_CALORIE_REQUIREMENT = "CalorieRequirement";
     private static String LOSE_KEEP_GAIN_WEIGHT = "LoseKeepGainWeight";
     private static String ACCOUNT_GENDER = "Gender";
+    private static String ACCOUNT_GOAL_WEIGHT = "GoalWeight";
 
 
 
@@ -45,9 +50,14 @@ public class Account {
         if(user.getAge() != -1) databaseReference.child(ACCOUNT_AGE).setValue(user.getAge());
         if(user.getCalorie_requirement() != -1) databaseReference.child(ACCOUNT_CALORIE_REQUIREMENT).setValue(user.getCalorie_requirement());
         if(user.getHeight() != -1) databaseReference.child(ACCOUNT_HEIGHT).setValue(user.getHeight());
-        if(user.getWeight() != -1) databaseReference.child(ACCOUNT_WEIGHT).setValue(user.getWeight());
-        if(user.getLose_keep_gain_weight() != -1) databaseReference.child(LOSE_KEEP_GAIN_WEIGHT).setValue(user.getLose_keep_gain_weight());
-        else databaseReference.child(LOSE_KEEP_GAIN_WEIGHT).setValue(1);
+        if(user.getGoal_weight() != -1) databaseReference.child(ACCOUNT_GOAL_WEIGHT).setValue(user.getGoal_weight());
+
+        if(user.getWeight() != -1) {
+            String id = String.valueOf(System.currentTimeMillis());
+            databaseReference.child(ACCOUNT_WEIGHT).child(id).child(ACCOUNT_WEIGHT_WEIGHT).setValue(user.getWeight());
+            databaseReference.child(ACCOUNT_WEIGHT).child(id).child(ACCOUNT_WEIGHT_TIME).setValue(System.currentTimeMillis());
+        }
+
         databaseReference.child(ACCOUNT_GENDER).setValue(user.getGender());
     }
 
@@ -65,10 +75,25 @@ public class Account {
                     user.setCalorie_requirement(Integer.parseInt(dataSnapshot.child(ACCOUNT_CALORIE_REQUIREMENT).getValue().toString()));
                 if(dataSnapshot.child(ACCOUNT_HEIGHT).exists())
                     user.setHeight(Integer.parseInt(dataSnapshot.child(ACCOUNT_HEIGHT).getValue().toString()));
-                if(dataSnapshot.child(ACCOUNT_WEIGHT).exists())
-                    user.setWeight(Integer.parseInt(dataSnapshot.child(ACCOUNT_WEIGHT).getValue().toString()));
-                if(dataSnapshot.child(LOSE_KEEP_GAIN_WEIGHT).exists())
-                    user.setLose_keep_gain_weight(Integer.parseInt(dataSnapshot.child(LOSE_KEEP_GAIN_WEIGHT).getValue().toString()));
+                if(dataSnapshot.child(ACCOUNT_GOAL_WEIGHT).exists())
+                    user.setGoal_weight(Integer.parseInt(dataSnapshot.child(ACCOUNT_GOAL_WEIGHT).getValue().toString()));
+
+                if(dataSnapshot.child(ACCOUNT_WEIGHT).exists()){
+                    ArrayList<WeightHistory> weightHistories = new ArrayList<>();
+                    for(DataSnapshot current : dataSnapshot.child(ACCOUNT_WEIGHT).getChildren()){
+                        Long weight, time;
+                        weight = Long.parseLong(current.child(ACCOUNT_WEIGHT_WEIGHT).getValue().toString());
+                        time = Long.parseLong(current.child(ACCOUNT_WEIGHT_TIME).getValue().toString());
+                        weightHistories.add(new WeightHistory(weight,time));
+                    }
+                    ArrayList<WeightHistory> reversedArray = new ArrayList<>();
+                    for(int i = weightHistories.size()-1; i >=0 ;--i){
+                        reversedArray.add(weightHistories.get(i));
+                    }
+                    user.setWeightHistories(reversedArray);
+                }
+                   // user.setWeight(Integer.parseInt(dataSnapshot.child(ACCOUNT_WEIGHT).getValue().toString()));
+
                 listener.onSuccess(user);
 
             }

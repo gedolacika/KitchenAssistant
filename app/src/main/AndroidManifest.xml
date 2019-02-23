@@ -27,7 +27,6 @@
         </activity>
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.Confirm.ConfirmActivity" />
-        <activity android:name=".Activities.WelcomeActivity" />
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main"

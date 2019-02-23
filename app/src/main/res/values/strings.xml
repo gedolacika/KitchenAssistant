@@ -24,8 +24,13 @@
 
     <string-array name="type_names">
         <item>Breakfast</item>
+        <item>Appetizer</item>
         <item>Soup</item>
         <item>Main course</item>
+        <item>Fish</item>
+        <item>Pasta</item>
+        <item>Side dishes</item>
+        <item>Salads</item>
         <item>Dessert</item>
         <item>Dinner</item>
     </string-array>
