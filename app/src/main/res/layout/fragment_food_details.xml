@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackgroundFoods"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.Details.FoodDetailsFragment">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="212dp"
+        android:layout_height="48dp"
+        android:background="@color/colorButton"
+        android:text="I 8 it!!"
+        android:textAllCaps="false"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_quantity_layout"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_quantity_layout" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_food_details_quantity_layout"
+        android:layout_width="174dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="460dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/fragment_food_details_quantity_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantity" />
+    </android.support.design.widget.TextInputLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="462dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".main.Details.FoodDetailsFragment">
+
+
+            <TextView
+                android:id="@+id/fragment_food_details_name"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="172dp"
+                android:text="Name"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="28dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/fragment_food_details_calorie_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="28dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_name"
+                app:srcCompat="@drawable/calorie_icon" />
+
+            <ImageView
+                android:id="@+id/fragment_food_details_fat_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_fat"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image"
+                app:srcCompat="@drawable/fat_icon" />
+
+            <ImageView
+                android:id="@+id/fragment_food_details_protein_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_protein"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image"
+                app:srcCompat="@drawable/protein_icon" />
+
+            <ImageView
+                android:id="@+id/fragment_food_details_carbohydrate_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_carbohydrate"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image"
+                app:srcCompat="@drawable/carbohydrate_icon" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_carbohydrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="121"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="20dp"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_fat_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_fat" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_fat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="121"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="20dp"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_protein_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_protein_image" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_protein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="121"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="20dp"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_calorie_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_calorie"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:text="121"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_food_details_calorie_image"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_food_details_ingredients"
+                android:layout_width="0dp"
+                android:layout_height="136dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_difficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="48dp"
+                android:text="Medium"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_origin"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginEnd="16dp"
+                android:text="Origin"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_type" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_servings"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:text="3"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:text="Preparation"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_ingredients" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_preparation_time"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="52dp"
+                android:text="45 min"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_type"
+                android:layout_width="42dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Type"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_calorie_image" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/icon_serving"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_type" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/difficulty_icon"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_difficulty"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_difficulty" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/icon_stopwatch"
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_preparation_time"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_preparation_time" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_preparation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:text="Preparation description"
+                android:textColor="@color/colorDetailsScreen"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_food_details_pictures_recyclerView"
+                android:layout_width="368dp"
+                android:layout_height="138dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

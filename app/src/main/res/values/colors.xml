@@ -6,5 +6,8 @@
     <color name="colorBlack">#000</color>
     <color name="colorRedCodeDidntSend">#dc0000</color>
     <color name="colorGray">#818181</color>
-    <color name="colorButton">#ac37ff52</color>
+    <color name="colorButton">#f726d43e</color>
+    <color name="colorWhite">#eee</color>
+    <color name="colorDetailsScreen">#000000</color>
+    <color name="colorBackgroundFoods">#f5f5f5</color>
 </resources>

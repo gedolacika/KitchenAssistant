@@ -31,7 +31,7 @@ public class RecipeHandler {
     private static String RECIPE_INGREDIENTS = "Ingredients";
     private static String RECIPE_INGREDIENT_NAME = "Name";
     private static String RECIPE_INGREDIENT_QUANTITY = "Quantity";
-    private static String RECIPE_INGREDIENT_PICTURE = "Quantity";
+    private static String RECIPE_INGREDIENT_PICTURE = "Picture";
     private static String RECIPE_PREPARATION = "Preparation";
 
      static String RECIPE_CALORIE = "Calorie";
@@ -48,9 +48,9 @@ public class RecipeHandler {
     //PATH
     private static final String IMAGES_STORAGE_BASE_PATH = "images/recipes/";
 
-    public static void downloadRecipes(RetrieveDataListener<ArrayList<Recipe>> listener){
+    public static void downloadRecipes(final RetrieveDataListener<ArrayList<Recipe>> listener){
 
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(IMAGES_STORAGE_BASE_PATH);
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(DATABASE_REFERENCE_BASE_PATH);
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -104,9 +104,10 @@ public class RecipeHandler {
                             }
                     }
 
-
+                    recipes.add(recipe);
 
                 }
+                listener.onSuccess(recipes);
             }
 
             @Override

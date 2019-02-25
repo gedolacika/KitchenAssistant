@@ -23,6 +23,7 @@ import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.ActivityNavigation;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
 import com.example.laci.kitchenassistant.firebase.BasicFoodsHandler;
+import com.example.laci.kitchenassistant.firebase.RecipeHandler;
 import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -59,6 +60,17 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onSuccess(ArrayList<BasicFood> data) {
                 basicFoods = data;
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+            }
+        });
+        RecipeHandler.downloadRecipes(new RetrieveDataListener<ArrayList<Recipe>>() {
+            @Override
+            public void onSuccess(ArrayList<Recipe> data) {
+                recipes = data;
             }
 
             @Override

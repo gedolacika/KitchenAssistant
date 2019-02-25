@@ -1,5 +1,6 @@
 package com.example.laci.kitchenassistant.Tools;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -9,8 +10,9 @@ import com.example.laci.kitchenassistant.main.Account.AccountFragment;
 import com.example.laci.kitchenassistant.main.AddFood.AddFoodFragment;
 import com.example.laci.kitchenassistant.main.DiagramsFragment;
 import com.example.laci.kitchenassistant.main.FitnessFragment;
+import com.example.laci.kitchenassistant.main.Details.FoodDetailsFragment;
 import com.example.laci.kitchenassistant.main.FoodsAtHomeFragment;
-import com.example.laci.kitchenassistant.main.FoodsFragment;
+import com.example.laci.kitchenassistant.main.Foods.FoodsFragment;
 import com.example.laci.kitchenassistant.main.HistoryFragment;
 import com.example.laci.kitchenassistant.main.HomeFragment;
 
@@ -94,6 +96,18 @@ public class FragmentNavigation {
             fragment = new AddFoodFragment();
         }
 
+        loadFragment(fragment, fragmentActivity);
+    }
+    public static void loadDetailsFragment(FragmentActivity fragmentActivity,int index)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putInt("index", index);
+
+        fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag("DetailsFragment");
+        if (fragment == null) {
+            fragment = new FoodDetailsFragment();
+        }
+        fragment.setArguments(bundle);
         loadFragment(fragment, fragmentActivity);
     }
 
