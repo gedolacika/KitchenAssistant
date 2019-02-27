@@ -39,6 +39,8 @@ public class RecipeHandler {
     private static String RECIPE_PROTEIN = "Protein";
     private static String RECIPE_FAT = "Fat";
     private static String RECIPE_QUANTITY = "Quantity";
+    private static String RECIPE_SUGAR = "Sugar";
+    private static String RECIPE_SATURATED = "Saturated";
 
     private static String RECIPE_PICTURES_URL = "Picture URL";
     private static String UPLOAD_SUCCESS = "SUCCESS";
@@ -69,6 +71,10 @@ public class RecipeHandler {
                         recipe.setProtein(Integer.parseInt(current.child(RECIPE_PROTEIN).getValue().toString()));
                     if(current.child(RECIPE_FAT).exists())
                         recipe.setFat(Integer.parseInt(current.child(RECIPE_FAT).getValue().toString()));
+                    if(current.child(RECIPE_SUGAR).exists())
+                        recipe.setSugar(Integer.parseInt(current.child(RECIPE_SUGAR).getValue().toString()));
+                    if(current.child(RECIPE_SATURATED).exists())
+                        recipe.setSaturated(Integer.parseInt(current.child(RECIPE_SATURATED).getValue().toString()));
 
                     if(current.child(RECIPE_PREPARATION).exists())
                         recipe.setPreparation(current.child(RECIPE_PREPARATION).getValue().toString());

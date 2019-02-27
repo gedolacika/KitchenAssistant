@@ -5,10 +5,10 @@
     android:background="@color/colorBackgroundFoods"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.Details.FoodDetailsFragment">
+    tools:context=".main.Details.Recipe.FoodDetailsFragment">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/fragment_food_details_button"
         android:layout_width="212dp"
         android:layout_height="48dp"
         android:background="@color/colorButton"
@@ -32,13 +32,13 @@
             android:id="@+id/fragment_food_details_quantity_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Quantity" />
+            android:hint="Quantity(g)" />
     </android.support.design.widget.TextInputLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="462dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_food_details_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -49,7 +49,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".main.Details.FoodDetailsFragment">
+            tools:context=".main.Details.Recipe.FoodDetailsFragment">
 
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="172dp"
+                android:layout_marginTop="136dp"
                 android:text="Name"
                 android:textColor="@color/colorDetailsScreen"
                 android:textSize="28dp"
@@ -65,7 +65,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/fragment_food_details_calorie_image"
+                android:id="@+id/fragment_food_details_calorie_imge"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="56dp"
@@ -80,7 +80,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toEndOf="@+id/fragment_food_details_fat"
-                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge"
                 app:srcCompat="@drawable/fat_icon" />
 
             <ImageView
@@ -89,7 +89,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toEndOf="@+id/fragment_food_details_protein"
-                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge"
                 app:srcCompat="@drawable/protein_icon" />
 
             <ImageView
@@ -98,7 +98,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="4dp"
                 app:layout_constraintStart_toEndOf="@+id/fragment_food_details_carbohydrate"
-                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge"
                 app:srcCompat="@drawable/carbohydrate_icon" />
 
             <TextView
@@ -131,8 +131,8 @@
                 android:text="121"
                 android:textColor="@color/colorDetailsScreen"
                 android:textSize="20dp"
-                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_calorie_image"
-                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image" />
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_calorie_imge"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge" />
 
             <TextView
                 android:id="@+id/fragment_food_details_calorie"
@@ -142,10 +142,10 @@
                 android:text="121"
                 android:textColor="@color/colorDetailsScreen"
                 android:textSize="20dp"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_food_details_calorie_image"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_food_details_calorie_imge"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_image" />
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_food_details_ingredients"
@@ -154,10 +154,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="8dp"
+                android:padding="1dp"
+                android:background="@drawable/border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_serving_image" />
 
             <TextView
                 android:id="@+id/fragment_food_details_difficulty"
@@ -167,8 +169,8 @@
                 android:text="Medium"
                 android:textColor="@color/colorDetailsScreen"
                 android:textSize="18dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView6"
-                app:layout_constraintTop_toTopOf="@+id/imageView6" />
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_preaparation_details"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_preaparation_details" />
 
             <TextView
                 android:id="@+id/fragment_food_details_origin"
@@ -189,11 +191,11 @@
                 android:text="3"
                 android:textColor="@color/colorDetailsScreen"
                 android:textSize="18dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView4"
-                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+                app:layout_constraintEnd_toStartOf="@+id/fragment_food_details_serving_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_serving_image" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/fragment_food_details_preparation_title"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
@@ -211,12 +213,12 @@
                 android:text="45 min"
                 android:textColor="@color/colorDetailsScreen"
                 android:textSize="18dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView4"
-                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+                app:layout_constraintStart_toEndOf="@+id/fragment_food_details_serving_image"
+                app:layout_constraintTop_toTopOf="@+id/fragment_food_details_serving_image" />
 
             <TextView
                 android:id="@+id/fragment_food_details_type"
-                android:layout_width="42dp"
+                android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
@@ -224,10 +226,10 @@
                 android:textColor="@color/colorDetailsScreen"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_calorie_image" />
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_calorie_imge" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/fragment_food_details_serving_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="50dp"
@@ -237,7 +239,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_type" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/fragment_food_details_deffeiculty_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
@@ -246,7 +248,7 @@
                 app:layout_constraintTop_toTopOf="@+id/fragment_food_details_difficulty" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/fragment_food_details_preaparation_details"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
@@ -267,18 +269,65 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_preparation_title" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/fragment_food_details_pictures_recyclerView"
                 android:layout_width="368dp"
                 android:layout_height="138dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:text="1200 g"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:text="Quantity of food: "
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_preparation" />
+
+            <TextView
+                android:id="@+id/fragment_food_details_quantity_per_serving"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                android:text="250 g"
+                app:layout_constraintStart_toEndOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_quantity" />
+
+
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:text="Quantity/serving: "
+                android:textColor="@color/colorBlack"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

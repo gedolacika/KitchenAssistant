@@ -19,6 +19,8 @@ public class BasicFoodsHandler {
     private static String BASICFOOD_PROTEIN = "Protein";
     private static String BASICFOOD_FAT = "Fat";
     private static String BASICFOOD_IMAGE = "i";
+    private static String BASICFOOD_SUGAR = "Sugar";
+    private static String BASICFOOD_SATURATED = "Saturated";
 
     private static String DATABASE_BASE_PATH = "BasicFoods";
 
@@ -47,6 +49,14 @@ public class BasicFoodsHandler {
                     if(current.child(BASICFOOD_FAT).exists())
                         current_basic_food.setFat(Integer.parseInt(current.child(BASICFOOD_FAT).getValue().toString()));
                     else current_basic_food.setFat(0);
+
+                    if(current.child(BASICFOOD_SUGAR).exists())
+                        current_basic_food.setSugar(Integer.parseInt(current.child(BASICFOOD_SUGAR).getValue().toString()));
+                    else current_basic_food.setSugar(0);
+
+                    if(current.child(BASICFOOD_SATURATED).exists())
+                        current_basic_food.setSaturated(Integer.parseInt(current.child(BASICFOOD_SATURATED).getValue().toString()));
+                    else current_basic_food.setSaturated(0);
 
 
                     if(current.child(BASICFOOD_IMAGE).exists())

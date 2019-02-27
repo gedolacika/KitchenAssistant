@@ -10,28 +10,38 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
 import com.example.laci.kitchenassistant.main.MainActivity;
 
-public class FoodsFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private FoodsAdapter adapter;
+import java.util.Objects;
 
+public class FoodsFragment extends Fragment {
+
+    private Button recipes, basicfoods;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_foods, container, false);
+        recipes = view.findViewById(R.id.fragment_foods_recipe);
+        basicfoods = view.findViewById(R.id.fragment_foods_basic_foods);
+        FragmentNavigation.loadRecipesSubFragment(Objects.requireNonNull(getActivity()));
+        recipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentNavigation.loadRecipesSubFragment(Objects.requireNonNull(getActivity()));
+            }
+        });
+        basicfoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentNavigation.loadBasicFoodsSubFragment(Objects.requireNonNull(getActivity()));
+            }
+        });
 
-        recyclerView = view.findViewById(R.id.fragment_foods_recyclerView);
-        adapter = new FoodsAdapter(((MainActivity)getActivity()).recipes,view.getContext(),getActivity());
-        LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        Log.e("SIZE",((MainActivity)getActivity()).recipes.size() + "");
 
         return view;
     }

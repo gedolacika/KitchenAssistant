@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.Details.BasicFood.BasicFoodDetailsFragment">
+
+
+    <ImageView
+        android:id="@+id/fragment_basic_food_details_image"
+        android:layout_width="0dp"
+        android:layout_height="172dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_basic_food_details_name"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@color/colorBlack"
+        android:textSize="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_basic_food_details_image" />
+
+    <ImageView
+        android:id="@+id/fragment_food_details_calorie_imge"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_basic_food_details_name"
+        app:srcCompat="@drawable/calorie_icon" />
+
+    <ImageView
+        android:id="@+id/fragment_food_details_fat_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_fat"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge"
+        app:srcCompat="@drawable/fat_icon" />
+
+    <ImageView
+        android:id="@+id/fragment_food_details_protein_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_protein"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge"
+        app:srcCompat="@drawable/protein_icon" />
+
+    <ImageView
+        android:id="@+id/fragment_basic_food_details_carbohydrate_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_carbohydrate"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge"
+        app:srcCompat="@drawable/carbohydrate_icon" />
+
+    <TextView
+        android:id="@+id/fragment_food_details_carbohydrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="121"
+        android:textColor="@color/colorDetailsScreen"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_fat_image"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_fat" />
+
+    <TextView
+        android:id="@+id/fragment_food_details_fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="121"
+        android:textColor="@color/colorDetailsScreen"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_protein_image"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_protein_image" />
+
+    <TextView
+        android:id="@+id/fragment_food_details_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="121"
+        android:textColor="@color/colorDetailsScreen"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_calorie_imge"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge" />
+
+    <TextView
+        android:id="@+id/fragment_basic_food_details_calorie"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:text="121"
+        android:textColor="@color/colorDetailsScreen"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_food_details_calorie_imge"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_calorie_imge" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="100 g"
+        android:textColor="@color/colorBlack"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_basic_food_details_image" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="192dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_calorie_imge">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/fragment_basic_food_details_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantity(g)" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/fragment_basic_food_details_button"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:text="I 8 it!!"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout2" />
+
+</android.support.constraint.ConstraintLayout>

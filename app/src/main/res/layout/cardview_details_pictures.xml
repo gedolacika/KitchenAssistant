@@ -9,6 +9,7 @@
         android:id="@+id/cardview_details_pictures_image"
         android:layout_width="384dp"
         android:layout_height="141dp"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

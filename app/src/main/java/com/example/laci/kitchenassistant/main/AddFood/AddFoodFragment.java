@@ -204,16 +204,20 @@ public class AddFoodFragment extends Fragment {
                     quantity_of_all_food.setError("Not a valid origin.");
                     send_data = false;
                 }
-                int calorie, protein, fat, carbohydrate;
+                int calorie, protein, fat, carbohydrate,sugar,saturated;
                 calorie = 0;
                 protein = 0;
                 fat = 0;
                 carbohydrate = 0;
+                sugar = 0;
+                saturated = 0;
                 for(int i = 0; i < ingredients.size(); ++i){
                     calorie += ingredients.get(i).getCalorie();
                     protein += ingredients.get(i).getProtein();
                     fat += ingredients.get(i).getFat();
                     carbohydrate += ingredients.get(i).getCarbohydrate();
+                    sugar += ingredients.get(i).getSugar();
+                    saturated += ingredients.get(i).getSaturated();
                 }
                 if(send_data){
                     Recipe upload_recipe = new Recipe(name.getText().toString(),
@@ -231,6 +235,9 @@ public class AddFoodFragment extends Fragment {
                             Integer.parseInt(difficulty.getText().toString()),
                             true,
                             recipe_url_pictures);
+                    upload_recipe.setQuantity(Integer.parseInt(quantity_of_all_food.getText().toString()));
+                    upload_recipe.setSaturated(saturated);
+                    upload_recipe.setSugar(sugar);
                     RecipeHandler.uploadRecipe(upload_recipe,pictures_byte_name,pictures_byte_byte);
                     Toast.makeText(context,"The recipe uploaded to database.",Toast.LENGTH_LONG).show();
                     FragmentNavigation.loadHomeFragment(getActivity());
@@ -335,7 +342,13 @@ public class AddFoodFragment extends Fragment {
     }
 
     private void setUpIngredientSpinner(Context context){
-        ingredient_spinner_adapter = new AddFoodBasicFoodsSpinnerAdapter(context,((MainActivity)Objects.requireNonNull(getActivity())).basicFoods);
+        ArrayList<BasicFood> foods = ((MainActivity)Objects.requireNonNull(getActivity())).basicFoods;
+        for(int i = 0; i < ((MainActivity)getActivity()).recipes.size() ;++i)
+        {
+            ((MainActivity)getActivity()).recipes.get(i).setPicture(((MainActivity)getActivity()).recipes.get(i).getPictures().get(0));
+            foods.add(((MainActivity)getActivity()).recipes.get(i));
+        }
+        ingredient_spinner_adapter = new AddFoodBasicFoodsSpinnerAdapter(context,foods);
         ingredient.setAdapter(ingredient_spinner_adapter);
 
         ingredient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

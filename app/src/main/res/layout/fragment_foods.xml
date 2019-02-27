@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,24 +7,45 @@
     tools:context=".main.Foods.FoodsFragment"
     android:background="@color/colorBackgroundFoods">
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/fragment_foods_frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="464dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fragment_foods_recyclerView"
-            android:layout_width="356dp"
-            android:layout_height="482dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+    </FrameLayout>
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/fragment_foods_recipe"
+        android:layout_width="192dp"
+        android:layout_height="52dp"
+        android:background="@color/colorPrimary"
+        android:text="Recipes"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_foods_frameLayout"
+        app:layout_constraintVertical_bias="1.0" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/fragment_foods_basic_foods"
+        android:layout_width="192dp"
+        android:layout_height="52dp"
+        android:background="@color/colorPrimary"
+        android:text="Basic foods"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_foods_recipe"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_foods_frameLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>

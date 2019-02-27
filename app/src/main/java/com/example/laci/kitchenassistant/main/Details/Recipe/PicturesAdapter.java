@@ -1,4 +1,4 @@
-package com.example.laci.kitchenassistant.main.Details;
+package com.example.laci.kitchenassistant.main.Details.Recipe;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

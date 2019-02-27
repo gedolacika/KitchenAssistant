@@ -1,11 +1,11 @@
-package com.example.laci.kitchenassistant.main.Foods;
+package com.example.laci.kitchenassistant.main.Foods.Recipes;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
@@ -78,6 +77,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.e("AAAAAAAAAAAA",index+"");
                     FragmentNavigation.loadDetailsFragment(activity,index);
                 }
             });

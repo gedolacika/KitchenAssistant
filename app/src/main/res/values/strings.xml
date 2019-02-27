@@ -23,6 +23,7 @@
     <string name="close">Close</string>
 
     <string-array name="type_names">
+        <item>Drink</item>
         <item>Breakfast</item>
         <item>Appetizer</item>
         <item>Soup</item>

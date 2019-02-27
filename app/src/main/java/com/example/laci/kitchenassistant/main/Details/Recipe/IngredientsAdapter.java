@@ -1,5 +1,6 @@
-package com.example.laci.kitchenassistant.main.Details;
+package com.example.laci.kitchenassistant.main.Details.Recipe;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -31,11 +32,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull IngredientsAdapter.ViewHolder viewHolder, int i) {
         Glide.with(context).load(foods.get(i).getPicture()).into(viewHolder.image);
         viewHolder.name.setText(foods.get(i).getName());
-        viewHolder.quantity.setText(String.valueOf(foods.get(i).getQuantity()));
+        viewHolder.quantity.setText(String.valueOf(foods.get(i).getQuantity()) + "g");
     }
 
     @Override
