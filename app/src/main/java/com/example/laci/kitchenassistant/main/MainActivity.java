@@ -18,10 +18,12 @@ import android.widget.Toast;
 
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
+import com.example.laci.kitchenassistant.BaseClasses.StepCount;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.ActivityNavigation;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
+import com.example.laci.kitchenassistant.firebase.Account;
 import com.example.laci.kitchenassistant.firebase.BasicFoodsHandler;
 import com.example.laci.kitchenassistant.firebase.RecipeHandler;
 import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     public User user;
     public ArrayList<BasicFood> basicFoods;
     public ArrayList<Recipe> recipes;
+    public ArrayList<StepCount> stepCounts;
     private Context context;
 
     @Override
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(context,message,Toast.LENGTH_LONG).show();
             }
         });
+
+
 
     }
 

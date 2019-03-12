@@ -17,7 +17,7 @@ import com.example.laci.kitchenassistant.main.Foods.Recipes.FoodsRecipesFragment
 import com.example.laci.kitchenassistant.main.FoodsAtHomeFragment;
 import com.example.laci.kitchenassistant.main.Foods.FoodsFragment;
 import com.example.laci.kitchenassistant.main.HistoryFragment;
-import com.example.laci.kitchenassistant.main.HomeFragment;
+import com.example.laci.kitchenassistant.main.Home.HomeFragment;
 
 public class FragmentNavigation {
     private static Fragment fragment;

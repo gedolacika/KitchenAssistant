@@ -24,10 +24,10 @@ import com.example.laci.kitchenassistant.main.MainActivity;
 import java.util.Objects;
 
 public class FoodDetailsFragment extends Fragment {
-    private int index;
+    private int quantity_int;
     private TextView name, type, origin, servings, time, difficulty, preparation, calorie, protein, fat, carbohydrate, quantity,quantity_serving;
     private RecyclerView pictures, ingredients;
-    private Recipe recipe;
+    private Recipe food;
     private PicturesAdapter pictures_adapter;
     private IngredientsAdapter ingredientsAdapter;
     private Button button;
@@ -52,13 +52,15 @@ public class FoodDetailsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                quantity_int = Integer.valueOf(editText.getText().toString());
+
                 BasicFood for_upload = new BasicFood();
-                for_upload.setCalorie(Integer.parseInt(quantity.getText().toString())*recipe.getCalorie()/100);
-                for_upload.setProtein(Integer.parseInt(quantity.getText().toString())*recipe.getProtein()/100);
-                for_upload.setCarbohydrate(Integer.parseInt(quantity.getText().toString())*recipe.getCarbohydrate()/100);
-                for_upload.setFat(Integer.parseInt(quantity.getText().toString())*recipe.getFat()/100);
-                for_upload.setSaturated(Integer.parseInt(quantity.getText().toString())*recipe.getSaturated()/100);
-                for_upload.setSugar(Integer.parseInt(quantity.getText().toString())*recipe.getSugar()/100);
+                for_upload.setCalorie(quantity_int* food.getCalorie()/100);
+                for_upload.setProtein(quantity_int* food.getProtein()/100);
+                for_upload.setCarbohydrate(quantity_int* food.getCarbohydrate()/100);
+                for_upload.setFat(quantity_int* food.getFat()/100);
+                for_upload.setSaturated(quantity_int* food.getSaturated()/100);
+                for_upload.setSugar(quantity_int* food.getSugar()/100);
                 Account.setIntakeFood(for_upload);
                 Toast.makeText(view.getContext(),"The upload was successfull!",Toast.LENGTH_LONG).show();
                 FragmentNavigation.loadFoodsFragment(Objects.requireNonNull(getActivity()));
@@ -67,7 +69,7 @@ public class FoodDetailsFragment extends Fragment {
     }
 
     private void setIngredients(View view){
-        ingredientsAdapter = new IngredientsAdapter(recipe.getIngredients(),view.getContext());
+        ingredientsAdapter = new IngredientsAdapter(food.getIngredients(),view.getContext());
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         ingredients.setLayoutManager(manager);
@@ -76,7 +78,7 @@ public class FoodDetailsFragment extends Fragment {
     }
 
     private void setPictures(View view) {
-        pictures_adapter = new PicturesAdapter(recipe.getPictures(),view.getContext());
+        pictures_adapter = new PicturesAdapter(food.getPictures(),view.getContext());
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         pictures.setLayoutManager(manager);
@@ -86,23 +88,23 @@ public class FoodDetailsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void setOtherParameters() {
-        name.setText(recipe.getName());
-        type.setText(recipe.getRecipeType());
-        origin.setText(recipe.getOrigin());
-        servings.setText(String.valueOf(recipe.getPortion()));
-        time.setText(recipe.getPreparation_time() + " m");
+        name.setText(food.getName());
+        type.setText(food.getRecipeType());
+        origin.setText(food.getOrigin());
+        servings.setText(String.valueOf(food.getPortion()));
+        time.setText(food.getPreparation_time() + " m");
 
-        preparation.setText(recipe.getPreparation());
-        calorie.setText(String.valueOf(recipe.getCalorie()));
-        carbohydrate.setText(String.valueOf(recipe.getCarbohydrate()));
-        fat.setText(String.valueOf(recipe.getFat()));
-        protein.setText(String.valueOf(recipe.getProtein()));
-        quantity.setText(String.valueOf(recipe.getQuantity())+"g");
-        quantity_serving.setText(String.valueOf(recipe.getQuantity()/recipe.getPortion()) + "g");
+        preparation.setText(food.getPreparation());
+        calorie.setText(String.valueOf(food.getCalorie()));
+        carbohydrate.setText(String.valueOf(food.getCarbohydrate()));
+        fat.setText(String.valueOf(food.getFat()));
+        protein.setText(String.valueOf(food.getProtein()));
+        quantity.setText(String.valueOf(food.getQuantity())+"g");
+        quantity_serving.setText(String.valueOf(food.getQuantity()/ food.getPortion()) + "g");
 
 
 
-        switch(recipe.getDifficulty())
+        switch(food.getDifficulty())
         {
             case 0: difficulty.setText("Low");break;
             case 1: difficulty.setText("Medium");break;
@@ -138,8 +140,8 @@ public class FoodDetailsFragment extends Fragment {
             index = bundle.getInt("index", 0);
             Log.e("WE GOT: ",index+"");
         }
-        recipe = ((MainActivity) getActivity()).recipes.get(index);
-        Log.e("RECIPE NAME:",recipe.getName());
+        food = ((MainActivity) getActivity()).recipes.get(index);
+        Log.e("RECIPE NAME:", food.getName());
     }
 
 }

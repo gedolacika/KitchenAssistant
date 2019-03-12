@@ -32,7 +32,8 @@
             android:id="@+id/fragment_food_details_quantity_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Quantity(g)" />
+            android:hint="Quantity(g)"
+            android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
     <ScrollView

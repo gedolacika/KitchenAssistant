@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
+import com.example.laci.kitchenassistant.BaseClasses.StepCount;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.BaseClasses.WeightHistory;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,6 +53,41 @@ public class Account {
     private static String ACCOUNT_INTAKE_FOOD_SUGAR = "Sugar";
     private static String ACCOUNT_INTAKE_FOOD_SATURATED = "Saturated";
     private static String ACCOUNT_INTAKE_FOOD_TIME = "Time";
+
+    private static String ACCOUNT_STEP_BASE = "Steps";
+    private static String ACCOUNT_STEP_TIME = "Time";
+    private static String ACCOUNT_STEP_STEP = "Step";
+
+    public static void saveSteps(StepCount stepCount){
+        long current_day = stepCount.getTime() - (stepCount.getTime()%(24*60*60*1000));
+        if(stepCount.getTime() != -1) databaseReference.child(ACCOUNT_STEP_BASE).child(String.valueOf(current_day)).child(String.valueOf(stepCount.getTime())).child(ACCOUNT_STEP_TIME).setValue(stepCount.getTime());
+        if(stepCount.getSteps() != -1) databaseReference.child(ACCOUNT_STEP_BASE).child(String.valueOf(current_day)).child(String.valueOf(stepCount.getTime())).child(ACCOUNT_STEP_STEP).setValue(stepCount.getSteps());
+    }
+
+    public static void downloadSteps(final RetrieveDataListener<ArrayList<StepCount>> listener){
+        long time_in_millis = System.currentTimeMillis();
+        long current_day = time_in_millis - (time_in_millis%(24*60*60*1000));
+        databaseReference.child(ACCOUNT_STEP_BASE).child(String.valueOf(current_day)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<StepCount> stepCounts = new ArrayList<>();
+                for(DataSnapshot current : dataSnapshot.getChildren()){
+                    long time=-1;
+                    int steps=-1;
+                    if(current.child(ACCOUNT_STEP_TIME).exists())time = Long.parseLong(Objects.requireNonNull(current.child(ACCOUNT_STEP_TIME).getValue()).toString());
+                    if(current.child(ACCOUNT_STEP_STEP).exists())steps = Integer.parseInt(Objects.requireNonNull(current.child(ACCOUNT_STEP_STEP).getValue()).toString());
+                    StepCount stepCount = new StepCount(time,steps);
+                    if(time > 0 && steps > 0) stepCounts.add(stepCount);
+                }
+                listener.onSuccess(stepCounts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                listener.onFailure(databaseError.getMessage());
+            }
+        });
+    }
 
 
     public static void setIntakeFood(BasicFood food) {

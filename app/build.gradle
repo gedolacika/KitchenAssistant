@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -40,5 +45,11 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.google.android.gms:play-services-fitness:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'org.jetbrains:annotations-java5:15.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+
 
 }

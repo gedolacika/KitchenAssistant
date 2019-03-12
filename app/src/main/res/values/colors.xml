@@ -10,4 +10,6 @@
     <color name="colorWhite">#eee</color>
     <color name="colorDetailsScreen">#000000</color>
     <color name="colorBackgroundFoods">#f5f5f5</color>
+    <color name="colorPieAlt">#498b8b8b</color>
+
 </resources>
