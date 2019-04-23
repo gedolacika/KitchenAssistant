@@ -10,7 +10,7 @@ import com.example.laci.kitchenassistant.main.Account.AccountFragment;
 import com.example.laci.kitchenassistant.main.AddFood.AddFoodFragment;
 import com.example.laci.kitchenassistant.main.Details.BasicFood.BasicFoodDetailsFragment;
 import com.example.laci.kitchenassistant.main.DiagramsFragment;
-import com.example.laci.kitchenassistant.main.FitnessFragment;
+import com.example.laci.kitchenassistant.main.Fitness.FitnessFragment;
 import com.example.laci.kitchenassistant.main.Details.Recipe.FoodDetailsFragment;
 import com.example.laci.kitchenassistant.main.Foods.BasicFoods.FoodsBasicFoodsFragment;
 import com.example.laci.kitchenassistant.main.Foods.Recipes.FoodsRecipesFragment;

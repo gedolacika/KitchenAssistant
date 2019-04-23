@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,8 +18,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
+import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
+import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.BaseClasses.StepCount;
+import com.example.laci.kitchenassistant.BaseClasses.Training;
+import com.example.laci.kitchenassistant.BaseClasses.TrainingBase;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.ActivityNavigation;
@@ -37,8 +42,12 @@ public class MainActivity extends AppCompatActivity
     public User user;
     public ArrayList<BasicFood> basicFoods;
     public ArrayList<Recipe> recipes;
-    public ArrayList<StepCount> stepCounts;
+    public ArrayList<StepCount> dailyStepCounts;
+    public ArrayList<StepCount> weeklyStepCounts;
+    public ArrayList<IntakeFood> intookedFoods;
     private Context context;
+    public ArrayList<TrainingBase> trainingBases ;
+    public ArrayList<Training> trainings ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +91,41 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        Account.downloadTrainingBase(new RetrieveDataListener<ArrayList<TrainingBase>>() {
+            @Override
+            public void onSuccess(ArrayList<TrainingBase> data) {
+                trainingBases = data;
+            }
 
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Account.downloadTraining(new RetrieveDataListener<ArrayList<Training>>() {
+            @Override
+            public void onSuccess(ArrayList<Training> data) {
+                trainings = data;
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Account.getUser(new RetrieveDataListener<User>() {
+            @Override
+            public void onSuccess(User data) {
+                user = data;
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

@@ -34,17 +34,19 @@ public class StepSaverForService {
             editor.putLong(TIME,(stepCount.getTime() - (stepCount.getTime() % 300000)));
             editor.putInt(STEP,stepCount.getSteps());
             editor.apply();
+            Log.i("StepSaver","File empty, saving the first step: " + stepCount.getSteps() + " - " + stepCount.getTime());
         }else{
             if((stepCount.getTime() - lastStepCount.getTime())>= 300000){
                 //lastStepCount.setSteps(lastStepCount.getSteps()/2);
 
-                lastStepCount.setSteps(lastStepCount.getSteps()/2);
+                lastStepCount.setSteps(lastStepCount.getSteps());
                 saveStepsToFirebase(lastStepCount);
                 editor.putLong(TIME,(stepCount.getTime() - (stepCount.getTime() % 300000)));
                 editor.putInt(STEP,stepCount.getSteps());
                 editor.apply();
+                Log.i("StepSaver","Saving to firebase: " + lastStepCount.getSteps() + " - " + lastStepCount.getTime());
             }else{
-                Log.e("SERVICE STEP COUNTER","Steps detected, total steps: " + (stepCount.getSteps() + lastStepCount.getSteps()) + " steps.");
+                Log.i("StepSaver","Save to file - all steps: " + stepCount.getSteps()+lastStepCount.getSteps() + " - " + lastStepCount.getTime());
                 editor.putInt(STEP,stepCount.getSteps()+lastStepCount.getSteps());
                 editor.apply();
             }

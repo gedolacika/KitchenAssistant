@@ -31,6 +31,7 @@ import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
+import com.example.laci.kitchenassistant.Tools.Tools;
 import com.example.laci.kitchenassistant.Tools.Validations;
 import com.example.laci.kitchenassistant.firebase.RecipeHandler;
 import com.example.laci.kitchenassistant.main.MainActivity;
@@ -264,7 +265,7 @@ public class AddFoodFragment extends Fragment {
                         e.printStackTrace();
                     }
                     try {
-                        pictures_byte_byte.add(getBytes(istream));
+                        pictures_byte_byte.add(Tools.getBytes(istream));
                         pictures_byte_name.add(String.valueOf(System.currentTimeMillis()));
                         add_picture_adapter.notifyDataSetChanged();
 
@@ -291,18 +292,6 @@ public class AddFoodFragment extends Fragment {
         }
     }
 
-    private byte[] getBytes(InputStream inputStream) throws IOException {
-
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)

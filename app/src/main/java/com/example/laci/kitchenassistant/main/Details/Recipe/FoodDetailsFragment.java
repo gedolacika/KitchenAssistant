@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
+import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
@@ -54,13 +55,16 @@ public class FoodDetailsFragment extends Fragment {
             public void onClick(View view) {
                 quantity_int = Integer.valueOf(editText.getText().toString());
 
-                BasicFood for_upload = new BasicFood();
+                BasicFoodQuantity for_upload = new BasicFoodQuantity();
                 for_upload.setCalorie(quantity_int* food.getCalorie()/100);
                 for_upload.setProtein(quantity_int* food.getProtein()/100);
                 for_upload.setCarbohydrate(quantity_int* food.getCarbohydrate()/100);
                 for_upload.setFat(quantity_int* food.getFat()/100);
                 for_upload.setSaturated(quantity_int* food.getSaturated()/100);
                 for_upload.setSugar(quantity_int* food.getSugar()/100);
+                for_upload.setName(food.getName());
+                for_upload.setPicture(food.getPictures().get(0));
+                for_upload.setQuantity(quantity_int);
                 Account.setIntakeFood(for_upload);
                 Toast.makeText(view.getContext(),"The upload was successfull!",Toast.LENGTH_LONG).show();
                 FragmentNavigation.loadFoodsFragment(Objects.requireNonNull(getActivity()));

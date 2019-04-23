@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
+import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
 import com.example.laci.kitchenassistant.Tools.Validations;
@@ -46,13 +47,16 @@ public class BasicFoodDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(Validations.validateNumber(Objects.requireNonNull(quantity.getText()).toString()) == 0){
-                    BasicFood for_upload = new BasicFood();
+                    BasicFoodQuantity for_upload = new BasicFoodQuantity();
                     for_upload.setCalorie(Integer.parseInt(quantity.getText().toString())*food.getCalorie()/100);
                     for_upload.setProtein(Integer.parseInt(quantity.getText().toString())*food.getProtein()/100);
                     for_upload.setCarbohydrate(Integer.parseInt(quantity.getText().toString())*food.getCarbohydrate()/100);
                     for_upload.setFat(Integer.parseInt(quantity.getText().toString())*food.getFat()/100);
                     for_upload.setSaturated(Integer.parseInt(quantity.getText().toString())*food.getSaturated()/100);
                     for_upload.setSugar(Integer.parseInt(quantity.getText().toString())*food.getSugar()/100);
+                    for_upload.setName(food.getName());
+                    for_upload.setPicture(food.getPicture());
+                    for_upload.setQuantity(Integer.parseInt(quantity.getText().toString()));
                     Account.setIntakeFood(for_upload);
                     Toast.makeText(view.getContext(),"The upload was successfull!",Toast.LENGTH_LONG).show();
                     FragmentNavigation.loadFoodsFragment(Objects.requireNonNull(getActivity()));

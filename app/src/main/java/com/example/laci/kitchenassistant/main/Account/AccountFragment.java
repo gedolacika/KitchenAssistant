@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.Tools;
 import com.example.laci.kitchenassistant.Tools.Validations;
 import com.example.laci.kitchenassistant.firebase.Account;
 import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
@@ -80,8 +81,6 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         Account.downloadProfilePicture(profilePicture,context);
         Account.downloadCoverPhoto(coverPhoto,context);
         updateUser();
-
-
         return view;
     }
 
@@ -159,7 +158,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         });
 
 
-
+        //on click listener on profile picture, to change it from gallery or camera
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,6 +204,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
             }
         });
 
+        //on click listener on cover photo, to change it from gallery or camera
         coverPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -250,6 +250,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
             }
         });
 
+        //List the weights in an alert dialog
         weight_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -323,7 +324,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
                         e.printStackTrace();
                     }
                     try {
-                        Account.uploadProfilePicture(getBytes(istream), new RetrieveDataListener<String>() {
+                        Account.uploadProfilePicture(Tools.getBytes(istream), new RetrieveDataListener<String>() {
                             @Override
                             public void onSuccess(String data) {
                                 Toast.makeText(globalView.getContext(),"The upload was succesfully!",Toast.LENGTH_LONG).show();
@@ -374,7 +375,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
                         e.printStackTrace();
                     }
                     try {
-                        Account.uploadCoverPhoto(getBytes(istream), new RetrieveDataListener<String>() {
+                        Account.uploadCoverPhoto(Tools.getBytes(istream), new RetrieveDataListener<String>() {
                             @Override
                             public void onSuccess(String data) {
                                 Toast.makeText(globalView.getContext(),"The upload was succesfully!",Toast.LENGTH_LONG).show();
@@ -419,32 +420,15 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         }
     }
 
-    /**
-     * @param inputStream from gallery
-     * @return bytes array containing the profile picture
-     * @throws IOException
-     */
-    private byte[] getBytes(InputStream inputStream) throws IOException {
-
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
-    }
-
+    //downloading the details about the user
     public void updateUser(){
         Account.getUser(new RetrieveDataListener<User>() {
             @Override
             public void onSuccess(User data) {
+                //save the data to the main activity
                 ((MainActivity) getActivity()).user = data;
+                //when the data arrived from the server, we have to update the UI
                 updateView();
-
-                Log.e("AAAAAAAAA",((MainActivity)getActivity()).user.toString());
             }
 
             @Override
@@ -454,6 +438,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         });
     }
 
+    //update the ui from the main activity
     private void updateView(){
         if(((MainActivity) getActivity()).user != null){
             if(!((MainActivity) Objects.requireNonNull(getActivity())).user.getName().equals("")) name.setText(((MainActivity) getActivity()).user.getName());
