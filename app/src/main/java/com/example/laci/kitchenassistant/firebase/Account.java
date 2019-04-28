@@ -215,6 +215,39 @@ public class Account {
         });
     }
 
+    public static void downloadAllSteps(final RetrieveDataListener<ArrayList<StepCount>> listener) {
+        long time_in_millis = System.currentTimeMillis();
+        final long current_day = time_in_millis - (time_in_millis % (24 * 60 * 60 * 1000));
+        databaseReference.child(ACCOUNT_STEP_BASE).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<StepCount> stepCounts = new ArrayList<>();
+                long thisWeekStartPoint = System.currentTimeMillis() - (7 * 24 * 60 * 60 * 1000);
+                for (DataSnapshot currentFields : dataSnapshot.getChildren()) {
+                    for (DataSnapshot current : currentFields.getChildren()) {
+                        long time = -1;
+                        int steps = -1;
+                        if (current.child(ACCOUNT_STEP_TIME).exists())
+                            time = Long.parseLong(Objects.requireNonNull(current.child(ACCOUNT_STEP_TIME).getValue()).toString());
+                        if (current.child(ACCOUNT_STEP_STEP).exists())
+                            steps = Integer.parseInt(Objects.requireNonNull(current.child(ACCOUNT_STEP_STEP).getValue()).toString());
+
+                        StepCount stepCount = new StepCount(time, steps);
+                        if (time > 0 && steps > 0) stepCounts.add(stepCount);
+
+                    }
+                }
+
+                listener.onSuccess(stepCounts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                listener.onFailure(databaseError.getMessage());
+            }
+        });
+    }
+
 
     public static void setIntakeFood(BasicFoodQuantity food) {
         long id = System.currentTimeMillis();
@@ -264,6 +297,14 @@ public class Account {
                     if (current.child(ACCOUNT_INTAKE_FOOD_SATURATED).exists())
                         current_food.setSaturated(Integer.parseInt(current.child(ACCOUNT_INTAKE_FOOD_SATURATED).getValue().toString()));
                     else current_food.setSaturated(0);
+                    if(current.child(ACCOUNT_INTAKE_FOOD_IMAGE).exists())
+                        current_food.setPicture(current.child(ACCOUNT_INTAKE_FOOD_IMAGE).getValue().toString());
+                    if(current.child(ACCOUNT_INTAKE_FOOD_NAME).exists())
+                        current_food.setName(current.child(ACCOUNT_INTAKE_FOOD_NAME).getValue().toString());
+                    else current_food.setName("Noname");
+                    if(current.child(ACCOUNT_INTAKE_FOOD_QUANTITY).exists())
+                        current_food.setQuantity(Integer.parseInt(current.child(ACCOUNT_INTAKE_FOOD_QUANTITY).getValue().toString()));
+                    else current_food.setQuantity(-1);
                     intakeFoods.add(current_food);
                 }
                 listener.onSuccess(intakeFoods);

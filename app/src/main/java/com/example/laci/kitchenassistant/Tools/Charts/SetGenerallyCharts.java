@@ -52,6 +52,44 @@ public class SetGenerallyCharts {
         chart.setData(data);
     }
 
+    public static void setUpTwoLineChart(Context context, LineChart chart, ArrayList<Entry> steps, ArrayList<Entry> consumedCalories) {
+        chart.clear();
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter( new XAxisValueFormatter());
+        xAxis.setSpaceMin(2);
+
+        LineDataSet lineDataSet = new LineDataSet(steps,"Burned calories");
+        LineDataSet lineDataSet2 = new LineDataSet(consumedCalories,"Consumed calories");
+        chart.getXAxis().setDrawGridLines(false);
+
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setDrawValues(false);
+        lineDataSet.setDrawFilled(false);
+        lineDataSet.setColor(ContextCompat.getColor(context,R.color.colorPrimary));
+        lineDataSet.setDrawCircles(false);
+
+        lineDataSet2.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet2.setDrawFilled(true);
+        lineDataSet2.setDrawValues(false);
+        lineDataSet2.setDrawFilled(false);
+        lineDataSet2.setColor(ContextCompat.getColor(context,R.color.colorButton));
+        lineDataSet2.setDrawCircles(false);
+
+
+        chart.getDescription().setText("");
+        //chart.getLegend().setEnabled(false);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineDataSet);
+        dataSets.add(lineDataSet2);
+
+        LineData data = new LineData(dataSets);
+        data.setValueFormatter(new ChartValueFormatter());
+        chart.animateX(4000);
+        chart.setData(data);
+    }
+
     public static void setUpPieChart(View view, PieChart pieChart, ArrayList<PieEntry> values, String centerText) {
         pieChart.clear();
         pieChart.setUsePercentValues(false);

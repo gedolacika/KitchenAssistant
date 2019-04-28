@@ -43,11 +43,14 @@ public class MainActivity extends AppCompatActivity
     public ArrayList<BasicFood> basicFoods;
     public ArrayList<Recipe> recipes;
     public ArrayList<StepCount> dailyStepCounts;
-    public ArrayList<StepCount> weeklyStepCounts;
+    public ArrayList<StepCount> weeklyStepCounts = null;
     public ArrayList<IntakeFood> intookedFoods;
     private Context context;
     public ArrayList<TrainingBase> trainingBases ;
     public ArrayList<Training> trainings ;
+    public ArrayList<StepCount> allSteps;
+    public ArrayList<StepCount> stepsForEachDay;
+    public ArrayList<StepCount> burnedCaloriesForEachDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

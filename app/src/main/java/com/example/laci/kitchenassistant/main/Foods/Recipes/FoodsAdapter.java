@@ -66,13 +66,13 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             calorie = itemView.findViewById(R.id.cardview_food_calorie_text7);
-            fat = itemView.findViewById(R.id.fragment_food_details_fat);
-            carbohydrate = itemView.findViewById(R.id.fragment_food_details_carbohydrate);
-            protein = itemView.findViewById(R.id.fragment_food_details_protein);
-            image = itemView.findViewById(R.id.cardview_food_image);
+            fat = itemView.findViewById(R.id.cardview_consumed_food_details_fat);
+            carbohydrate = itemView.findViewById(R.id.cardview_consumed_food_details_carbohydrate);
+            protein = itemView.findViewById(R.id.cardview_consumed_food_details_protein);
+            image = itemView.findViewById(R.id.cardview_consumed_food_image);
             layout = itemView.findViewById(R.id.cardview_food_constarint_layout);
-            name = itemView.findViewById(R.id.cardview_food_name);
-            type = itemView.findViewById(R.id.cardview_food_type);
+            name = itemView.findViewById(R.id.cardview_consumed_food_name);
+            type = itemView.findViewById(R.id.cardview_consumed_food_date);
 
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override

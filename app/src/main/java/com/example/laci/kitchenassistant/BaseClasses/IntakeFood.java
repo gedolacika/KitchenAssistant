@@ -18,4 +18,5 @@ public class IntakeFood extends BasicFoodQuantity {
 
     public IntakeFood() {
     }
+
 }

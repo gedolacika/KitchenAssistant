@@ -34,6 +34,10 @@ public class BasicFood {
         this.saturated = 0;
     }
 
+    public BasicFood(int calorie) {
+        this.calorie = calorie;
+    }
+
     public int getSugar() {
         return sugar;
     }
