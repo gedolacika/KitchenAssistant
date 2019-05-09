@@ -12,9 +12,9 @@ import com.example.laci.kitchenassistant.main.Details.BasicFood.BasicFoodDetails
 import com.example.laci.kitchenassistant.main.DiagramsFragment;
 import com.example.laci.kitchenassistant.main.Fitness.FitnessFragment;
 import com.example.laci.kitchenassistant.main.Details.Recipe.FoodDetailsFragment;
+import com.example.laci.kitchenassistant.main.FoodRecommendation.FoodRecommendation;
 import com.example.laci.kitchenassistant.main.Foods.BasicFoods.FoodsBasicFoodsFragment;
 import com.example.laci.kitchenassistant.main.Foods.Recipes.FoodsRecipesFragment;
-import com.example.laci.kitchenassistant.main.FoodsAtHomeFragment;
 import com.example.laci.kitchenassistant.main.Foods.FoodsFragment;
 import com.example.laci.kitchenassistant.main.HistoryFragment;
 import com.example.laci.kitchenassistant.main.Home.HomeFragment;
@@ -49,10 +49,10 @@ public class FragmentNavigation {
         loadFragment(fragment, fragmentActivity);
     }
 
-    public static void loadFoodsAtHomeFragment(FragmentActivity fragmentActivity) {
-        fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag("FoodsAtHomeFragment");
+    public static void loadFoodRecommendationFragment(FragmentActivity fragmentActivity) {
+        fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag("FooDRecommendation");
         if (fragment == null) {
-            fragment = new FoodsAtHomeFragment();
+            fragment = new FoodRecommendation();
         }
 
         loadFragment(fragment, fragmentActivity);

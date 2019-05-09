@@ -6,10 +6,14 @@ import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.BaseClasses.StepCount;
 import com.example.laci.kitchenassistant.BaseClasses.Training;
 import com.example.laci.kitchenassistant.BaseClasses.User;
+import com.example.laci.kitchenassistant.BaseClasses.UserNeedPersonalInformations;
 import com.example.laci.kitchenassistant.BaseClasses.WeeklyPersonalData;
 import com.example.laci.kitchenassistant.BaseClasses.WeightHistory;
 import com.example.laci.kitchenassistant.main.MainActivity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,10 +21,23 @@ import java.util.Date;
 public class CalorieNeedCounter {
     private static ArrayList<WeeklyPersonalData> weeklyPersonalData = new ArrayList<>();
     private static int calorieNeedForOneDay;
+    private static int MINIMUM_CALORIE_INTAKE_FOR_A_DAY = 500;//recommended 1200
+    private static int MINIMUM_CALORIE_BURN_FOR_A_DAY = 1;//recommended calorieNeedForOneDay + 100
+    private static int MINIMUM_STEPS_FOR_A_DAY = 500;//recommended 1000
+    private static int MINIMUM_VALID_DAYS_PER_WEEK = 1;// recommended 4
+    private static int ONE_CALORIE_IN_STEPS = 20;// recommended [20,30]
+
 
     public static void CountCalories(ArrayList<IntakeFood> foods, ArrayList<StepCount> steps, ArrayList<Training> trainings, User user){
         calorieNeedForOneDay = getCalorieNeedForOneDay(user);
+        //MINIMUM_CALORIE_BURN_FOR_A_DAY = calorieNeedForOneDay;
         setWeeklyPersonalData(foods, steps, trainings, user);
+        filterWeeklyPersonalDataByWhatWeWant(user);
+        setCalorieRequirements();
+        //printWeeklyPersonalData();
+        //printUserPersonalInformations();
+
+
         /*calculateHistoryWeeksGoal();
         countAveragesGlobalAverages();
         selectFoodsToEatPerDay();*/
@@ -29,16 +46,103 @@ public class CalorieNeedCounter {
 
 
 
-    private static void setWeeklyPersonalData(ArrayList<IntakeFood> foods, ArrayList<StepCount> steps, ArrayList<Training> trainings, User user){
-        //Set all event dates
-        ArrayList<Date> dates = new ArrayList<>();
-        setAllEventDates(foods,steps, trainings, dates);
 
-        //Set all week when happened something
-        createAllWeekWhenHappenedSomething(dates);
-
-        //Set average values to the weeklyPersonalData ArrayList
+    private static void setCalorieRequirements(){
+        int minBC=10000,minIC=10000, maxBC=-1, maxIC=-1, avgBC=0, avgIC=0;
+        int burnedCalories, consumedCalories;
         for(int i = 0; i < weeklyPersonalData.size(); ++i){
+            burnedCalories = weeklyPersonalData.get(i).getAverageBurnedCalories();
+            consumedCalories = weeklyPersonalData.get(i).getAverageConsumedCalories();
+            if( burnedCalories < minBC ){
+                minBC = burnedCalories;
+            }
+            if( consumedCalories < minIC){
+                minIC = consumedCalories;
+            }
+            if( burnedCalories > maxBC){
+                maxBC = burnedCalories;
+            }
+            if( consumedCalories > maxIC){
+                maxIC = consumedCalories;
+            }
+            avgBC += burnedCalories;
+            avgIC += consumedCalories;
+        }
+        avgBC /= weeklyPersonalData.size();
+        avgIC /= weeklyPersonalData.size();
+
+        UserNeedPersonalInformations.setMinimumCalorieBurn(minBC);
+        UserNeedPersonalInformations.setMinimumCalorieIntake(minIC);
+        UserNeedPersonalInformations.setMaximumCalorieBurn(maxBC);
+        UserNeedPersonalInformations.setMaximumCalorieIntake(maxIC);
+        UserNeedPersonalInformations.setAverageCalorieBurn(avgBC);
+        UserNeedPersonalInformations.setAverageCalorieIntake(avgIC);
+    }
+
+    /**
+     * Removing weeks where the result was other than what is ours goal
+     * @param user
+     */
+    private static void filterWeeklyPersonalDataByWhatWeWant(User user){
+        int whatWeWant = whatWeWant(user);// 0 - keeping weight, 1 - gaining weight, -1 - losing weight
+        for(int i = 0; i < weeklyPersonalData.size(); ++i){
+            if(whatWeWant == -1){
+                if(weeklyPersonalData.get(i).getWeightCHangeFromTheLastWeek() > -1){
+                    weeklyPersonalData.remove(i);
+                }
+            }
+            if(whatWeWant == 0){
+                if(weeklyPersonalData.get(i).getWeightCHangeFromTheLastWeek() != 0){
+                    weeklyPersonalData.remove(i);
+                }
+            }
+            if(whatWeWant == 1){
+                if(weeklyPersonalData.get(i).getWeightCHangeFromTheLastWeek() < 1){
+                    weeklyPersonalData.remove(i);
+                }
+            }
+        }
+    }
+
+    private static int whatWeWant(User user){
+        if(user.getGoal_weight() < user.getWeight()) return -1;
+        if(user.getGoal_weight() > user.getWeight()) return 1;
+        return 0;
+    }
+
+
+    private static void printWeeklyPersonalData(){
+        Log.e("WeeklyPersonalData","------------------------------------------------------------------------");
+        for(int i = 0; i < weeklyPersonalData.size(); ++i){
+            Log.e("WeeklyPersonalData", "Start: " + weeklyPersonalData.get(i).getStart().toString()
+                    + ", End: " + weeklyPersonalData.get(i).getEnd().toString() + ", "
+                    + "AvgBC: " + weeklyPersonalData.get(i).getAverageBurnedCalories()
+                    + ", " + "AvgIC: "  + weeklyPersonalData.get(i).getAverageConsumedCalories()
+                    + ", Weight: " + weeklyPersonalData.get(i).getWeightCHangeFromTheLastWeek()
+                    + ", IsReal: " + weeklyPersonalData.get(i).isRealData()
+                    + ", IsWeightFound: " + weeklyPersonalData.get(i).isWeightFound());
+        }
+    }
+
+    private static void printUserPersonalInformations(){
+        Log.e("WeeklyPersonalData","-------------------------------------------------------------------");
+        Log.e("WeeklyPersonalData","MinBurn: " + UserNeedPersonalInformations.getMinimumCalorieBurn() +
+                                            ", MinConsume: " + UserNeedPersonalInformations.getMinimumCalorieIntake() +
+                                            ", MaxBurn: " + UserNeedPersonalInformations.getMaximumCalorieBurn() +
+                                            ", MaxConsume: " + UserNeedPersonalInformations.getMaximumCalorieIntake() +
+                                            ", AverageBurn: " + UserNeedPersonalInformations.getAverageCalorieBurn() +
+                                            ", AverageConsume: " + UserNeedPersonalInformations.getAverageCalorieIntake());
+    }
+
+
+    private static void setWeeklyPersonalData(ArrayList<IntakeFood> foods, ArrayList<StepCount> steps, ArrayList<Training> trainings, User user){
+        //Set all weeks when we registered an event from the user
+        weeklyPersonalData.clear();
+        DateFunctions.getAllWeekWhenHappenedSomething(foods, steps, trainings, weeklyPersonalData);
+        //Checking events
+        //Set average values to the weeklyPersonalData ArrayList
+
+        for(int i = 0; i < weeklyPersonalData.size(); ){
 
             setWeeklyConsumedCalories(weeklyPersonalData.get(i).getStart(),
                     weeklyPersonalData.get(i).getEnd(),
@@ -51,15 +155,20 @@ public class CalorieNeedCounter {
                     trainings,
                     weeklyPersonalData.get(i));
             setWeightChange(user, i);
-            if( !weeklyPersonalData.get(i).isRealData() || !weeklyPersonalData.get(i).isWeightFound()){
+
+            //Clear weeks, when we have not enough data to calculate a real data
+            if( !(weeklyPersonalData.get(i).isRealData() && weeklyPersonalData.get(i).isWeightFound())){
                 weeklyPersonalData.remove(i);
+            }else{
+                ++i;
             }
         }
+
     }
 
     private static void setWeightChange(User user, int i){
-        Date previousWeekStart = new Date(getTheStartOfDate(new Date(weeklyPersonalData.get(i).getStart().getTime()-100000)).getTime());
-        Date previousWeekEnd = new Date(getTheEndOfDate(new Date(weeklyPersonalData.get(i).getStart().getTime()-100000)).getTime());
+        Date previousWeekStart = new Date(DateFunctions.getTheStartOfDate(new Date(weeklyPersonalData.get(i).getStart().getTime()-100000)).getTime());
+        Date previousWeekEnd = new Date(DateFunctions.getTheEndOfDate(new Date(weeklyPersonalData.get(i).getStart().getTime()-100000)).getTime());
         int thisWeekWeight = -1, previousWeekWeight = -1;
         thisWeekWeight = getWeightFromAWeek(user.getWeightHistories(), weeklyPersonalData.get(i).getStart(), weeklyPersonalData.get(i).getEnd());
         previousWeekWeight = getWeightFromAWeek(user.getWeightHistories(), previousWeekStart, previousWeekEnd);
@@ -90,44 +199,14 @@ public class CalorieNeedCounter {
         return -1;
     }
 
-    private static void createAllWeekWhenHappenedSomething(ArrayList<Date> dates){
-        for(int i = 0; i < dates.size(); ++i){
-            if(!isExistsADate(dates.get(i))){
-                weeklyPersonalData.add(new WeeklyPersonalData(
-                        getTheStartOfDate(dates.get(i)),
-                        getTheEndOfDate(dates.get(i)),
-                        0,
-                        0,
-                        0
-                ));
-            }
-        }
-    }
 
-    private static void setAllEventDates(ArrayList<IntakeFood> foods, ArrayList<StepCount> steps, ArrayList<Training> trainings, ArrayList<Date> dates){
-        for(int i = 0; i < foods.size();++i)dates.add(new Date(foods.get(i).getTime()));
-        for(int i = 0; i < steps.size();++i)dates.add(new Date(steps.get(i).getTime()));
-        for(int i = 0; i < trainings.size();++i)dates.add(new Date(trainings.get(i).getTimeTo()));
-    }
 
-    private static boolean isExistsADate(Date date){
-        for(int i = 0; i < weeklyPersonalData.size(); ++i){
-            if(date.getTime() >= weeklyPersonalData.get(i).getStart().getTime() && date.getTime() <= weeklyPersonalData.get(i).getEnd().getTime()){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    private static Date getTheStartOfDate(Date date){
-        long millisPerWeek = 7 * 24 * 60 * 60 * 1000;
-        return new Date(date.getTime() - (date.getTime()% millisPerWeek));
-    }
 
-    private static Date getTheEndOfDate(Date date){
-        long millisPerWeek = 7 * 24 * 60 * 60 * 1000;
-        return new Date((date.getTime() - (date.getTime() % millisPerWeek)) + (millisPerWeek-1));
-    }
+
+
+
+
 
     /**
      * Set the average consumed calories for a given week
@@ -136,12 +215,12 @@ public class CalorieNeedCounter {
      * @param allCalories - the all consumed foods, what the user registered to the database
      * @param targetWeek - the object where we want to save the data
      */
-    private static void setWeeklyConsumedCalories(Date start, Date end, ArrayList<IntakeFood> allCalories, WeeklyPersonalData targetWeek){
+    public static void setWeeklyConsumedCalories(Date start, Date end, ArrayList<IntakeFood> allCalories, WeeklyPersonalData targetWeek){
         //Set the consumed calories for each day to the weeklyFoodsForEachDay ArrayList
         ArrayList<IntakeFood> weeklyFoodsForEachDay = new ArrayList<>();
 
         Date tempDate = new Date();
-        int i, badData = 0;
+        int i, badData = 0, goodDays = 0;
         long oneDayInMillis = 86400000;
 
         for(i = 0; i < 7; ++i){
@@ -152,7 +231,9 @@ public class CalorieNeedCounter {
         }
 
         for(i = 0; i < allCalories.size(); ++i){
+
             tempDate.setTime(allCalories.get(i).getTime());
+
             if(tempDate.getTime() >= start.getTime() && tempDate.getTime() <= end.getTime()){
                 weeklyFoodsForEachDay.get((int)((tempDate.getTime()-start.getTime())/oneDayInMillis)).setCalorie(
                         weeklyFoodsForEachDay.get((int)((tempDate.getTime()-start.getTime())/oneDayInMillis)).getCalorie()+allCalories.get(i).getCalorie()
@@ -163,20 +244,24 @@ public class CalorieNeedCounter {
 
         //Set the average consumed calories for this week, pulling out the days when the consumed calories were less than the minimum calorie requirement to keep in alive
         for(i = 0; i < weeklyFoodsForEachDay.size(); ++i){
+            //Sum the consumed calories
+            targetWeek.setAverageConsumedCalories(targetWeek.getAverageConsumedCalories() + weeklyFoodsForEachDay.get(i).getCalorie());
             tempDate.setTime(weeklyFoodsForEachDay.get(i).getTime());
-            if(tempDate.getTime() >= start.getTime() && tempDate.getTime() <= end.getTime()){
-                if(weeklyFoodsForEachDay.get(i).getCalorie() < calorieNeedForOneDay){
-                    badData += 1;
-                }
-                if((7-badData) < WeeklyPersonalData.getMinimumNumbersOfRealDataPerWeek())
-                    targetWeek.setRealData(false);
-                else
-                    targetWeek.setAverageConsumedCalories(targetWeek.getAverageConsumedCalories() + weeklyFoodsForEachDay.get(i).getCalorie());
+            //Sum the bad days, when the consumed calories were less than the minimum
+            if(weeklyFoodsForEachDay.get(i).getCalorie() < MINIMUM_CALORIE_INTAKE_FOR_A_DAY){
+                badData += 1;
             }
         }
+        goodDays = 7-badData;
+        //If the good days were less then the minimum, then ths week is not a valid week
+        if(goodDays < MINIMUM_VALID_DAYS_PER_WEEK)
+            targetWeek.setRealData(false);
 
-        //We got the summed value to this variable, what we have to divide the numbers of good days
-        targetWeek.setAverageConsumedCalories(targetWeek.getAverageConsumedCalories()/(7-badData));
+
+        //We got the summed value to the averageConsumedCalories variable, what we have to divide the numbers of good days
+        if( goodDays > 0 ) {
+            targetWeek.setAverageConsumedCalories(targetWeek.getAverageConsumedCalories() / goodDays);
+        }
     }
 
     /**
@@ -200,7 +285,6 @@ public class CalorieNeedCounter {
 
         for(i = 0; i < allSteps.size(); ++i){
             tempDate.setTime(allSteps.get(i).getTime());
-            Log.e("STEPSCHECK","FOR - " + tempDate.toString() + " - " + allSteps.get(i).getSteps());
             if(tempDate.getTime() >= start.getTime() && tempDate.getTime() <= end.getTime()){
 
                 numberOfStepsForEachDayOnTHeTargetWeek.get((int)((tempDate.getTime()-start.getTime())/oneDayInMillis)).setSteps(
@@ -209,18 +293,20 @@ public class CalorieNeedCounter {
             }
         }
 
+
+
         //If the steps was less than 1000, it means that the step counter wasn't turned on, on its day and we skip it from the counting.
         // transforming the steps to calories and adding the calorie need for one day to the burned calories
         for(i = 0; i < numberOfStepsForEachDayOnTHeTargetWeek.size(); ++i){
-            if(numberOfStepsForEachDayOnTHeTargetWeek.get(i).getSteps() < 1000){
+            if(numberOfStepsForEachDayOnTHeTargetWeek.get(i).getSteps() < MINIMUM_STEPS_FOR_A_DAY){
                 --goodDaysOnThisWeek;
-                continue;
+            }else{
+                targetWeek.setAverageBurnedCalories(targetWeek.getAverageBurnedCalories()
+                        + numberOfStepsForEachDayOnTHeTargetWeek.get(i).getSteps()/ONE_CALORIE_IN_STEPS
+                        + calorieNeedForOneDay);
             }
-            numberOfStepsForEachDayOnTHeTargetWeek.get(i).setSteps(numberOfStepsForEachDayOnTHeTargetWeek.get(i).getSteps()/20);
-            numberOfStepsForEachDayOnTHeTargetWeek.get(i).setSteps(numberOfStepsForEachDayOnTHeTargetWeek.get(i).getSteps()+calorieNeedForOneDay);
-            targetWeek.setAverageBurnedCalories(targetWeek.getAverageBurnedCalories() + numberOfStepsForEachDayOnTHeTargetWeek.get(i).getSteps());
-        }
 
+        }
         //Continue with the weekly trainings
         for(i = 0; i < trainings.size(); ++i){
             tempDate.setTime(trainings.get(i).getTimeTo());
@@ -230,8 +316,11 @@ public class CalorieNeedCounter {
         }
 
         //Finally we have to divide the summed value for the active days of week
-        targetWeek.setAverageBurnedCalories(targetWeek.getAverageBurnedCalories()/goodDaysOnThisWeek);
-        if(goodDaysOnThisWeek < WeeklyPersonalData.getMinimumNumbersOfRealDataPerWeek())
+        if(goodDaysOnThisWeek >= 1){
+            targetWeek.setAverageBurnedCalories(targetWeek.getAverageBurnedCalories()/goodDaysOnThisWeek);
+        }
+
+        if(goodDaysOnThisWeek < MINIMUM_VALID_DAYS_PER_WEEK)
             targetWeek.setRealData(false);
 
     }

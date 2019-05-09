@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.R;
-import com.example.laci.kitchenassistant.main.Foods.BasicFoods.BasicFoodsAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,14 +64,14 @@ public class ConsumedFoodsAdapter extends RecyclerView.Adapter<ConsumedFoodsAdap
         }
 
         private void initViews(View view){
-            image = view.findViewById(R.id.cardview_consumed_food_image);
+            image = view.findViewById(R.id.cardview_consumed_food_recipe_image);
             calorie = view.findViewById(R.id.cardview_consumed_food_calorie);
-            fat = view.findViewById(R.id.cardview_consumed_food_details_fat);
-            carbohydrate = view.findViewById(R.id.cardview_consumed_food_details_carbohydrate);
-            protein = view.findViewById(R.id.cardview_consumed_food_details_protein);
+            fat = view.findViewById(R.id.cardview_consumed_food_recipe_details_fat);
+            carbohydrate = view.findViewById(R.id.cardview_consumed_food_recipe_details_carbohydrate);
+            protein = view.findViewById(R.id.cardview_consumed_food_recipe_details_protein);
             quantity = view.findViewById(R.id.cardview_consumed_food_quantity);
-            date = view.findViewById(R.id.cardview_consumed_food_date);
-            name = view.findViewById(R.id.cardview_consumed_food_name);
+            date = view.findViewById(R.id.cardview_consumed_food_recipe_quantity_title);
+            name = view.findViewById(R.id.cardview_consumed_food_recipe_name);
         }
     }
 }

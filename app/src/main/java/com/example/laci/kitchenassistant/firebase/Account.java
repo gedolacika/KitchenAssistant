@@ -368,6 +368,7 @@ public class Account {
                         reversedArray.add(weightHistories.get(i));
                     }
                     user.setWeightHistories(reversedArray);
+                    user.setWeight((int)(long)user.getWeightHistories().get(0).getWeight());
                 }
                 // user.setWeight(Integer.parseInt(dataSnapshot.child(ACCOUNT_WEIGHT).getValue().toString()));
 

@@ -15,8 +15,8 @@
             android:title="Foods" />
         <item
             android:id="@+id/nav_foods_at_home"
-            android:icon="@drawable/icon_fridge"
-            android:title="Foods at home" />
+            android:icon="@drawable/food_recommendation"
+            android:title="Recommendations" />
         <item
             android:id="@+id/nav_add_food"
             android:icon="@drawable/icon_plus"

@@ -21,6 +21,7 @@ public class BasicFoodsHandler {
     private static String BASICFOOD_IMAGE = "i";
     private static String BASICFOOD_SUGAR = "Sugar";
     private static String BASICFOOD_SATURATED = "Saturated";
+    private static String BASICFOOD_TYPE = "type";
 
     private static String DATABASE_BASE_PATH = "BasicFoods";
 
@@ -61,6 +62,11 @@ public class BasicFoodsHandler {
 
                     if(current.child(BASICFOOD_IMAGE).exists())
                         current_basic_food.setPicture(current.child(BASICFOOD_IMAGE).getValue().toString());
+
+                    if(current.child(BASICFOOD_TYPE).exists())
+                        current_basic_food.setType(current.child(BASICFOOD_TYPE).getValue().toString());
+                    else
+                        current_basic_food.setType("base");
 
                     basicFoods.add(current_basic_food);
                 }

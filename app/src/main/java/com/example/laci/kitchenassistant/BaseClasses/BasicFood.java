@@ -3,6 +3,7 @@ package com.example.laci.kitchenassistant.BaseClasses;
 public class BasicFood {
     private String name,picture;
     private int calorie,protein,carbohydrate,fat,sugar,saturated;
+    private String type;
 
     public BasicFood(String name, int calorie, int protein, int carbohydrate, int fat) {
         this.name = name;
@@ -25,6 +26,18 @@ public class BasicFood {
         this.saturated = 0;
     }
 
+    public BasicFood(String name, String picture, int calorie, int protein, int carbohydrate, int fat, String type) {
+        this.name = name;
+        this.picture = picture;
+        this.calorie = calorie;
+        this.protein = protein;
+        this.carbohydrate = carbohydrate;
+        this.fat = fat;
+        this.sugar = 0;
+        this.saturated = 0;
+        this.type = type;
+    }
+
     public BasicFood() {
         calorie = -1;
         protein = -1;
@@ -36,6 +49,14 @@ public class BasicFood {
 
     public BasicFood(int calorie) {
         this.calorie = calorie;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getSugar() {

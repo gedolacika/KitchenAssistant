@@ -2,11 +2,6 @@ package com.example.laci.kitchenassistant.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +13,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
-import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
 import com.example.laci.kitchenassistant.BaseClasses.StepCount;
@@ -130,6 +124,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        Account.getIntakeFood(new RetrieveDataListener<ArrayList<IntakeFood>>() {
+            @Override
+            public void onSuccess(ArrayList<IntakeFood> data) {
+                intookedFoods = data;
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
     }
 
     @Override
@@ -175,7 +181,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_diagram: FragmentNavigation.loadDiagramsFragment(this); break;
             case R.id.nav_fitness: FragmentNavigation.loadFitnessFragment(this); break;
             case R.id.nav_foods: FragmentNavigation.loadFoodsFragment(this); break;
-            case R.id.nav_foods_at_home: FragmentNavigation.loadFoodsAtHomeFragment(this); break;
+            case R.id.nav_foods_at_home: FragmentNavigation.loadFoodRecommendationFragment(this); break;
             case R.id.nav_history: FragmentNavigation.loadHistoryFragment(this); break;
             case R.id.nav_home: FragmentNavigation.loadHomeFragment(this); break;
             case R.id.nav_logout: FirebaseAuth.getInstance().signOut();

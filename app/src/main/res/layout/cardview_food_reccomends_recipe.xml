@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardview_food_basic_food_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -21,62 +20,45 @@
         <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/cardview_food_basic_food_layout_inner"
+            android:id="@+id/cardview_food_recommend_constraint_layout_inner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
+
 
             <ImageView
-                android:id="@+id/cardview_food_basic_food_image"
+                android:id="@+id/cardview_food_recommend_recipe_image"
                 android:layout_width="0dp"
-                android:layout_height="118dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="112dp"
                 android:scaleType="center"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@color/colorAccent" />
+                app:srcCompat="@color/colorGray" />
 
             <TextView
-                android:id="@+id/cardview_food_basic_food_name"
+                android:id="@+id/cardview_food_recommend_recipe_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="26dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="Pepper"
-                android:textColor="@color/colorDetailsScreen"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardview_food_basic_food_image" />
-
-            <TextView
-                android:id="@+id/cardview_food_basic_food_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
                 android:layout_marginEnd="8dp"
-                android:text="100 g"
-                android:textColor="@color/colorDetailsScreen"
+                android:text="TextView"
+                android:textColor="#000"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cardview_food_basic_food_name" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/cardview_food_recommend_recipe_details_calorie_imge"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="68dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="148dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardview_food_basic_food_image"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/calorie_icon" />
 
             <ImageView
@@ -98,13 +80,26 @@
                 app:srcCompat="@drawable/protein_icon" />
 
             <ImageView
-                android:id="@+id/fragment_food_details_carbohydrate_image"
+                android:id="@+id/cardview_food_recommend_recipe_carbohydrate_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardview_food_recommend_recipe_details_carbohydrate"
                 app:layout_constraintTop_toTopOf="@+id/cardview_food_recommend_recipe_details_calorie_imge"
                 app:srcCompat="@drawable/carbohydrate_icon" />
+
+            <TextView
+                android:id="@+id/cardview_food_recommend_recipe_quantity_title"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Recommended quantity: 275 g"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_food_recommend_recipe_details_calorie_imge" />
 
             <TextView
                 android:id="@+id/cardview_food_recommend_recipe_details_carbohydrate"
@@ -112,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="121"
-                android:textColor="@color/colorDetailsScreen"
+                android:textColor="#000000"
                 android:textSize="20dp"
                 app:layout_constraintStart_toEndOf="@+id/cardview_food_recommend_recipe_details_fat_image"
                 app:layout_constraintTop_toTopOf="@+id/cardview_food_recommend_recipe_details_fat" />
@@ -123,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="121"
-                android:textColor="@color/colorDetailsScreen"
+                android:textColor="#000000"
                 android:textSize="20dp"
                 app:layout_constraintStart_toEndOf="@+id/cardview_food_recommend_recipe_details_protein_image"
                 app:layout_constraintTop_toTopOf="@+id/cardview_food_recommend_recipe_details_protein_image" />
@@ -134,23 +129,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="121"
-                android:textColor="@color/colorDetailsScreen"
+                android:textColor="#000000"
                 android:textSize="20dp"
                 app:layout_constraintStart_toEndOf="@+id/cardview_food_recommend_recipe_details_calorie_imge"
                 app:layout_constraintTop_toTopOf="@+id/cardview_food_recommend_recipe_details_calorie_imge" />
 
             <TextView
-                android:id="@+id/cardview_food_basic_food_calorie"
+                android:id="@+id/cardview_food_recommend_recipe_calorie_text7"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:text="121"
-                android:textColor="@color/colorDetailsScreen"
+                android:textColor="#000000"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/cardview_food_recommend_recipe_details_calorie_imge"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/cardview_food_recommend_recipe_details_calorie_imge" />
+
+
         </android.support.constraint.ConstraintLayout>
+
     </android.support.v7.widget.CardView>
+
 </android.support.constraint.ConstraintLayout>

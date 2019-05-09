@@ -21,13 +21,13 @@
         <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/cardview_food_constarint_layout_inner"
+            android:id="@+id/cardview_food_recommend_constraint_layout_inner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
             <ImageView
-                android:id="@+id/cardview_consumed_food_image"
+                android:id="@+id/cardview_food_image"
                 android:layout_width="0dp"
                 android:layout_height="112dp"
                 android:scaleType="center"
@@ -37,7 +37,7 @@
                 app:srcCompat="@color/colorGray" />
 
             <TextView
-                android:id="@+id/cardview_consumed_food_name"
+                android:id="@+id/cardview_food_name"
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:layout_marginStart="16dp"
@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/fragment_consumed_food_details_calorie_imge"
+                android:id="@+id/cardview_food_details_calorie_imge"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="56dp"
@@ -62,21 +62,21 @@
                 app:srcCompat="@drawable/calorie_icon" />
 
             <ImageView
-                android:id="@+id/fragment_consumed_food_details_fat_image"
+                android:id="@+id/cardview_food_details_fat_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@+id/cardview_consumed_food_details_fat"
-                app:layout_constraintTop_toTopOf="@+id/fragment_consumed_food_details_calorie_imge"
+                app:layout_constraintStart_toEndOf="@+id/cardview_food_details_fat"
+                app:layout_constraintTop_toTopOf="@+id/cardview_food_details_calorie_imge"
                 app:srcCompat="@drawable/fat_icon" />
 
             <ImageView
-                android:id="@+id/fragment_consumed_food_details_protein_image"
+                android:id="@+id/cardview_food_details_protein_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@+id/cardview_consumed_food_details_protein"
-                app:layout_constraintTop_toTopOf="@+id/fragment_consumed_food_details_calorie_imge"
+                app:layout_constraintStart_toEndOf="@+id/cardview_food_details_protein"
+                app:layout_constraintTop_toTopOf="@+id/cardview_food_details_calorie_imge"
                 app:srcCompat="@drawable/protein_icon" />
 
             <ImageView
@@ -85,12 +85,12 @@
                 android:layout_height="30dp"
                 android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardview_consumed_food_details_carbohydrate"
-                app:layout_constraintTop_toTopOf="@+id/fragment_consumed_food_details_calorie_imge"
+                app:layout_constraintStart_toEndOf="@+id/cardview_food_details_carbohydrate"
+                app:layout_constraintTop_toTopOf="@+id/cardview_food_details_calorie_imge"
                 app:srcCompat="@drawable/carbohydrate_icon" />
 
             <TextView
-                android:id="@+id/cardview_consumed_food_date"
+                android:id="@+id/cardview_food_quantity_title"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
@@ -102,37 +102,37 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/cardview_consumed_food_details_carbohydrate"
+                android:id="@+id/cardview_food_details_carbohydrate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="121"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                app:layout_constraintStart_toEndOf="@+id/fragment_consumed_food_details_fat_image"
-                app:layout_constraintTop_toTopOf="@+id/cardview_consumed_food_details_fat" />
+                app:layout_constraintStart_toEndOf="@+id/cardview_food_details_fat_image"
+                app:layout_constraintTop_toTopOf="@+id/cardview_food_details_fat" />
 
             <TextView
-                android:id="@+id/cardview_consumed_food_details_fat"
+                android:id="@+id/cardview_food_details_fat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="121"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                app:layout_constraintStart_toEndOf="@+id/fragment_consumed_food_details_protein_image"
-                app:layout_constraintTop_toTopOf="@+id/fragment_consumed_food_details_protein_image" />
+                app:layout_constraintStart_toEndOf="@+id/cardview_food_details_protein_image"
+                app:layout_constraintTop_toTopOf="@+id/cardview_food_details_protein_image" />
 
             <TextView
-                android:id="@+id/cardview_consumed_food_details_protein"
+                android:id="@+id/cardview_food_details_protein"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="121"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                app:layout_constraintStart_toEndOf="@+id/fragment_consumed_food_details_calorie_imge"
-                app:layout_constraintTop_toTopOf="@+id/fragment_consumed_food_details_calorie_imge" />
+                app:layout_constraintStart_toEndOf="@+id/cardview_food_details_calorie_imge"
+                app:layout_constraintTop_toTopOf="@+id/cardview_food_details_calorie_imge" />
 
             <TextView
                 android:id="@+id/cardview_food_calorie_text7"
@@ -142,10 +142,10 @@
                 android:text="121"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                app:layout_constraintEnd_toStartOf="@+id/fragment_consumed_food_details_calorie_imge"
+                app:layout_constraintEnd_toStartOf="@+id/cardview_food_details_calorie_imge"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/fragment_consumed_food_details_calorie_imge" />
+                app:layout_constraintTop_toTopOf="@+id/cardview_food_details_calorie_imge" />
 
 
         </android.support.constraint.ConstraintLayout>

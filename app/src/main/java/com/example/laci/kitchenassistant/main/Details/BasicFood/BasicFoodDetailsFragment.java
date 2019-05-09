@@ -78,9 +78,9 @@ public class BasicFoodDetailsFragment extends Fragment {
     private void initViews(View view) {
         name = view.findViewById(R.id.fragment_basic_food_details_name);
         calorie = view.findViewById(R.id.fragment_basic_food_details_calorie);
-        fat = view.findViewById(R.id.cardview_consumed_food_details_fat);
-        carbohydrate = view.findViewById(R.id.cardview_consumed_food_details_carbohydrate);
-        protein = view.findViewById(R.id.cardview_consumed_food_details_protein);
+        fat = view.findViewById(R.id.cardview_food_recommend_recipe_details_fat);
+        carbohydrate = view.findViewById(R.id.cardview_food_recommend_recipe_details_carbohydrate);
+        protein = view.findViewById(R.id.cardview_food_recommend_recipe_details_protein);
         imageView = view.findViewById(R.id.fragment_basic_food_details_image);
         button = view.findViewById(R.id.fragment_basic_food_details_button);
         quantity = view.findViewById(R.id.fragment_basic_food_details_editText);

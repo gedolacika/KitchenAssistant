@@ -126,9 +126,9 @@ public class FoodDetailsFragment extends Fragment {
         pictures = view.findViewById(R.id.fragment_food_details_pictures_recyclerView);
         ingredients = view.findViewById(R.id.fragment_food_details_ingredients);
         calorie = view.findViewById(R.id.fragment_food_details_calorie);
-        protein = view.findViewById(R.id.cardview_consumed_food_details_protein);
-        fat = view.findViewById(R.id.cardview_consumed_food_details_fat);
-        carbohydrate = view.findViewById(R.id.cardview_consumed_food_details_carbohydrate);
+        protein = view.findViewById(R.id.cardview_food_recommend_recipe_details_protein);
+        fat = view.findViewById(R.id.cardview_food_recommend_recipe_details_fat);
+        carbohydrate = view.findViewById(R.id.cardview_food_recommend_recipe_details_carbohydrate);
         quantity = view.findViewById(R.id.fragment_food_details_quantity);
         quantity_serving = view.findViewById(R.id.fragment_food_details_quantity_per_serving);
         button = view.findViewById(R.id.fragment_food_details_button);

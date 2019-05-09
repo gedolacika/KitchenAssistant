@@ -77,9 +77,9 @@ public class BasicFoodsAdapter extends RecyclerView.Adapter<BasicFoodsAdapter.Vi
         private void initViews(View itemView){
             name = itemView.findViewById(R.id.cardview_food_basic_food_name);
             calorie = itemView.findViewById(R.id.cardview_food_basic_food_calorie);
-            fat = itemView.findViewById(R.id.cardview_consumed_food_details_fat);
-            protein = itemView.findViewById(R.id.cardview_consumed_food_details_protein);
-            carbohydrate = itemView.findViewById(R.id.cardview_consumed_food_details_carbohydrate);
+            fat = itemView.findViewById(R.id.cardview_food_recommend_recipe_details_fat);
+            protein = itemView.findViewById(R.id.cardview_food_recommend_recipe_details_protein);
+            carbohydrate = itemView.findViewById(R.id.cardview_food_recommend_recipe_details_carbohydrate);
             imageView = itemView.findViewById(R.id.cardview_food_basic_food_image);
             layout = itemView.findViewById(R.id.cardview_food_basic_food_layout_inner);
         }
