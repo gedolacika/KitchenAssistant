@@ -45,34 +45,13 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ((MainActivity)getActivity()).setTitle("Home");
         initViews(view);
-        Account.downloadDailySteps(new RetrieveDataListener<ArrayList<StepCount>>() {
-            @Override
-            public void onSuccess(ArrayList<StepCount> data) {
-                ((MainActivity) Objects.requireNonNull(getActivity())).dailyStepCounts = data;
-                setUpStepsPieCharts(view);
-            }
 
-            @Override
-            public void onFailure(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-            }
-        });
 
-        Account.getIntakeFood(new RetrieveDataListener<ArrayList<IntakeFood>>() {
-            @Override
-            public void onSuccess(ArrayList<IntakeFood> data) {
-                ((MainActivity)getActivity()).intookedFoods = data;
-                setUpIntakeFoodsPieCharts(view);
-                setConsumedFoodsRecyclerView(view);
-
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-            }
-        });
+        setUpStepsPieCharts(view);
+        setUpIntakeFoodsPieCharts(view);
+        setConsumedFoodsRecyclerView(view);
 
 
         stepCounterService = new com.example.laci.kitchenassistant.main.Service.StepCounter();
@@ -86,8 +65,12 @@ public class HomeFragment extends Fragment {
     private void setConsumedFoodsRecyclerView(View view){
         Date currentTime = new Date();
         ArrayList<IntakeFood> foods = new ArrayList<>();
+        Date tempDate;
         for(int i = 0; i < ((MainActivity)getActivity()).intookedFoods.size(); ++i){
-            if(currentTime.getDay() == (new Date(((MainActivity)getActivity()).intookedFoods.get(i).getTime())).getDay()){
+            tempDate = new Date(((MainActivity)getActivity()).intookedFoods.get(i).getTime());
+            if(currentTime.getDay() == tempDate.getDay() &&
+                currentTime.getMonth() == tempDate.getMonth() &&
+                currentTime.getYear() == tempDate.getYear()){
                 foods.add(((MainActivity)getActivity()).intookedFoods.get(i));
             }
         }

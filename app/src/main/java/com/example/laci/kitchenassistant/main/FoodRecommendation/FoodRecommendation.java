@@ -36,7 +36,7 @@ public class FoodRecommendation extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_food_recommendation, container, false);
         initViews(view);
-
+        ((MainActivity)getActivity()).setTitle("Recommendation");
         /*breakfast = view.findViewById(R.id.fragment_food_recommends_breakfast_recyclerView);
         breakfastAdapter = new RecipeAdapter( UserNeedPersonalInformations.getBreakfasts(), view.getContext());
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -57,27 +57,18 @@ public class FoodRecommendation extends Fragment {
         setUpBasicFoodRecyclerView(view.getContext(), afternoonSnack, afternoonSnackAdapter, UserNeedPersonalInformations.getAfternoonSnacks());
         setUpRecipeRecyclerView(view.getContext(),dinner, dinnerAdapter, UserNeedPersonalInformations.getDinners());
 
-        Account.downloadAllSteps(new RetrieveDataListener<ArrayList<StepCount>>() {
-            @Override
-            public void onSuccess(ArrayList<StepCount> data) {
-                ((MainActivity)getActivity()).allSteps = data;
-                CalorieNeedCounter.CountCalories(((MainActivity)getActivity()).intookedFoods, ((MainActivity)getActivity()).allSteps, ((MainActivity)getActivity()).trainings, ((MainActivity)getActivity()).user);
-                MenuSetter.setMenu(((MainActivity)getActivity()).recipes,
-                        ((MainActivity)getActivity()).basicFoods,
-                        ((MainActivity)getActivity()).intookedFoods);
+        CalorieNeedCounter.CountCalories(((MainActivity)getActivity()).intookedFoods, ((MainActivity)getActivity()).allSteps, ((MainActivity)getActivity()).trainings, ((MainActivity)getActivity()).user);
+        MenuSetter.setMenu(((MainActivity)getActivity()).recipes,
+                ((MainActivity)getActivity()).basicFoods,
+                ((MainActivity)getActivity()).intookedFoods);
 
-                breakfastAdapter.notifyDataSetChanged();
-                snackAdapter.notifyDataSetChanged();
-                lunchAdapter.notifyDataSetChanged();
-                afternoonSnackAdapter.notifyDataSetChanged();
-                dinnerAdapter.notifyDataSetChanged();
-            }
+        breakfastAdapter.notifyDataSetChanged();
+        snackAdapter.notifyDataSetChanged();
+        lunchAdapter.notifyDataSetChanged();
+        afternoonSnackAdapter.notifyDataSetChanged();
+        dinnerAdapter.notifyDataSetChanged();
 
-            @Override
-            public void onFailure(String message) {
-                Toast.makeText(container.getContext(), message.toString(),Toast.LENGTH_LONG).show();
-            }
-        });
+
 
         return view;
     }

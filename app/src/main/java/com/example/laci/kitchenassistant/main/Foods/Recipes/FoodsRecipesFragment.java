@@ -21,7 +21,7 @@ public class FoodsRecipesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_foods_recipes, container, false);
-
+        ((MainActivity)getActivity()).setTitle("Recipes");
         recyclerView = view.findViewById(R.id.fragment_foods_recipes_recyclerView);
         adapter = new FoodsAdapter(((MainActivity)getActivity()).recipes,view.getContext(),getActivity());
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext());

@@ -25,7 +25,7 @@ public class ConfirmActivity extends AppCompatActivity implements ConfirmContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
-
+        setTitle("Authentication");
         initViews();
         materialDialog = new MaterialDialog.Builder(this)
                 .content("Loading...")

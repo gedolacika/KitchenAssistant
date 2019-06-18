@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -48,7 +49,9 @@ import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 public class AddFoodFragment extends Fragment {
-    private TextInputEditText name,origin,preparation_time, portion, difficulty,quantity,preparation,quantity_of_all_food,link;
+    private TextInputEditText name,origin,preparation_time, portion, difficulty,preparation,quantity_of_all_food,link;
+    private SeekBar quantity_seekBar;
+    private int quantity = 0;
     private Spinner type, ingredient;
     private Button add_ingredient, add_picture, add_food;
     private RecyclerView ingredients_recyclerView, pictures_recyclerView;
@@ -74,6 +77,7 @@ public class AddFoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_food, container, false);
         globalView = view;
+        ((MainActivity)getActivity()).setTitle("Add food");
         initViews(view);
         context = view.getContext();
         recipe_url_pictures = new ArrayList<>();
@@ -100,24 +104,38 @@ public class AddFoodFragment extends Fragment {
     }
 
     private void setUpListeners(){
+        quantity_seekBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener()
+                {
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress,
+                                                  boolean fromUser)
+                    {
+                        quantity = progress*10;
+                        add_ingredient.setText("ADD " + quantity + "g");
+                    }
+                }
+        );
         add_ingredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Validations.validateQuantity(quantity.getText().toString()) == 0){
-                    BasicFood new_basicFood = new BasicFood(chosen_basic_food.getName(),
-                            chosen_basic_food.getPicture(),
-                            chosen_basic_food.getCalorie()*Integer.parseInt(quantity.getText().toString())/100,
-                            chosen_basic_food.getProtein()*Integer.parseInt(quantity.getText().toString())/100,
-                            chosen_basic_food.getCarbohydrate()*Integer.parseInt(quantity.getText().toString())/100,
-                            chosen_basic_food.getFat()*Integer.parseInt(quantity.getText().toString())/100);
-                    ingredients.add(new BasicFoodQuantity(new_basicFood,Integer.parseInt(quantity.getText().toString())));
-                    ingredient_recyclerView_adapter.notifyDataSetChanged();
+                BasicFood new_basicFood = new BasicFood(chosen_basic_food.getName(),
+                        chosen_basic_food.getPicture(),
+                        chosen_basic_food.getCalorie()*quantity/100,
+                        chosen_basic_food.getProtein()*quantity/100,
+                        chosen_basic_food.getCarbohydrate()*quantity/100,
+                        chosen_basic_food.getFat()*quantity/100);
+                ingredients.add(new BasicFoodQuantity(new_basicFood,quantity));
+                ingredient_recyclerView_adapter.notifyDataSetChanged();
 
-                    Toast.makeText(context,quantity.getText() + "g " + new_basicFood.getName() + " added to ingredients.",Toast.LENGTH_LONG).show();
-                    quantity.setText("");
-                }
-                else
-                    quantity.setError("Not a valid number.");
+                Toast.makeText(context,quantity + "g " + new_basicFood.getName() + " added to ingredients.",Toast.LENGTH_LONG).show();
             }
         });
         add_picture.setOnClickListener(new View.OnClickListener() {
@@ -376,7 +394,7 @@ public class AddFoodFragment extends Fragment {
         preparation_time = view.findViewById(R.id.add_food_preparation_time_editText);
         portion = view.findViewById(R.id.add_food_portion_editText);
         difficulty = view.findViewById(R.id.add_food_difficulty_editText);
-        quantity = view.findViewById(R.id.add_food_ingredient_quantity_editText);
+        quantity_seekBar = view.findViewById(R.id.add_food_ingredient_seekBar);
         preparation = view.findViewById(R.id.add_food_preparation_editText);
         quantity_of_all_food = view.findViewById(R.id.add_food_quantity_editText);
         type = view.findViewById(R.id.add_food_spinner_food_type);

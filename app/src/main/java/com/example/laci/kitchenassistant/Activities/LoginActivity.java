@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         button = findViewById(R.id.login_button);
         phoneNumber = findViewById(R.id.login_text_input_edit_text);
+        setTitle("Login");
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

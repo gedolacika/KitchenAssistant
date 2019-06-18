@@ -44,7 +44,7 @@ public class FoodDetailsFragment extends Fragment {
         setIngredients(view);
         setOtherParameters();
         setListener(view);
-
+        ((MainActivity)getActivity()).setTitle(food.getName());
         return view;
     }
 

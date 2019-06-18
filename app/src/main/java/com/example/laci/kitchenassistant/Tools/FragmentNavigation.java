@@ -16,7 +16,6 @@ import com.example.laci.kitchenassistant.main.FoodRecommendation.FoodRecommendat
 import com.example.laci.kitchenassistant.main.Foods.BasicFoods.FoodsBasicFoodsFragment;
 import com.example.laci.kitchenassistant.main.Foods.Recipes.FoodsRecipesFragment;
 import com.example.laci.kitchenassistant.main.Foods.FoodsFragment;
-import com.example.laci.kitchenassistant.main.HistoryFragment;
 import com.example.laci.kitchenassistant.main.Home.HomeFragment;
 
 public class FragmentNavigation {
@@ -62,15 +61,6 @@ public class FragmentNavigation {
         fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag("FoodsFragment");
         if (fragment == null) {
             fragment = new FoodsFragment();
-        }
-
-        loadFragment(fragment, fragmentActivity);
-    }
-
-    public static void loadHistoryFragment(FragmentActivity fragmentActivity) {
-        fragment = fragmentActivity.getSupportFragmentManager().findFragmentByTag("HistoryFragment");
-        if (fragment == null) {
-            fragment = new HistoryFragment();
         }
 
         loadFragment(fragment, fragmentActivity);

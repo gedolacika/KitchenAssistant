@@ -72,6 +72,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
+        ((MainActivity)getActivity()).setTitle("Account");
         context = container.getContext();
         globalView = view;
         initViews(view);

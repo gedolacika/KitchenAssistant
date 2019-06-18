@@ -28,7 +28,7 @@ public class DiagramsFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_diagrams, container, false);
         initViews(view);
-
+        ((MainActivity)getActivity()).setTitle("Diagrams");
         Account.downloadAllSteps(new RetrieveDataListener<ArrayList<StepCount>>() {
             @Override
             public void onSuccess(ArrayList<StepCount> data) {

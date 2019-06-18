@@ -58,22 +58,12 @@ public class FitnessFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_fitness, container, false);
         initViews(view);
+        ((MainActivity)getActivity()).setTitle("Fitness");
         PersonalizeChart.setStepsPieChart(view,pieChart, ((MainActivity)Objects.requireNonNull(getActivity())).dailyStepCounts, 10000);
-        Account.downloadWeeklySteps(new RetrieveDataListener<ArrayList<StepCount>>() {
-            @Override
-            public void onSuccess(ArrayList<StepCount> data) {
-                ((MainActivity)getActivity()).weeklyStepCounts = data;
-                SetGenerallyCharts.setUpLineChart(getContext(),stepsLineChart,setStepsToArrayList(new ArrayList<Entry>(),1));
-                SetGenerallyCharts.setUpLineChart(getContext(),trainingAllLineChart,setTrainingsAllArrayList(new ArrayList<Entry>(),3));
-                setListeners(view);
-            }
 
-            @Override
-            public void onFailure(String message) {
-
-            }
-        });
-
+        SetGenerallyCharts.setUpLineChart(getContext(),stepsLineChart,setStepsToArrayList(new ArrayList<Entry>(),1));
+        SetGenerallyCharts.setUpLineChart(getContext(),trainingAllLineChart,setTrainingsAllArrayList(new ArrayList<Entry>(),3));
+        setListeners(view);
         setUpTrainingsSpinner(view.getContext());
 
         return view;
