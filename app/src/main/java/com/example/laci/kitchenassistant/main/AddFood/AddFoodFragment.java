@@ -49,13 +49,14 @@ import static android.app.Activity.RESULT_OK;
 import static com.google.android.gms.common.util.CollectionUtils.listOf;
 
 public class AddFoodFragment extends Fragment {
-    private TextInputEditText name,origin,preparation_time, portion, difficulty,preparation,quantity_of_all_food,link;
+    private TextInputEditText name,origin,preparation_time, portion,preparation,quantity_of_all_food,link;
+    private Spinner difficulty;
     private SeekBar quantity_seekBar;
-    private int quantity = 0;
+    private int quantity = 0, choosen_difficulty;
     private Spinner type, ingredient;
     private Button add_ingredient, add_picture, add_food;
     private RecyclerView ingredients_recyclerView, pictures_recyclerView;
-    private ArrayAdapter<CharSequence> type_adapter;
+    private ArrayAdapter<CharSequence> type_adapter, difficulty_adapter;
     private String choosen_type;
     private BasicFood chosen_basic_food;
     private AddFoodBasicFoodsSpinnerAdapter ingredient_spinner_adapter;
@@ -86,7 +87,7 @@ public class AddFoodFragment extends Fragment {
         setUpIngredientRecyclerView(view.getContext());
         setUpPicturesRecyclerView(view.getContext());
         setUpListeners();
-
+        setUpDifficultySpinner(view.getContext());
 
 
 
@@ -206,10 +207,10 @@ public class AddFoodFragment extends Fragment {
                     portion.setError("Not a valid number of servings.");
                     send_data = false;
                 }
-                if(Validations.validateNumber(difficulty.getText().toString()) != 0){
+                /*if(Validations.validateNumber(difficulty.getText().toString()) != 0){
                     difficulty.setError("Not a valid difficulty. It could be 0-easy,1-medium,2-hard.");
                     send_data = false;
-                }
+                }*/
                 if(Validations.validateString(origin.getText().toString()) != 0){
                     origin.setError("Not a valid origin.");
                     send_data = false;
@@ -251,7 +252,7 @@ public class AddFoodFragment extends Fragment {
                             FirebaseAuth.getInstance().getUid(),
                             Integer.parseInt(preparation_time.getText().toString()),
                             Integer.parseInt(portion.getText().toString()),
-                            Integer.parseInt(difficulty.getText().toString()),
+                            choosen_difficulty,
                             true,
                             recipe_url_pictures);
                     upload_recipe.setQuantity(Integer.parseInt(quantity_of_all_food.getText().toString()));
@@ -388,12 +389,29 @@ public class AddFoodFragment extends Fragment {
         });
     }
 
+    public void setUpDifficultySpinner(Context context){
+        difficulty_adapter = ArrayAdapter.createFromResource(context,R.array.difficulty,android.R.layout.simple_spinner_item);
+        difficulty_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        difficulty.setAdapter(difficulty_adapter);
+        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                choosen_difficulty = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                choosen_difficulty = 0;
+            }
+        });
+    }
+
     public void initViews(View view){
         name = view.findViewById(R.id.add_food_name_editText);
         origin = view.findViewById(R.id.add_food_origin_editText);
         preparation_time = view.findViewById(R.id.add_food_preparation_time_editText);
         portion = view.findViewById(R.id.add_food_portion_editText);
-        difficulty = view.findViewById(R.id.add_food_difficulty_editText);
+        difficulty = view.findViewById(R.id.add_food_difficulty_spinner);
         quantity_seekBar = view.findViewById(R.id.add_food_ingredient_seekBar);
         preparation = view.findViewById(R.id.add_food_preparation_editText);
         quantity_of_all_food = view.findViewById(R.id.add_food_quantity_editText);

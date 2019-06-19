@@ -25,16 +25,16 @@
 
                 <Button
                     android:id="@+id/add_food_add_image_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="46dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:background="@color/colorButton"
                     android:text="Add photo"
+                    app:layout_constraintBottom_toBottomOf="@+id/add_food_picture_link_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/add_food_picture_link_layout"
-                    app:layout_constraintTop_toBottomOf="@+id/add_food_quantity_layout" />
+                    app:layout_constraintTop_toBottomOf="@+id/add_food_pictures_textView" />
 
                 <TextView
                     android:id="@+id/add_food_pictures_textView"
@@ -121,29 +121,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/add_food_praparation_time_layout" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/add_food_difficulty_layout"
-                    android:layout_width="116dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/add_food_praparation_time_layout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/add_food_portion_layout"
-                    app:layout_constraintTop_toTopOf="@+id/add_food_praparation_time_layout"
-                    app:layout_constraintVertical_bias="0.0">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/add_food_difficulty_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Difficulty" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
                     android:id="@+id/add_food_portion_layout"
-                    android:layout_width="116dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/add_food_praparation_time_layout"
@@ -160,7 +139,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/add_food_praparation_time_layout"
-                    android:layout_width="116dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -253,7 +232,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/add_food_picture_link_layout"
-                    android:layout_width="272dp"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
@@ -293,6 +272,17 @@
                     app:layout_constraintEnd_toStartOf="@+id/add_food_button_add_ingredient"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/add_food_food_ingerdients_spinner" />
+
+                <Spinner
+                    android:id="@+id/add_food_difficulty_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/add_food_portion_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/add_food_portion_layout"
+                    app:layout_constraintTop_toTopOf="@+id/add_food_portion_layout" />
             </android.support.constraint.ConstraintLayout>
 
         </ScrollView>

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,14 +25,14 @@ import com.example.laci.kitchenassistant.main.MainActivity;
 import java.util.Objects;
 
 public class FoodDetailsFragment extends Fragment {
-    private int quantity_int;
+    private int quantity_int = 0;
     private TextView name, type, origin, servings, time, difficulty, preparation, calorie, protein, fat, carbohydrate, quantity,quantity_serving;
     private RecyclerView pictures, ingredients;
     private Recipe food;
     private PicturesAdapter pictures_adapter;
     private IngredientsAdapter ingredientsAdapter;
     private Button button;
-    private TextInputEditText editText;
+    private SeekBar seekBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +53,7 @@ public class FoodDetailsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                quantity_int = Integer.valueOf(editText.getText().toString());
+                //quantity_int = Integer.valueOf(seekBar.getText().toString());
 
                 BasicFoodQuantity for_upload = new BasicFoodQuantity();
                 for_upload.setCalorie(quantity_int* food.getCalorie()/food.getQuantity());
@@ -132,7 +133,29 @@ public class FoodDetailsFragment extends Fragment {
         quantity = view.findViewById(R.id.fragment_food_details_quantity);
         quantity_serving = view.findViewById(R.id.fragment_food_details_quantity_per_serving);
         button = view.findViewById(R.id.fragment_food_details_button);
-        editText = view.findViewById(R.id.fragment_food_details_quantity_editText);
+        seekBar = view.findViewById(R.id.fragment_food_details_seekBar);
+
+        button.setText("I ate 0g");
+
+        seekBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener()
+                {
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress,
+                                                  boolean fromUser)
+                    {
+                        quantity_int = progress*10;
+                        button.setText("I ate " + quantity_int + "g");
+                    }
+                }
+        );
 
     }
 

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.CalorieNeedCounter;
 import com.example.laci.kitchenassistant.Tools.Tools;
 import com.example.laci.kitchenassistant.Tools.Validations;
 import com.example.laci.kitchenassistant.firebase.Account;
@@ -48,6 +49,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
     private Button change, close;
     private TextInputEditText name, weight,height,age,goal_weight;
     private ImageView profilePicture,coverPhoto,male,female,weight_history;
+    private TextView calorieRequirement;
     //Gender 0 = male
     //Gender 1 = female
     private int lose_keep_gain,gender;
@@ -464,9 +466,14 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         female = view.findViewById(R.id.fragment_account_gender_female);
         weight_history = view.findViewById(R.id.fragment_account_weight_history);
         goal_weight = view.findViewById(R.id.fragment_account_goal_weight_editText);
-
+        calorieRequirement = view.findViewById(R.id.fragment_account_recommend_calorie_number);
         unChangeMode();
         lose_keep_gain = 0;
+
+        if(((MainActivity)getActivity()).user.getWeight() > 0 &&
+                ((MainActivity)getActivity()).user.getHeight() > 0 ){
+            calorieRequirement.setText(String.valueOf(CalorieNeedCounter.getCalorieNeedFOrOneDay(((MainActivity)getActivity()).user)));
+        }
 
     }
 

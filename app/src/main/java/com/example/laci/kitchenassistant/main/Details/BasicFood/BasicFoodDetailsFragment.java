@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ public class BasicFoodDetailsFragment extends Fragment {
     private TextView name, calorie, fat, carbohydrate, protein;
     private ImageView imageView;
     private Button button;
-    private TextInputEditText quantity;
+    private SeekBar quantity;
+    private int quantity_int= 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,17 +48,17 @@ public class BasicFoodDetailsFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Validations.validateNumber(Objects.requireNonNull(quantity.getText()).toString()) == 0){
+                if(quantity_int != 0){
                     BasicFoodQuantity for_upload = new BasicFoodQuantity();
-                    for_upload.setCalorie(Integer.parseInt(quantity.getText().toString())*food.getCalorie()/100);
-                    for_upload.setProtein(Integer.parseInt(quantity.getText().toString())*food.getProtein()/100);
-                    for_upload.setCarbohydrate(Integer.parseInt(quantity.getText().toString())*food.getCarbohydrate()/100);
-                    for_upload.setFat(Integer.parseInt(quantity.getText().toString())*food.getFat()/100);
-                    for_upload.setSaturated(Integer.parseInt(quantity.getText().toString())*food.getSaturated()/100);
-                    for_upload.setSugar(Integer.parseInt(quantity.getText().toString())*food.getSugar()/100);
+                    for_upload.setCalorie(quantity_int*food.getCalorie()/100);
+                    for_upload.setProtein(quantity_int*food.getProtein()/100);
+                    for_upload.setCarbohydrate(quantity_int*food.getCarbohydrate()/100);
+                    for_upload.setFat(quantity_int*food.getFat()/100);
+                    for_upload.setSaturated(quantity_int*food.getSaturated()/100);
+                    for_upload.setSugar(quantity_int*food.getSugar()/100);
                     for_upload.setName(food.getName());
                     for_upload.setPicture(food.getPicture());
-                    for_upload.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                    for_upload.setQuantity(quantity_int);
                     Account.setIntakeFood(for_upload);
                     Toast.makeText(view.getContext(),"The upload was successfull!",Toast.LENGTH_LONG).show();
                     FragmentNavigation.loadFoodsFragment(Objects.requireNonNull(getActivity()));
@@ -83,7 +85,25 @@ public class BasicFoodDetailsFragment extends Fragment {
         protein = view.findViewById(R.id.cardview_food_recommend_recipe_details_protein);
         imageView = view.findViewById(R.id.fragment_basic_food_details_image);
         button = view.findViewById(R.id.fragment_basic_food_details_button);
-        quantity = view.findViewById(R.id.fragment_basic_food_details_editText);
+        quantity = view.findViewById(R.id.fragment_basic_food_seekBar);
+
+        quantity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                quantity_int = i*10;
+                button.setText("I ate " + quantity_int + "g");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void setIndex() {

@@ -27,6 +27,7 @@ import com.example.laci.kitchenassistant.BaseClasses.TrainingBase;
 import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.ActivityNavigation;
+import com.example.laci.kitchenassistant.Tools.CalorieNeedCounter;
 import com.example.laci.kitchenassistant.Tools.FragmentNavigation;
 import com.example.laci.kitchenassistant.firebase.Account;
 import com.example.laci.kitchenassistant.firebase.BasicFoodsHandler;
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity
     public void checkTheEndOfDownloads(){
         ++finishedDownloads;
         if(finishedDownloads == 9){
+            CalorieNeedCounter.CountCalories(intookedFoods, allSteps, trainings, user);
             dialog.dismiss();
             FragmentNavigation.loadHomeFragment(this);
         }

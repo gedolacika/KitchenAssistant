@@ -7,47 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".main.Details.Recipe.FoodDetailsFragment">
 
+    <SeekBar
+        android:id="@+id/fragment_food_details_seekBar"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_food_details_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/fragment_food_details_button"
-        android:layout_width="212dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/colorButton"
         android:text="I 8 it!!"
         android:textAllCaps="false"
         android:textSize="22dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fragment_food_details_quantity_layout"
-        app:layout_constraintTop_toTopOf="@+id/fragment_food_details_quantity_layout" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fragment_food_details_quantity_layout"
-        android:layout_width="174dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="460dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/fragment_food_details_quantity_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Quantity(g)"
-            android:inputType="number" />
-    </android.support.design.widget.TextInputLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="462dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_food_details_button"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_food_details_seekBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".main.Details.Recipe.FoodDetailsFragment">
@@ -155,8 +153,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="8dp"
-                android:padding="1dp"
                 android:background="@drawable/border"
+                android:padding="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -262,7 +260,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:text="Preparation description"
                 android:textColor="@color/colorDetailsScreen"
@@ -311,12 +309,11 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:text="250 g"
                 android:textColor="@color/colorBlack"
                 android:textSize="18dp"
-                android:text="250 g"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_food_details_quantity" />
-
 
 
             <TextView

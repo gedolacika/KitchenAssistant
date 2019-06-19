@@ -57,7 +57,6 @@ public class FoodRecommendation extends Fragment {
         setUpBasicFoodRecyclerView(view.getContext(), afternoonSnack, afternoonSnackAdapter, UserNeedPersonalInformations.getAfternoonSnacks());
         setUpRecipeRecyclerView(view.getContext(),dinner, dinnerAdapter, UserNeedPersonalInformations.getDinners());
 
-        CalorieNeedCounter.CountCalories(((MainActivity)getActivity()).intookedFoods, ((MainActivity)getActivity()).allSteps, ((MainActivity)getActivity()).trainings, ((MainActivity)getActivity()).user);
         MenuSetter.setMenu(((MainActivity)getActivity()).recipes,
                 ((MainActivity)getActivity()).basicFoods,
                 ((MainActivity)getActivity()).intookedFoods);

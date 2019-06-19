@@ -9,13 +9,8 @@ import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.BaseClasses.UserNeedPersonalInformations;
 import com.example.laci.kitchenassistant.BaseClasses.WeeklyPersonalData;
 import com.example.laci.kitchenassistant.BaseClasses.WeightHistory;
-import com.example.laci.kitchenassistant.main.MainActivity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class CalorieNeedCounter {
@@ -29,11 +24,18 @@ public class CalorieNeedCounter {
 
 
     public static void CountCalories(ArrayList<IntakeFood> foods, ArrayList<StepCount> steps, ArrayList<Training> trainings, User user){
-        calorieNeedForOneDay = getCalorieNeedForOneDay(user);
+        calorieNeedForOneDay = getBaseCalorieNeedForOneDay(user);
         //MINIMUM_CALORIE_BURN_FOR_A_DAY = calorieNeedForOneDay;
         setWeeklyPersonalData(foods, steps, trainings, user);
         filterWeeklyPersonalDataByWhatWeWant(user);
-        setCalorieRequirements();
+        if(weeklyPersonalData.size() > 0){
+            setCalorieRequirementsIfWeHaveHistory();
+        } else{
+            setCalorieRequirementsIfWeHaveNotHistory();
+        }
+        setCalorieRequirementsIfWeHaveHistory();//TODO HAVE TO DELETE
+
+
         //printWeeklyPersonalData();
         //printUserPersonalInformations();
 
@@ -44,10 +46,18 @@ public class CalorieNeedCounter {
 
     }
 
+    private static void setCalorieRequirementsIfWeHaveNotHistory(){
+        //TODO default calorie requirements
+        /*UserNeedPersonalInformations.setMinimumCalorieBurn(minBC);
+        UserNeedPersonalInformations.setMinimumCalorieIntake(minIC);
+        UserNeedPersonalInformations.setMaximumCalorieBurn(maxBC);
+        UserNeedPersonalInformations.setMaximumCalorieIntake(maxIC);
+        UserNeedPersonalInformations.setAverageCalorieBurn(avgBC);
+        UserNeedPersonalInformations.setAverageCalorieIntake(avgIC);*/
+    }
 
 
-
-    private static void setCalorieRequirements(){
+    private static void setCalorieRequirementsIfWeHaveHistory(){
         int minBC=10000,minIC=10000, maxBC=-1, maxIC=-1, avgBC=0, avgIC=0;
         int burnedCalories, consumedCalories;
         for(int i = 0; i < weeklyPersonalData.size(); ++i){
@@ -326,11 +336,12 @@ public class CalorieNeedCounter {
     }
 
     /**
+     * This function count the daily base calorie requirement, if we don't do nothing.
      * It returns the personalized value of the calorie need for one day, followed by the users parameters
      * @param user
      * @return - calorie requirement for one day
      */
-    private static int getCalorieNeedForOneDay(User user){
+    public static int getBaseCalorieNeedForOneDay(User user){
         int calorieNeed = 0;
         //if male
         if(user.getGender()==0){
@@ -357,4 +368,15 @@ public class CalorieNeedCounter {
         return  calorieNeed;
     }
 
+    /**
+     * Calculate the calorie requirement with an average fitness action
+     * @param user
+     * @return
+     */
+    public static int getCalorieNeedFOrOneDay(User user){
+        int baseCalorieRequirement = getBaseCalorieNeedForOneDay(user);
+        if(user.getGender()==0) baseCalorieRequirement = (int)((int)baseCalorieRequirement*(float)2.2);
+        else baseCalorieRequirement = (int)((int)baseCalorieRequirement*(float)1.6);
+        return baseCalorieRequirement;
+    }
 }
