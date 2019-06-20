@@ -6,6 +6,8 @@ import android.view.View;
 import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.BaseClasses.StepCount;
 import com.example.laci.kitchenassistant.BaseClasses.Training;
+import com.example.laci.kitchenassistant.BaseClasses.UserNeedPersonalInformations;
+import com.example.laci.kitchenassistant.Tools.DateFunctions;
 import com.example.laci.kitchenassistant.Tools.Tools;
 import com.example.laci.kitchenassistant.main.MainActivity;
 import com.github.mikephil.charting.charts.LineChart;
@@ -16,6 +18,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 
 public class PersonalizeChart {
@@ -25,6 +28,57 @@ public class PersonalizeChart {
 
     public static void setDiagramsFragmentLineCharts(View view, LineChart consumedBurnedLineChart, LineChart plusMinusLineChart, LineChart estimatedLineChart, ArrayList<IntakeFood> consumedFoods, ArrayList<StepCount> steps, ArrayList<Training> trainings,  int calorieNeedForOneDay){
         setConsumedBurnedLineChart(view,consumedBurnedLineChart, consumedFoods, steps, calorieNeedForOneDay,trainings);
+        setPlusMinusLineChart(view, plusMinusLineChart, burnedCaloriesLastWeek, consumedFoods);
+        setEstimatedByRecommendations(view, estimatedLineChart);
+    }
+
+    public static void setEstimatedByRecommendations(View view, LineChart lineChart){
+        ArrayList<StepCount> burned = new ArrayList<>();
+        ArrayList<IntakeFood> consumed = new ArrayList<>();
+
+        DateFunctions.setNextWeek(consumed, burned);
+
+        Random random1 = new Random();
+        Random random2 = new Random();
+        int consumedRandom, burnedRandom;
+        for(int i = 0; i < burned.size(); ++i){
+            consumedRandom = UserNeedPersonalInformations.getMinimumCalorieIntake() +
+                    random1.nextInt(
+                            UserNeedPersonalInformations.getMaximumCalorieIntake() -
+                                    UserNeedPersonalInformations.getMinimumCalorieIntake());
+
+            burnedRandom = UserNeedPersonalInformations.getMinimumCalorieBurn() +
+                    random2.nextInt(
+                            UserNeedPersonalInformations.getMaximumCalorieBurn() -
+                                    UserNeedPersonalInformations.getMinimumCalorieBurn());
+
+            consumed.get(i).setCalorie(consumedRandom);
+            burned.get(i).setSteps(burnedRandom);
+            Log.e("MINUSPLUS", "Consumed random: " + consumedRandom + " - Burned random: " + burnedRandom);
+        }
+
+        setPlusMinusLineChart(view,lineChart,burned, consumed);
+    }
+
+    public static void setPlusMinusLineChart(View view, LineChart lineChart,ArrayList<StepCount> burned,ArrayList<IntakeFood> consumed){
+        ArrayList<StepCount> lastWeekPLusMinusValues = new ArrayList<>();
+        Date iDate, jDate;
+        for(int i = 0; i < burned.size(); ++i){
+            iDate = new Date(burned.get(i).getTime());
+            lastWeekPLusMinusValues.add(new StepCount(
+                    iDate.getTime(),
+                    consumed.get(i).getCalorie() - burned.get(i).getSteps()
+            ));
+        }
+
+        ArrayList<Entry> dataVals = new ArrayList<>();
+
+        for(int i = 0; i < lastWeekPLusMinusValues.size(); ++i){
+            dataVals.add(new Entry(lastWeekPLusMinusValues.get(i).getTime(), lastWeekPLusMinusValues.get(i).getSteps()));
+        }
+
+
+        SetGenerallyCharts.setUpOneLineChartWithoutFill(view.getContext(), lineChart, dataVals);
     }
 
     public static void setConsumedBurnedLineChart(View view, LineChart lineChart, ArrayList<IntakeFood> consumedFoods, ArrayList<StepCount> weeklySteps, int calorieNeedForOneDay, ArrayList<Training> trainings) {

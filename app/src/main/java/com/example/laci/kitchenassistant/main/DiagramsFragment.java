@@ -29,18 +29,8 @@ public class DiagramsFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_diagrams, container, false);
         initViews(view);
         ((MainActivity)getActivity()).setTitle("Diagrams");
-        Account.downloadAllSteps(new RetrieveDataListener<ArrayList<StepCount>>() {
-            @Override
-            public void onSuccess(ArrayList<StepCount> data) {
-                ((MainActivity)getActivity()).allSteps = data;
-                PersonalizeChart.setDiagramsFragmentLineCharts(view,consumedBurnedChart,plusMinusChart, estimatedChart, ((MainActivity)getActivity()).intookedFoods,((MainActivity)getActivity()).allSteps,((MainActivity)getActivity()).trainings, getCalorieNeedForOneDay());
-            }
 
-            @Override
-            public void onFailure(String message) {
-                Toast.makeText(view.getContext(),message,Toast.LENGTH_LONG).show();
-            }
-        });
+        PersonalizeChart.setDiagramsFragmentLineCharts(view,consumedBurnedChart,plusMinusChart, estimatedChart, ((MainActivity)getActivity()).intookedFoods,((MainActivity)getActivity()).allSteps,((MainActivity)getActivity()).trainings, getCalorieNeedForOneDay());
 
 
         return view;

@@ -22,38 +22,68 @@ public class CalorieNeedCounter {
     private static int MINIMUM_VALID_DAYS_PER_WEEK = 1;// recommended 4
     private static int ONE_CALORIE_IN_STEPS = 20;// recommended [20,30]
 
+    //multiplier value of base calorie requirements to get calorie requirements by goal and gender
+    // MALE: lose - 1.6, keep - 2.2, gain - 2.8
+    // FEMALE: lose - 1.2, keep - 1.6, gain - 2.0
+    private static double CALORIE_REQUIREMENT_MALE_LOSE = 1.6;
+    private static double CALORIE_REQUIREMENT_MALE_KEEP = 2.2;
+    private static double CALORIE_REQUIREMENT_MALE_GAIN = 2.8;
+    private static double CALORIE_REQUIREMENT_FEMALE_LOSE = 1.2;
+    private static double CALORIE_REQUIREMENT_FEMALE_KEEP = 1.6;
+    private static double CALORIE_REQUIREMENT_FEMALE_GAIN = 2.0;
+
 
     public static void CountCalories(ArrayList<IntakeFood> foods, ArrayList<StepCount> steps, ArrayList<Training> trainings, User user){
         calorieNeedForOneDay = getBaseCalorieNeedForOneDay(user);
         //MINIMUM_CALORIE_BURN_FOR_A_DAY = calorieNeedForOneDay;
         setWeeklyPersonalData(foods, steps, trainings, user);
         filterWeeklyPersonalDataByWhatWeWant(user);
-        if(weeklyPersonalData.size() > 0){
+        /*if(weeklyPersonalData.size() > 0){
             setCalorieRequirementsIfWeHaveHistory();
         } else{
-            setCalorieRequirementsIfWeHaveNotHistory();
-        }
-        setCalorieRequirementsIfWeHaveHistory();//TODO HAVE TO DELETE
-
-
-        //printWeeklyPersonalData();
-        //printUserPersonalInformations();
-
-
-        /*calculateHistoryWeeksGoal();
-        countAveragesGlobalAverages();
-        selectFoodsToEatPerDay();*/
-
+            setCalorieRequirementsIfWeHaveNotHistory(user);
+        }*/
+        setCalorieRequirementsIfWeHaveNotHistory(user);
     }
 
-    private static void setCalorieRequirementsIfWeHaveNotHistory(){
+    private static void setCalorieRequirementsIfWeHaveNotHistory(User user){
         //TODO default calorie requirements
-        /*UserNeedPersonalInformations.setMinimumCalorieBurn(minBC);
-        UserNeedPersonalInformations.setMinimumCalorieIntake(minIC);
-        UserNeedPersonalInformations.setMaximumCalorieBurn(maxBC);
-        UserNeedPersonalInformations.setMaximumCalorieIntake(maxIC);
-        UserNeedPersonalInformations.setAverageCalorieBurn(avgBC);
-        UserNeedPersonalInformations.setAverageCalorieIntake(avgIC);*/
+        int whatWeWant = whatWeWant(user);// 0 - keeping weight, 1 - gaining weight, -1 - losing weight
+        if(user.getGender() == 0){
+            //if male
+            switch(whatWeWant){
+                case -1:
+                    UserNeedPersonalInformations.setAverageCalorieIntake((int)(CALORIE_REQUIREMENT_MALE_LOSE * getBaseCalorieNeedForOneDay(user)));
+                    break;
+                case 0:
+                    UserNeedPersonalInformations.setAverageCalorieIntake((int)(CALORIE_REQUIREMENT_MALE_KEEP * getBaseCalorieNeedForOneDay(user)));
+                    break;
+                case 1:
+                    UserNeedPersonalInformations.setAverageCalorieIntake((int)(CALORIE_REQUIREMENT_MALE_GAIN * getBaseCalorieNeedForOneDay(user)));
+                    break;
+            }
+        }else{
+            //if female
+            switch(whatWeWant){
+                case -1:
+                    UserNeedPersonalInformations.setAverageCalorieIntake((int)(CALORIE_REQUIREMENT_FEMALE_LOSE * getBaseCalorieNeedForOneDay(user)));
+                    break;
+                case 0:
+                    UserNeedPersonalInformations.setAverageCalorieIntake((int)(CALORIE_REQUIREMENT_FEMALE_KEEP * getBaseCalorieNeedForOneDay(user)));
+                    break;
+                case 1:
+                    UserNeedPersonalInformations.setAverageCalorieIntake((int)(CALORIE_REQUIREMENT_FEMALE_GAIN * getBaseCalorieNeedForOneDay(user)));
+                    break;
+            }
+        }
+
+        UserNeedPersonalInformations.setAverageCalorieBurn(UserNeedPersonalInformations.getAverageCalorieIntake());
+        UserNeedPersonalInformations.setMinimumCalorieBurn(UserNeedPersonalInformations.getAverageCalorieBurn()-200);
+        UserNeedPersonalInformations.setMinimumCalorieIntake(UserNeedPersonalInformations.getAverageCalorieIntake()-200);
+        UserNeedPersonalInformations.setMaximumCalorieBurn(UserNeedPersonalInformations.getAverageCalorieBurn()+200);
+        UserNeedPersonalInformations.setMaximumCalorieIntake(UserNeedPersonalInformations.getAverageCalorieIntake()+200);
+
+
     }
 
 

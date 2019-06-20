@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.laci.kitchenassistant.BaseClasses.User;
+import com.example.laci.kitchenassistant.BaseClasses.UserNeedPersonalInformations;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.CalorieNeedCounter;
 import com.example.laci.kitchenassistant.Tools.Tools;
@@ -472,7 +473,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
 
         if(((MainActivity)getActivity()).user.getWeight() > 0 &&
                 ((MainActivity)getActivity()).user.getHeight() > 0 ){
-            calorieRequirement.setText(String.valueOf(CalorieNeedCounter.getCalorieNeedFOrOneDay(((MainActivity)getActivity()).user)));
+            calorieRequirement.setText(String.valueOf(UserNeedPersonalInformations.getAverageCalorieIntake()));
         }
 
     }

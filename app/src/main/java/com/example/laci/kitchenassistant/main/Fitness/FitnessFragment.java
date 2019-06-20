@@ -2,7 +2,6 @@ package com.example.laci.kitchenassistant.main.Fitness;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,18 +21,15 @@ import com.example.laci.kitchenassistant.BaseClasses.StepCount;
 import com.example.laci.kitchenassistant.BaseClasses.Training;
 import com.example.laci.kitchenassistant.BaseClasses.TrainingBase;
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.CalorieNeedCounter;
 import com.example.laci.kitchenassistant.Tools.Charts.PersonalizeChart;
 import com.example.laci.kitchenassistant.Tools.Charts.SetGenerallyCharts;
+import com.example.laci.kitchenassistant.Tools.Tools;
 import com.example.laci.kitchenassistant.firebase.Account;
-import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
 import com.example.laci.kitchenassistant.main.MainActivity;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,13 +40,14 @@ public class FitnessFragment extends Fragment {
     private PieChart pieChart;
     private LineChart stepsLineChart, trainingAllLineChart;
     private RadioButton steps, calories, training, all;
-    private TextView addTrainingTextView;
+    private TextView addTrainingTextView, calorieBurnedBySteps, calorieBurnedByTrainings, calorieBurnedWithKeepAlive, calorieBurnedAll;
     private Spinner addTrainingSpinner;
     private SeekBar addTrainingSeekBar;
     private Button addTrainingButton;
     private TrainingSpinnerAdapter training_spinner_adapter;
     private TrainingBase choosen_training;
     private int trainMinValue=0;
+    private int ONE_CALORIE_IN_STEP = 20;
 
 
     @Override
@@ -289,6 +286,7 @@ public class FitnessFragment extends Fragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void initViews(View view) {
         pieChart = view.findViewById(R.id.fragment_fitness_step_chart);
         stepsLineChart = view.findViewById(R.id.fragment_fitness_steps_chart);
@@ -301,7 +299,60 @@ public class FitnessFragment extends Fragment {
         trainingAllLineChart = view.findViewById(R.id.fragment_fitness_chart_training_all);
         training = view.findViewById(R.id.fragment_fitness_show_trainings);
         all = view.findViewById(R.id.fragment_fitness_show_all_burn);
+        //calorieBurnedBySteps, calorieBurnedByTrainings, calorieBurnedWithKeepAlive, calorieBurnedAll
+        calorieBurnedBySteps = view.findViewById(R.id.fragment_fitness_steps_textView);
+        calorieBurnedByTrainings = view.findViewById(R.id.fragment_fitness_trainings_textView);
+        calorieBurnedWithKeepAlive = view.findViewById(R.id.fragment_fitness_alive_textView);
+        calorieBurnedAll = view.findViewById(R.id.fragment_fitness_all_burn_textView);
 
+        int allBurnedKcals = getDailyBurnedCaloriesBySteps();
+        int temp;
+        calorieBurnedBySteps.setText("Step: " + allBurnedKcals + "kcal");
+
+
+        temp = getDailyBurnedCaloriesByTrainings();
+        calorieBurnedByTrainings.setText("Training: " + temp + "kcal");
+        allBurnedKcals += temp;
+
+        temp = getDailyKeepAlive();
+        calorieBurnedWithKeepAlive.setText("Base: " + temp + "kcal");
+
+        allBurnedKcals += temp;
+
+        calorieBurnedAll.setText("All: " + allBurnedKcals + "kcal");
+
+
+    }
+
+    public int getDailyKeepAlive(){
+        long oneDayInMillis = 86400000;
+        long oneDayCalorieRequirement = (long)(CalorieNeedCounter.getBaseCalorieNeedForOneDay(((MainActivity)getActivity()).user));
+        long today = System.currentTimeMillis() % oneDayInMillis;
+
+        return (int)((oneDayCalorieRequirement*today)/oneDayInMillis);
+    }
+
+    public int getDailyBurnedCaloriesByTrainings(){
+        int sum = 0;
+        Date tempDate;
+        Date today = new Date();
+        for(int i =0; i < ((MainActivity)getActivity()).trainings.size(); ++i){
+            tempDate = new Date(((MainActivity)getActivity()).trainings.get(i).getTimeTo());
+            if(today.getDay() == tempDate.getDay() &&
+                today.getMonth() == tempDate.getMonth() &&
+                today.getYear() == tempDate.getYear()){
+                sum += ((MainActivity)getActivity()).trainings.get(i).getBurnCalorie();
+            }
+        }
+        return sum;
+    }
+
+    public int getDailyBurnedCaloriesBySteps(){
+        int step = 0;
+        for(int i = 0; i < ((MainActivity)getActivity()).dailyStepCounts.size(); ++i){
+            step += ((MainActivity)getActivity()).dailyStepCounts.get(i).getSteps();
+        }
+        return (int)((step + Tools.getStepsFromService(getContext()))/ONE_CALORIE_IN_STEP);
     }
 
     public void setUpTrainingsSpinner(Context context){

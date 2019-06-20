@@ -52,6 +52,35 @@ public class SetGenerallyCharts {
         chart.setData(data);
     }
 
+    public static void setUpOneLineChartWithoutFill(Context context, LineChart chart, ArrayList<Entry> dataVals) {
+        chart.clear();
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter( new XAxisValueFormatter());
+        xAxis.setSpaceMin(2);
+
+        LineDataSet lineDataSet = new LineDataSet(dataVals,"Burned calories");
+        chart.getXAxis().setDrawGridLines(false);
+
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setDrawValues(false);
+        lineDataSet.setDrawFilled(false);
+        lineDataSet.setColor(ContextCompat.getColor(context,R.color.colorPrimary));
+        lineDataSet.setDrawCircles(false);
+
+
+        chart.getDescription().setText("");
+        //chart.getLegend().setEnabled(false);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineDataSet);
+
+        LineData data = new LineData(dataSets);
+        data.setValueFormatter(new ChartValueFormatter());
+        chart.animateX(4000);
+        chart.setData(data);
+    }
+
     public static void setUpTwoLineChart(Context context, LineChart chart, ArrayList<Entry> steps, ArrayList<Entry> consumedCalories) {
         chart.clear();
 

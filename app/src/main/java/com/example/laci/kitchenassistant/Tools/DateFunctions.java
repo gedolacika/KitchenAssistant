@@ -2,6 +2,7 @@ package com.example.laci.kitchenassistant.Tools;
 
 import android.util.Log;
 
+import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.BaseClasses.StepCount;
 import com.example.laci.kitchenassistant.BaseClasses.Training;
@@ -100,5 +101,17 @@ public class DateFunctions {
         return date;
     }
 
+    public static void setNextWeek(ArrayList<IntakeFood> consumed, ArrayList<StepCount> burned){
+        long counter = System.currentTimeMillis();
+        for(int i = 0; i < 7; ++i){
+            counter += 86400000;
+            consumed.add(new IntakeFood(
+                    new BasicFood(0),
+                    0,
+                    counter
+            ));
+            burned.add(new StepCount(counter, 0));
+        }
 
+    }
 }
