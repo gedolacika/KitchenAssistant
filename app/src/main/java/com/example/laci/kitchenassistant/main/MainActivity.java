@@ -1,8 +1,10 @@
 package com.example.laci.kitchenassistant.main;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -138,6 +140,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_foods_at_home: FragmentNavigation.loadFoodRecommendationFragment(this); break;
             case R.id.nav_home: FragmentNavigation.loadHomeFragment(this); break;
             case R.id.nav_logout: FirebaseAuth.getInstance().signOut();
+                ((ActivityManager)context.getSystemService(ACTIVITY_SERVICE))
+                        .clearApplicationUserData();
                                     ActivityNavigation.navigateToSplash(this);
                                     break;
             case R.id.nav_add_food: FragmentNavigation.loadAddFoodFragment(this); break;

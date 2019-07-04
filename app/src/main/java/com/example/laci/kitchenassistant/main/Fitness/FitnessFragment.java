@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.laci.kitchenassistant.BaseClasses.StepCount;
 import com.example.laci.kitchenassistant.BaseClasses.Training;
 import com.example.laci.kitchenassistant.BaseClasses.TrainingBase;
+import com.example.laci.kitchenassistant.BaseClasses.UserNeedPersonalInformations;
 import com.example.laci.kitchenassistant.R;
 import com.example.laci.kitchenassistant.Tools.CalorieNeedCounter;
 import com.example.laci.kitchenassistant.Tools.Charts.PersonalizeChart;
@@ -56,10 +57,17 @@ public class FitnessFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_fitness, container, false);
         initViews(view);
         ((MainActivity)getActivity()).setTitle("Fitness");
-        PersonalizeChart.setStepsPieChart(view,pieChart, ((MainActivity)Objects.requireNonNull(getActivity())).dailyStepCounts, 10000);
+        if(((MainActivity)Objects.requireNonNull(getActivity())).dailyStepCounts != null)
+            PersonalizeChart.setStepsPieChart(view,pieChart, ((MainActivity)Objects.requireNonNull(getActivity())).dailyStepCounts, (UserNeedPersonalInformations.getAverageCalorieIntake() - CalorieNeedCounter.getBaseCalorieNeedForOneDay(((MainActivity)getActivity()).user))/20);
 
-        SetGenerallyCharts.setUpLineChart(getContext(),stepsLineChart,setStepsToArrayList(new ArrayList<Entry>(),1));
-        SetGenerallyCharts.setUpLineChart(getContext(),trainingAllLineChart,setTrainingsAllArrayList(new ArrayList<Entry>(),3));
+        if(((MainActivity)getActivity()).weeklyStepCounts != null)
+            if(((MainActivity)getActivity()).weeklyStepCounts.size() > 0)
+                SetGenerallyCharts.setUpLineChart(getContext(),stepsLineChart,setStepsToArrayList(new ArrayList<Entry>(),1));
+
+        if(((MainActivity)getActivity()).trainings != null && ((MainActivity)getActivity()).weeklyStepCounts != null)
+            if(((MainActivity)getActivity()).weeklyStepCounts.size() > 0 && ((MainActivity)getActivity()).trainings.size() > 0)
+            SetGenerallyCharts.setUpLineChart(getContext(),trainingAllLineChart,setTrainingsAllArrayList(new ArrayList<Entry>(),3));
+
         setListeners(view);
         setUpTrainingsSpinner(view.getContext());
 
@@ -74,6 +82,7 @@ public class FitnessFragment extends Fragment {
      * @return the arraylist which contains the values to the chart
      */
     private ArrayList<Entry> setTrainingsAllArrayList(ArrayList<Entry> dataVals, int controller){
+
             if(controller == 3){
                 long time = System.currentTimeMillis()-604800000;
                 for(int i = 0; i < ((MainActivity)getActivity()).trainings.size(); ++i){

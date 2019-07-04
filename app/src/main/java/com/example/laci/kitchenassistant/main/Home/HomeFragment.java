@@ -18,7 +18,10 @@ import android.widget.Toast;
 
 import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.BaseClasses.StepCount;
+import com.example.laci.kitchenassistant.BaseClasses.User;
+import com.example.laci.kitchenassistant.BaseClasses.UserNeedPersonalInformations;
 import com.example.laci.kitchenassistant.R;
+import com.example.laci.kitchenassistant.Tools.CalorieNeedCounter;
 import com.example.laci.kitchenassistant.Tools.Charts.PersonalizeChart;
 import com.example.laci.kitchenassistant.firebase.Account;
 import com.example.laci.kitchenassistant.firebase.RetrieveDataListener;
@@ -49,7 +52,7 @@ public class HomeFragment extends Fragment {
         initViews(view);
 
 
-        setUpStepsPieCharts(view);
+        setUpStepsPieCharts(view, ((MainActivity)getActivity()).user);
         setUpIntakeFoodsPieCharts(view);
         setConsumedFoodsRecyclerView(view);
 
@@ -82,12 +85,12 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void setUpStepsPieCharts(View view) {
-        PersonalizeChart.setStepsPieChart(view,pieChart,((MainActivity)Objects.requireNonNull(getActivity())).dailyStepCounts,10000);
+    private void setUpStepsPieCharts(View view, User user) {
+        PersonalizeChart.setStepsPieChart(view,pieChart,((MainActivity)Objects.requireNonNull(getActivity())).dailyStepCounts, (UserNeedPersonalInformations.getAverageCalorieBurn() - CalorieNeedCounter.getBaseCalorieNeedForOneDay(user)) * 20);
     }
 
     private void setUpIntakeFoodsPieCharts(View view) {
-        PersonalizeChart.setIntookCaloriePieChart(view,intakePieChart,((MainActivity)getActivity()).intookedFoods,2000);
+        PersonalizeChart.setIntookCaloriePieChart(view,intakePieChart,((MainActivity)getActivity()).intookedFoods, UserNeedPersonalInformations.getAverageCalorieIntake());
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

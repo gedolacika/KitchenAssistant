@@ -51,6 +51,26 @@ public class Recipe extends BasicFoodQuantity {
         this.pictures = pictures;
     }
 
+    public Recipe(Recipe recipe) {
+        super(recipe.getName(), recipe.getCalorie(), recipe.getProtein(), recipe.getCarbohydrate(), recipe.getFat(), recipe.getQuantity());
+        this.preparation = recipe.getPreparation();
+        this.origin = recipe.getOrigin();
+        this.recipeType = recipe.getRecipeType();
+        this.uploaderID = recipe.getUploaderID();
+        this.preparation_time = recipe.getPreparation_time();
+        this.portion = recipe.getPortion();
+        this.difficulty = recipe.getDifficulty();
+        this.visibility = recipe.isVisibility();
+
+
+        this.ingredients = new ArrayList<>();
+        this.pictures = new ArrayList<>();
+
+
+        this.ingredients = recipe.getIngredients();
+        this.pictures = recipe.getPictures();
+    }
+
     public Recipe(String name, int calorie, int protein, int carbohydrate, int fat) {
         super(name, calorie, protein, carbohydrate, fat);
     }
@@ -60,6 +80,7 @@ public class Recipe extends BasicFoodQuantity {
         this.ingredients = basicFoods;
         this.preparation = preparation;
     }
+
 
     public ArrayList<BasicFoodQuantity> getIngredients() {
         return ingredients;

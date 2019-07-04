@@ -484,6 +484,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         age.setEnabled(true);
         weight.setEnabled(true);
         height.setEnabled(true);
+        goal_weight.setEnabled(true);
         close.setVisibility(View.VISIBLE);
         change.setText("SAVE");
         mode = true;
@@ -495,6 +496,7 @@ public class AccountFragment extends Fragment implements AccountContract.View{
         age.setEnabled(false);
         weight.setEnabled(false);
         height.setEnabled(false);
+        goal_weight.setEnabled(false);
         close.setVisibility(View.INVISIBLE);
         change.setText("CHANGE");
         mode = false;

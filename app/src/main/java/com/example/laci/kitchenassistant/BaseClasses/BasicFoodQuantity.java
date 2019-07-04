@@ -13,6 +13,11 @@ public class BasicFoodQuantity extends BasicFood {
         super(name, calorie, protein, carbohydrate, fat);
     }
 
+    public BasicFoodQuantity(BasicFoodQuantity basicFoodQuantity) {
+        super(basicFoodQuantity.getName(),basicFoodQuantity.getPicture(), basicFoodQuantity.getCalorie(), basicFoodQuantity.getProtein(), basicFoodQuantity.getCarbohydrate(), basicFoodQuantity.getFat(), basicFoodQuantity.getType());
+        quantity = basicFoodQuantity.getQuantity();
+    }
+
     public BasicFoodQuantity(String name, String picture, int calorie, int protein, int carbohydrate, int fat) {
         super(name, picture, calorie, protein, carbohydrate, fat);
     }

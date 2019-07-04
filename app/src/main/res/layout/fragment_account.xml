@@ -13,7 +13,7 @@
 
         <ImageView
             android:id="@+id/fragment_account_cover_photo"
-            android:layout_width="384dp"
+            android:layout_width="0dp"
             android:layout_height="148dp"
             android:scaleType="center"
             android:src="@color/colorPrimary"

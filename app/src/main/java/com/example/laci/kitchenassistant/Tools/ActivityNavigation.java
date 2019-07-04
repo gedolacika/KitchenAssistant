@@ -2,6 +2,7 @@ package com.example.laci.kitchenassistant.Tools;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 
 import com.example.laci.kitchenassistant.Activities.Confirm.ConfirmActivity;
 import com.example.laci.kitchenassistant.Activities.LoginActivity;

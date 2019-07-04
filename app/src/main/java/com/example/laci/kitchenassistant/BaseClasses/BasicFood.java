@@ -47,6 +47,18 @@ public class BasicFood {
         this.saturated = 0;
     }
 
+    public BasicFood(BasicFood basicFood){
+        this.name = basicFood.getName();
+        this.picture = basicFood.getPicture();
+        this.calorie = basicFood.getCalorie();
+        this.protein = basicFood.getProtein();
+        this.carbohydrate = basicFood.getCarbohydrate();
+        this.fat = basicFood.getFat();
+        this.sugar = basicFood.getSugar();
+        this.saturated = basicFood.getSaturated();
+        this.type = basicFood.getType();
+    }
+
     public BasicFood(int calorie) {
         this.calorie = calorie;
     }

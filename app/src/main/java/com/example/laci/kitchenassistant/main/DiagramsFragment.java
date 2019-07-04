@@ -30,7 +30,14 @@ public class DiagramsFragment extends Fragment {
         initViews(view);
         ((MainActivity)getActivity()).setTitle("Diagrams");
 
+        if(((MainActivity)getActivity()).intookedFoods != null &&
+                ((MainActivity)getActivity()).allSteps != null &&
+                ((MainActivity)getActivity()).trainings != null)
+            if(((MainActivity)getActivity()).intookedFoods.size() > 0 &&
+                    ((MainActivity)getActivity()).allSteps.size() > 0 &&
+                    ((MainActivity)getActivity()).trainings.size() > 0)
         PersonalizeChart.setDiagramsFragmentLineCharts(view,consumedBurnedChart,plusMinusChart, estimatedChart, ((MainActivity)getActivity()).intookedFoods,((MainActivity)getActivity()).allSteps,((MainActivity)getActivity()).trainings, getCalorieNeedForOneDay());
+
 
 
         return view;
@@ -70,5 +77,23 @@ public class DiagramsFragment extends Fragment {
         estimatedChart = view.findViewById(R.id.fragment_diagrams_estimated_chart);
         recommendRadioButton = view.findViewById(R.id.fragment_diagrams_reccomendations_radioButton);
         previousRadioButton = view.findViewById(R.id.fragment_diagrams_previous_radioButton);
+        recommendRadioButton.setChecked(true);
+
+        recommendRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                previousRadioButton.setChecked(false);
+                PersonalizeChart.setEstimatedByRecommendations(view, estimatedChart);
+            }
+        });
+
+        previousRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recommendRadioButton.setChecked(false);
+                PersonalizeChart.setEstimatedByPrevious(view,estimatedChart);
+            }
+        });
+
     }
 }

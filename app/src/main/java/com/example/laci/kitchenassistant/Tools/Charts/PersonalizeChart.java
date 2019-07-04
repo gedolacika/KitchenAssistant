@@ -32,7 +32,114 @@ public class PersonalizeChart {
         setEstimatedByRecommendations(view, estimatedLineChart);
     }
 
+    public static void setEstimatedByPrevious(View view, LineChart lineChart){
+        lineChart.clear();
+        ArrayList<StepCount> burned = new ArrayList<>();
+        ArrayList<IntakeFood> consumed = new ArrayList<>();
+
+        DateFunctions.setNextWeek(consumed, burned);
+
+        int minimum_consumed_weekly = getTheWeeklyMinimumValidConsumedCalorie();
+        int maximum_consumed_weekly = getTheWeeklyMaximumValidConsumedCalorie();
+        int minimum_burned_weekly = getTheWeeklyMinimumValidBurnedCalorie();
+        int maximum_burned_weekly = getTheWeeklyMaximumValidBurnedCalorie();
+
+
+
+        Random random1 = new Random();
+        Random random2 = new Random();
+        if(minimum_burned_weekly == maximum_burned_weekly){
+            minimum_burned_weekly -= 200;
+            maximum_burned_weekly += 200;
+        }
+        if(minimum_consumed_weekly  == maximum_consumed_weekly){
+            minimum_consumed_weekly -= 200;
+            maximum_consumed_weekly += 200;
+        }
+
+        Log.e("MIN-MAX","\nMinimum consumed: " + minimum_consumed_weekly +
+                "\nMaximum consumed: " + maximum_consumed_weekly +
+                "\nMinimum burned: " + minimum_burned_weekly +
+                "\nMaximum burned: " + maximum_burned_weekly);
+
+        int consumedRandom, burnedRandom;
+        for(int i = 0; i < burned.size(); ++i){
+            consumedRandom = minimum_consumed_weekly +
+                    random1.nextInt(
+                            maximum_consumed_weekly -
+                                    minimum_consumed_weekly);
+
+            burnedRandom = minimum_burned_weekly +
+                    random2.nextInt(
+                            maximum_burned_weekly -
+                                    minimum_burned_weekly);
+
+            consumed.get(i).setCalorie(consumedRandom);
+            burned.get(i).setSteps(burnedRandom);
+            //Log.e("MINUSPLUS", "Consumed random: " + consumedRandom + " - Burned random: " + burnedRandom);
+        }
+
+        setPlusMinusLineChart(view,lineChart,burned, consumed);
+    }
+
+    private static int getTheWeeklyMinimumValidConsumedCalorie(){
+        int value = 10000;
+        int count = 0;
+
+        for(int i = 0; i < consumedCaloriesLastWeek.size(); ++i){
+            if(consumedCaloriesLastWeek.get(i).getCalorie() < value && consumedCaloriesLastWeek.get(i).getCalorie() > 800){
+                value = consumedCaloriesLastWeek.get(i).getCalorie();
+                ++count;
+            }
+        }
+        if(count == 0) return 1200;
+        return value;
+    }
+
+    private static int getTheWeeklyMaximumValidConsumedCalorie(){
+        int value = 900;
+        int count = 0;
+
+        for(int i = 0; i < consumedCaloriesLastWeek.size(); ++i){
+            if(consumedCaloriesLastWeek.get(i).getCalorie() > value){
+                value = consumedCaloriesLastWeek.get(i).getCalorie();
+                ++count;
+            }
+        }
+        if(count == 0) return 2200;
+        return value;
+    }
+
+    private static int getTheWeeklyMinimumValidBurnedCalorie(){
+        int value = 10000;
+        int count = 0;
+
+        for(int i = 0; i < burnedCaloriesLastWeek.size(); ++i){
+            if(burnedCaloriesLastWeek.get(i).getSteps() < value && burnedCaloriesLastWeek.get(i).getSteps() > 800){
+                value = burnedCaloriesLastWeek.get(i).getSteps();
+                ++count;
+            }
+        }
+        if(count == 0) return 1200;
+        return value;
+    }
+
+    private static int getTheWeeklyMaximumValidBurnedCalorie(){
+        int value = 800;
+        int count = 0;
+
+        for(int i = 0; i < burnedCaloriesLastWeek.size(); ++i){
+            if(burnedCaloriesLastWeek.get(i).getSteps() > value){
+                value = burnedCaloriesLastWeek.get(i).getSteps();
+                ++count;
+            }
+        }
+        if(count == 0) return 2200;
+        return value;
+    }
+
     public static void setEstimatedByRecommendations(View view, LineChart lineChart){
+        lineChart.clear();
         ArrayList<StepCount> burned = new ArrayList<>();
         ArrayList<IntakeFood> consumed = new ArrayList<>();
 
@@ -54,7 +161,7 @@ public class PersonalizeChart {
 
             consumed.get(i).setCalorie(consumedRandom);
             burned.get(i).setSteps(burnedRandom);
-            Log.e("MINUSPLUS", "Consumed random: " + consumedRandom + " - Burned random: " + burnedRandom);
+            //Log.e("MINUSPLUS", "Consumed random: " + consumedRandom + " - Burned random: " + burnedRandom);
         }
 
         setPlusMinusLineChart(view,lineChart,burned, consumed);
@@ -118,8 +225,8 @@ public class PersonalizeChart {
 
         stepCount += Tools.getStepsFromService(view.getContext());
 
-        values.add(new PieEntry(Float.parseFloat(String.valueOf(stepCount)), "Steps: " + stepCount));
-        values.add(new PieEntry(Float.parseFloat(String.valueOf(10000 - stepCount)), "Goal: " + String.valueOf(targetStepCount)));
+        values.add(new PieEntry(Float.parseFloat(String.valueOf(stepCount%targetStepCount)), "Steps: " + stepCount%targetStepCount));
+        values.add(new PieEntry(Float.parseFloat(String.valueOf(targetStepCount - (stepCount % targetStepCount))), "Goal: " + String.valueOf(targetStepCount)));
 
 
         SetGenerallyCharts.setUpPieChart(view, pieChart, values, "Steps");
@@ -139,8 +246,8 @@ public class PersonalizeChart {
             }
         }
 
-        values.add(new PieEntry(Float.parseFloat(String.valueOf(intookCalorie)), "Calories: " + intookCalorie));
-        values.add(new PieEntry(Float.parseFloat(String.valueOf(2000 - intookCalorie)), "Goal: " + String.valueOf(targetCalorie)));
+        values.add(new PieEntry(Float.parseFloat(String.valueOf(intookCalorie % targetCalorie)), "Calories: " + intookCalorie));
+        values.add(new PieEntry(Float.parseFloat(String.valueOf(targetCalorie - (intookCalorie % targetCalorie))), "Goal: " + String.valueOf(targetCalorie)));
 
 
         SetGenerallyCharts.setUpPieChart(view, pieChart, values, "Calories");

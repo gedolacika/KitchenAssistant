@@ -6,6 +6,7 @@ import com.example.laci.kitchenassistant.BaseClasses.BasicFood;
 import com.example.laci.kitchenassistant.BaseClasses.BasicFoodQuantity;
 import com.example.laci.kitchenassistant.BaseClasses.IntakeFood;
 import com.example.laci.kitchenassistant.BaseClasses.Recipe;
+import com.example.laci.kitchenassistant.BaseClasses.User;
 import com.example.laci.kitchenassistant.BaseClasses.UserNeedPersonalInformations;
 
 import java.util.ArrayList;
@@ -32,17 +33,43 @@ public class MenuSetter {
         for(int i = 0; i < basicFoods.size(); ++i){
             basicFoodQuantities.add(new BasicFoodQuantity(
                     basicFoods.get(i),
-                    0
+                    100
             ));
         }
 
-        setBreakfasts(recipes, consumedFoods);
-        setSnacks(basicFoodQuantities,consumedFoods);
-        setLunch(recipes,consumedFoods);
-        setAfternoonSnacks(basicFoodQuantities,consumedFoods);
-        setDinner(recipes, consumedFoods);
+        ArrayList<Recipe> tempRecipes = new ArrayList<>();
+        ArrayList<BasicFoodQuantity> tempBasicFood = new ArrayList<>();
 
+        for(int i = 0; i < recipes.size(); ++i){
+            tempRecipes.add(new Recipe(recipes.get(i)));
+        }
+        for(int i = 0; i < basicFoodQuantities.size(); ++i){
+            tempBasicFood.add(new BasicFoodQuantity(basicFoodQuantities.get(i)));
+        }
 
+        setBreakfasts(tempRecipes, consumedFoods);
+        setSnacks(tempBasicFood,consumedFoods);
+
+        tempBasicFood.clear();
+        tempRecipes.clear();
+        for(int i = 0; i < recipes.size(); ++i){
+            tempRecipes.add(new Recipe(recipes.get(i)));
+        }
+        for(int i = 0; i < basicFoodQuantities.size(); ++i){
+            tempBasicFood.add(new BasicFoodQuantity(basicFoodQuantities.get(i)));
+        }
+
+        setLunch(tempRecipes,consumedFoods);
+        setAfternoonSnacks(tempBasicFood,consumedFoods);
+        tempBasicFood.clear();
+        tempRecipes.clear();
+        for(int i = 0; i < recipes.size(); ++i){
+            tempRecipes.add(new Recipe(recipes.get(i)));
+        }
+        setDinner(tempRecipes, consumedFoods);
+
+        tempBasicFood.clear();
+        tempRecipes.clear();
 
     }
 
@@ -53,21 +80,27 @@ public class MenuSetter {
         ArrayList<Recipe> dinners = new ArrayList<>();
         fillAllDinnerArray(dinners, recipes);
         filterRecipesArray(dinners, consumedFoods);
-        int randomNumber, quantity;
+        int randomNumber, target_calorie;
         float rate;
         UserNeedPersonalInformations.getDinners().clear();
 
-        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories() != 0)
+        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories()  >= MINIMUM_AVG_CALORIE)
             rate = (float)(int)(avgIntake/UserNeedPersonalInformations.getWeeklyAverageConsumedCalories());
         else
             rate = 1;
-
-        quantity = (int)((avgIntake * rate * DINNER_RATIO));
+        int oldQuantity;
+        target_calorie = (int)((avgIntake * rate * DINNER_RATIO));
         for(int i = 0; i < NUMBER_OF_FOOD_RECOMMENDATIONS_FOR_EACH_MEAL; ++i){
             if(dinners.size() > 0){
                 randomNumber = random.nextInt(dinners.size());
-                dinners.get(randomNumber).setQuantity(quantity);
-                UserNeedPersonalInformations.addToDinners(dinners.get(randomNumber));
+                Recipe tempRecipe = new Recipe(dinners.get(randomNumber));
+                oldQuantity = tempRecipe.getQuantity();
+                tempRecipe.setQuantity(target_calorie * tempRecipe.getQuantity() / tempRecipe.getCalorie());
+                tempRecipe.setCalorie(target_calorie);
+                tempRecipe.setProtein(tempRecipe.getProtein() * tempRecipe.getQuantity() / oldQuantity);
+                tempRecipe.setCarbohydrate(tempRecipe.getCarbohydrate() * tempRecipe.getQuantity() / oldQuantity);
+                tempRecipe.setFat(tempRecipe.getFat() * tempRecipe.getQuantity() / oldQuantity);
+                UserNeedPersonalInformations.addToDinners(tempRecipe);
                 dinners.remove(randomNumber);
             }
         }
@@ -94,21 +127,27 @@ public class MenuSetter {
         fillAllAfternoonSnackArray(afternoonSnacks, recipes);
         filterBasicFoodQuantityArray(afternoonSnacks, consumedFoods);
 
-        int randomNumber, quantity;
+        int randomNumber, target_calorie;
         float rate;
         UserNeedPersonalInformations.getAfternoonSnacks().clear();
 
-        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories() != 0)
+        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories()  >= MINIMUM_AVG_CALORIE)
             rate = (float)(int)(avgIntake/UserNeedPersonalInformations.getWeeklyAverageConsumedCalories());
         else
             rate = 1;
-
-        quantity = (int)((avgIntake * rate * AFTERNOON_SNACK_RATIO));
+        int oldQuantity;
+        target_calorie = (int)((avgIntake * rate * AFTERNOON_SNACK_RATIO));
         for(int i = 0; i < NUMBER_OF_FOOD_RECOMMENDATIONS_FOR_EACH_MEAL; ++i){
             if(afternoonSnacks.size() > 0){
                 randomNumber = random.nextInt(afternoonSnacks.size());
-                afternoonSnacks.get(randomNumber).setQuantity(quantity);
-                UserNeedPersonalInformations.addToAfternoonSnacks(afternoonSnacks.get(randomNumber));
+                BasicFoodQuantity tempBasicFood = new BasicFoodQuantity(afternoonSnacks.get(randomNumber));
+                oldQuantity = tempBasicFood.getQuantity();
+                tempBasicFood.setQuantity(target_calorie * tempBasicFood.getQuantity() / tempBasicFood.getCalorie());
+                tempBasicFood.setCalorie(target_calorie);
+                tempBasicFood.setProtein(tempBasicFood.getProtein() * tempBasicFood.getQuantity() / oldQuantity);
+                tempBasicFood.setCarbohydrate(tempBasicFood.getCarbohydrate() * tempBasicFood.getQuantity() / oldQuantity);
+                tempBasicFood.setFat(tempBasicFood.getFat() * tempBasicFood.getQuantity() / oldQuantity);
+                UserNeedPersonalInformations.addToAfternoonSnacks(tempBasicFood);
                 afternoonSnacks.remove(randomNumber);
             }
         }
@@ -133,21 +172,27 @@ public class MenuSetter {
         ArrayList<Recipe> lunches = new ArrayList<>();
         fillAllLunchArray(lunches, recipes);
         filterRecipesArray(lunches, consumedFoods);
-        int randomNumber, quantity;
+        int randomNumber, target_calorie;
         float rate;
         UserNeedPersonalInformations.getLunches().clear();
 
-        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories() != 0)
+        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories()  >= MINIMUM_AVG_CALORIE)
             rate = (float)(int)(avgIntake/UserNeedPersonalInformations.getWeeklyAverageConsumedCalories());
         else
             rate = 1;
-
-        quantity = (int)((avgIntake * rate * LUNCH_RATIO));
+        int oldQuantity;
+        target_calorie = (int)((avgIntake * rate * LUNCH_RATIO));
         for(int i = 0; i < NUMBER_OF_FOOD_RECOMMENDATIONS_FOR_EACH_MEAL; ++i){
             if(lunches.size() > 0){
                 randomNumber = random.nextInt(lunches.size());
-                lunches.get(randomNumber).setQuantity(quantity);
-                UserNeedPersonalInformations.addToLunches(lunches.get(randomNumber));
+                Recipe tempRecipe = new Recipe(lunches.get(randomNumber));
+                oldQuantity = tempRecipe.getQuantity();
+                tempRecipe.setQuantity(target_calorie * tempRecipe.getQuantity() / tempRecipe.getCalorie());
+                tempRecipe.setCalorie(target_calorie);
+                tempRecipe.setProtein(tempRecipe.getProtein() * tempRecipe.getQuantity() / oldQuantity);
+                tempRecipe.setCarbohydrate(tempRecipe.getCarbohydrate() * tempRecipe.getQuantity() / oldQuantity);
+                tempRecipe.setFat(tempRecipe.getFat() * tempRecipe.getQuantity() / oldQuantity);
+                UserNeedPersonalInformations.addToLunches(tempRecipe);
                 lunches.remove(randomNumber);
             }
 
@@ -173,21 +218,27 @@ public class MenuSetter {
         fillAllSnackArray(snacks, recipes);
         filterBasicFoodQuantityArray(snacks, consumedFoods);
 
-        int randomNumber, quantity;
+        int randomNumber, target_calorie;
         float rate;
         UserNeedPersonalInformations.getSnacks().clear();
 
-        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories() != 0)
+        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories()  >= MINIMUM_AVG_CALORIE)
             rate = (float)(int)(avgIntake/UserNeedPersonalInformations.getWeeklyAverageConsumedCalories());
         else
             rate = 1;
-
-        quantity = (int)((avgIntake * rate * SNACK_RATIO));
+        int oldQuantity;
+        target_calorie = (int)((avgIntake * rate * SNACK_RATIO));
         for(int i = 0; i < NUMBER_OF_FOOD_RECOMMENDATIONS_FOR_EACH_MEAL; ++i){
             if(snacks.size() > 0){
                 randomNumber = random.nextInt(snacks.size());
-                snacks.get(randomNumber).setQuantity(quantity);
-                UserNeedPersonalInformations.addToSnacks(snacks.get(randomNumber));
+                BasicFoodQuantity tempBasicFood = new BasicFoodQuantity(snacks.get(randomNumber));
+                oldQuantity = tempBasicFood.getQuantity();
+                tempBasicFood.setQuantity(target_calorie*tempBasicFood.getQuantity()/tempBasicFood.getCalorie());
+                tempBasicFood.setCalorie(target_calorie);
+                tempBasicFood.setProtein(tempBasicFood.getProtein() * tempBasicFood.getQuantity() / oldQuantity);
+                tempBasicFood.setCarbohydrate(tempBasicFood.getCarbohydrate() * tempBasicFood.getQuantity() / oldQuantity);
+                tempBasicFood.setFat(tempBasicFood.getFat() * tempBasicFood.getQuantity() / oldQuantity);
+                UserNeedPersonalInformations.addToSnacks(tempBasicFood);
                 snacks.remove(randomNumber);
             }
         }
@@ -212,22 +263,31 @@ public class MenuSetter {
         ArrayList<Recipe> breakfasts = new ArrayList<>();
         fillAllBreakfastArray(breakfasts, recipes);
         filterRecipesArray(breakfasts, consumedFoods);
-        int randomNumber, quantity;
+        int randomNumber, target_calorie;
         float rate;
         UserNeedPersonalInformations.getBreakfasts().clear();
 
-        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories() != 0)
+        if(avgIntake != 0 && UserNeedPersonalInformations.getWeeklyAverageConsumedCalories() >= MINIMUM_AVG_CALORIE)
             rate = (float)(int)(avgIntake/UserNeedPersonalInformations.getWeeklyAverageConsumedCalories());
         else
-            rate = 1;
+            rate = (float)1.0;
 
-        quantity = (int)((avgIntake * rate * BREAKFAST_RATIO));
+        target_calorie = (int)((avgIntake * rate * BREAKFAST_RATIO));
+        int oldQuantity;
         for(int i = 0; i < NUMBER_OF_FOOD_RECOMMENDATIONS_FOR_EACH_MEAL; ++i){
             randomNumber = random.nextInt(breakfasts.size());
-            breakfasts.get(randomNumber).setQuantity(quantity);
-            UserNeedPersonalInformations.addToBreakfasts(breakfasts.get(randomNumber));
+            Recipe tempBreakfast = new Recipe(breakfasts.get(randomNumber));
+            oldQuantity = tempBreakfast.getQuantity();
+            tempBreakfast.setQuantity(target_calorie*oldQuantity/tempBreakfast.getCalorie());
+            tempBreakfast.setCalorie(target_calorie);
+            tempBreakfast.setProtein(tempBreakfast.getProtein() * tempBreakfast.getQuantity() / oldQuantity);
+            tempBreakfast.setCarbohydrate(tempBreakfast.getCarbohydrate() * tempBreakfast.getQuantity() / oldQuantity);
+            tempBreakfast.setFat(tempBreakfast.getFat() * tempBreakfast.getQuantity() / oldQuantity);
+            UserNeedPersonalInformations.addToBreakfasts(tempBreakfast);
             breakfasts.remove(randomNumber);
         }
+
+        breakfasts.clear();
     }
 
 

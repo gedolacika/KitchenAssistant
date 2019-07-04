@@ -30,8 +30,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int validation_result = Validations.validatePhoneNumber(phoneNumber.getText().toString());
 
-                if(validation_result==0)
-                    navigateToConfirm(LoginActivity.this,Objects.requireNonNull(phoneNumber.getText()).toString());
+                if(validation_result==0) {
+                    navigateToConfirm(LoginActivity.this, Objects.requireNonNull(phoneNumber.getText()).toString());
+                    finish();
+                }
                 if(validation_result==1)
                     phoneNumber.setError("The length of phone number should be 12 characters!");
                 if(validation_result==2)
